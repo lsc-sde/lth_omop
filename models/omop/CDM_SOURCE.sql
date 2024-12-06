@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = "table"
-    )
-}}
+
+MODEL (
+  name lth_bronze.CDM_SOURCE,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   'LTH OMOP Bronze' as cdm_source_name,

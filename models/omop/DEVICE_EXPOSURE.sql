@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'device']
-    )
-}}
+
+MODEL (
+  name lth_bronze.DEVICE_EXPOSURE,
+  kind FULL,
+  cron '@daily',
+);
 
 SELECT
   CAST(ROW_NUMBER() OVER (ORDER BY NEWID()) AS bigint) AS device_exposure_id,

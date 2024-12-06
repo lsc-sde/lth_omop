@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'drugs']
-    )
-}}
+
+MODEL (
+  name lth_bronze.DRUG_STRENGTH,
+  kind FULL,
+  cron '@daily',
+);
 select
   cast(null as bigint) as drug_concept_id,
   cast(null as bigint) as ingredient_concept_id,

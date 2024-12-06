@@ -1,8 +1,9 @@
-{{
-    config(
-        tags = ['vocab', 'location']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__location,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   trim(location_id) as location_id,

@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['bi', 'flex', 'staging', 'condition']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__condition_occurrence,
+  kind FULL,
+  cron '@daily',
+);
 
 with condition_occ as (
   select

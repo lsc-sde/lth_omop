@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['device', 'staging'],
-    docs = {
-        'name': 'stg__device_exposure',
-        'description': 'Device exposure view for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__device_exposure,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   dvc.visit_id,

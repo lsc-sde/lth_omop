@@ -1,10 +1,9 @@
-{{
-    config(
-        materialized='incremental',
-        unique_key='visit_id',
-        tags = ['visit', 'bulk', 'source', 'flex']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_flex__visit_segment,
+  kind FULL,
+  cron '@daily',
+);
 
 with source_data as (
 select

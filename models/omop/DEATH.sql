@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'death', 'person']
-    )
-}}
+
+MODEL (
+  name lth_bronze.DEATH,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(person_id as bigint) as person_id,

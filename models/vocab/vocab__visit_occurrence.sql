@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['visit', 'vocab']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__visit_occurrence,
+  kind FULL,
+  cron '@daily',
+);
 with ae_visits as (
   select distinct visit_id from lth_bronze.src_flex__visit_detail_ae 
 )

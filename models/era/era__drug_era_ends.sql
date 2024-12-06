@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'era', 'drugs', 'lookup', 'dimension']
-    )
-}}
+
+MODEL (
+  name lth_bronze.era__drug_era_ends,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   ft.person_id,

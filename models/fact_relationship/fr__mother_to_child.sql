@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "incremental",
-    unique_key= ['unique_key']
-    )
-}}
+
+MODEL (
+  name lth_bronze.fr__mother_to_child,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   domain_concept_id_1,

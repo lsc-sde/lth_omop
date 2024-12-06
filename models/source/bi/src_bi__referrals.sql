@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['bi', 'flex', 'bulk', 'source']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_bi__referrals,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   referral_received_date,

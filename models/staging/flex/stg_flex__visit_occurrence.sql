@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['visit', 'bulk', 'staging', 'flex']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__visit_occurrence,
+  kind FULL,
+  cron '@daily',
+);
 
 select distinct
   vs.person_source_value,

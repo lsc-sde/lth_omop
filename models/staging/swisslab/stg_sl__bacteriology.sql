@@ -1,15 +1,9 @@
-{{
-    config(
-        materialized = "table",
-        tags = ['staging', 'sl', 'measurement'],
-        unique_key=['care_id','plan_id'],
-        post_hook = [
-          "CREATE INDEX idx_stg_sl_bacteriology_mrn ON {{ this }} (mrn ASC);",
-          "CREATE INDEX idx_stg_sl_bacteriology_nhs_number ON {{ this }} (nhs_number ASC);",
-          "CREATE INDEX idx_stg_sl_bacteriology_updated_at ON {{ this }} (updated_at ASC);",
-    ]
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_sl__bacteriology,
+  kind FULL,
+  cron '@daily',
+);
 
 with merged as (
   select

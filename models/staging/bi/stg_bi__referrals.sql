@@ -1,8 +1,9 @@
-{{
-    config(
-        tags = ['bi', 'flex', 'staging', 'observation']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_bi__referrals,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   bi.patient_id as bi_patient_id,

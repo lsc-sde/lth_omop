@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'condition', 'era']
-    )
-}}
+
+MODEL (
+  name lth_bronze.CONDITION_ERA,
+  kind FULL,
+  cron '@daily',
+);
 
 SELECT
   CAST(ROW_NUMBER() OVER (

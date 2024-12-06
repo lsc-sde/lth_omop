@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='table',
-        tags = ['bulk', 'source', 'scr', 'person']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_scr__person,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   person_source_value,

@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['bi', 'flex', 'staging', 'drugs']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__drug_exposure,
+  kind FULL,
+  cron '@daily',
+);
 
 with drug_exp as (
   select

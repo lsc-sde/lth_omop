@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['bi', 'flex', 'staging', 'provider']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__provider_specialty,
+  kind FULL,
+  cron '@daily',
+);
 
 select distinct
   efms.emp_provider_id,

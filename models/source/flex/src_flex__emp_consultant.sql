@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = 'view',
-    tags = ['provider', 'bulk', 'source', 'flex']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_flex__emp_consultant,
+  kind FULL,
+  cron '@daily',
+);
 
 select
 cons_org_code,

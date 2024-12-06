@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['bi', 'flex', 'staging', 'visit']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__facility_transfer,
+  kind FULL,
+  cron '@daily',
+);
 
 with multiple_visits as (
   select distinct

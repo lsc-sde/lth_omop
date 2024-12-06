@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['person', 'staging', 'death', 'person'],
-    docs = {
-        'name': 'stg__death',
-        'description': 'Death view for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__death,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   person_id,

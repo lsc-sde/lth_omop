@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['endoscopy', 'bulk', 'source', 'person']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_gireport__person,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   mrn,

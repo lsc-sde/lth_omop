@@ -1,10 +1,9 @@
-{{
-  config(
-    materialized = "incremental",
-    tags = ['omop', 'measurement'],
-    unique_key= ['unique_key']
-    )
-}}
+
+MODEL (
+  name lth_bronze.MEASUREMENT,
+  kind FULL,
+  cron '@daily',
+);
 
 {%- if is_incremental() %}
 {%- set max_id = max_existing('measurement_id') %}

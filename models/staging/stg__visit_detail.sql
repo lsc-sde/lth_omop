@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['visit', 'staging', 'visit_detail'],
-    docs = {
-        'name': 'stg__visit_detail',
-        'description': 'Visit detail view for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__visit_detail,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(vd.visit_detail_id as numeric) as visit_detail_id,

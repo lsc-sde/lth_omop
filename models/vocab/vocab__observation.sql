@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['observation', 'vocab'],
-    docs = {
-        'name': 'vocab__observation',
-        'description': 'Observation for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__observation,
+  kind FULL,
+  cron '@daily',
+);
 
 with concept as (
   select distinct

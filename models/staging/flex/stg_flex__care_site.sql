@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized='view',
-    tags = ['bi', 'flex', 'staging', 'care_site']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__care_site,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   e.*,

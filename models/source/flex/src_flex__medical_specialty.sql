@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = 'view',
-    tags = ['provider', 'bulk', 'source', 'flex']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_flex__medical_specialty,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   physician_service_id,

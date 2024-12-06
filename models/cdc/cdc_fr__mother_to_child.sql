@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = "view"
-    )
-}}
+
+MODEL (
+  name lth_bronze.cdc_fr__mother_to_child,
+  kind FULL,
+  cron '@daily',
+);
 
 with cdc as (
   select min(updated_at) as updated_at

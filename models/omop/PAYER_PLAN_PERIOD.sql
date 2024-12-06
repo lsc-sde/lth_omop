@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = "table"
-    )
-}}
+
+MODEL (
+  name lth_bronze.PAYER_PLAN_PERIOD,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(null as bigint) as payer_plan_period_id,

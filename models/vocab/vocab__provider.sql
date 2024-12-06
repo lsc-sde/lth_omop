@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['provider', 'vocab']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__provider,
+  kind FULL,
+  cron '@daily',
+);
 select
   provider_name,
   care_site_id,

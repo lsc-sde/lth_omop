@@ -1,3 +1,9 @@
+
+MODEL (
+  name lth_bronze.src_flex__care_site_gp,
+  kind FULL,
+  cron '@daily',
+);
 /*
 OMOP CARE SITE QUERY
 CONTEXT:
@@ -9,12 +15,6 @@ ASSUMPTION:
 - Outpatient clinic are all listed in ud_master.resource_entity
 */
 
-{{
-  config(
-    materialized = 'view',
-    tags = ['lookup', 'dimension', 'care_site', 'bulk', 'source', 'flex']
-    )
-}}
 
 select
   care_site_id,

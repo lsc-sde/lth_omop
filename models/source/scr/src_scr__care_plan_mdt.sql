@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='table',
-        tags = ['bulk', 'source', 'scr', 'care_plan']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_scr__care_plan_mdt,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   care_id,

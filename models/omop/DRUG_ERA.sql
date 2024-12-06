@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'drugs', 'era']
-    )
-}}
+
+MODEL (
+  name lth_bronze.DRUG_ERA,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(row_number() over (order by newid()) as bigint) as drug_era_id,

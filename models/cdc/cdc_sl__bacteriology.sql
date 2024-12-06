@@ -1,15 +1,9 @@
-{{
-    config(
-        materialized='table',
-        tags = ['results', 'cdc', 'sl'],
-        post_hook = [
-          "{{ create_nonclustered_index(
-                columns=['updated_at'],
-                includes=['nhs_number'])
-            }}"
-        ]
-    )
-}}
+
+MODEL (
+  name lth_bronze.cdc_sl__bacteriology,
+  kind FULL,
+  cron '@daily',
+);
 
 with cdc as (
   select min(updated_at) as updated_at

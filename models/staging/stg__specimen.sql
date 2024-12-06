@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['specimen', 'staging'],
-    docs = {
-        'name': 'stg__specimen',
-        'description': 'Specimen view for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__specimen,
+  kind FULL,
+  cron '@daily',
+);
 
 with person as (
 select

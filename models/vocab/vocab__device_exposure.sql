@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['device', 'vocab'],
-    docs = {
-        'name': 'vocab__device_exposure',
-        'description': 'Devices for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__device_exposure,
+  kind FULL,
+  cron '@daily',
+);
 
 WITH Devices AS (
   SELECT

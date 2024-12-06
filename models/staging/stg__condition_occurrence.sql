@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['condition', 'staging'],
-    docs = {
-        'name': 'stg__condition_occurrence',
-        'description': 'Condition occurrence view for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__condition_occurrence,
+  kind FULL,
+  cron '@daily',
+);
 
 with cond as (
   select

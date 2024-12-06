@@ -1,9 +1,9 @@
-{{
-    config(
-      materialized = 'table',
-      tags = ['bulk', 'source', 'sl', 'measurement']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_sl__bacteriology_live,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   order_number,

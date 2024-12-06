@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'specimen']
-    )
-}}
+
+MODEL (
+  name lth_bronze.SPECIMEN,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(row_number() over (order by NEWID()) as bigint) as specimen_id,

@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['bi', 'flex', 'staging', 'provider'],
-    docs = {
-        'name': 'stg_flex__provider',
-        'description': 'Provider staging table'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__provider,
+  kind FULL,
+  cron '@daily',
+);
 
 with provider_base as (
   select distinct

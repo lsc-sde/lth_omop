@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['visit', 'bulk', 'visit_detail', 'staging', 'flex']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__visit_detail,
+  kind FULL,
+  cron '@daily',
+);
 
 with ip_detail as (
   select

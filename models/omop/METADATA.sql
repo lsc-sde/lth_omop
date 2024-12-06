@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = "table"
-    )
-}}
+
+MODEL (
+  name lth_bronze.METADATA,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(null as bigint) as metadata_id,

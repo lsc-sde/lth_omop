@@ -1,9 +1,9 @@
-{{
-    config(
-        tags = ['staging', 'sl', 'care_site'],
-        unique_key=['care_id','plan_id']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_sl__care_site,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   e.care_site_name,

@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['endoscopy', 'bulk', 'source', 'condition']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_gireport__diagnostic_codes,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   table_name,

@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'care_site']
-    )
-}}
+
+MODEL (
+  name lth_bronze.CARE_SITE,
+  kind FULL,
+  cron '@daily',
+);
 
 select distinct
   cast(care_site_id as bigint) as care_site_id,

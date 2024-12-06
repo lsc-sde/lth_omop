@@ -1,19 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['results', 'staging'],
-    docs = {
-        'name': 'stg__result',
-        'description': 'Results view for all sources'
-    },
-    post_hook = [
-          "{{ create_nonclustered_index(
-                columns=['source_code'],
-                includes=['value_source_value'])
-            }}"
-        ]
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__result,
+  kind FULL,
+  cron '@daily',
+);
 
 with results_union as (
   select

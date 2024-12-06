@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'fact_relationship']
-    )
-}}
+
+MODEL (
+  name lth_bronze.FACT_RELATIONSHIP,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(domain_concept_id_1 as bigint) as domain_concept_id_1,

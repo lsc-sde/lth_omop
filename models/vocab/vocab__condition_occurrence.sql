@@ -1,8 +1,9 @@
-{{
-    config(
-        tags = ['vocab', 'condition']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__condition_occurrence,
+  kind FULL,
+  cron '@daily',
+);
 
 with concept as (
   select distinct

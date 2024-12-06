@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['bi', 'flex', 'staging', 'condition']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__ae_diagnosis,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   visit_id,

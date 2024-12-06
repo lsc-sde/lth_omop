@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['bi', 'flex', 'staging', 'result']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__result,
+  kind FULL,
+  cron '@daily',
+);
 
 with visit_detail as (
   select distinct

@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['visit_detail', 'vocab']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__visit_detail,
+  kind FULL,
+  cron '@daily',
+);
 select
   vd.visit_detail_id,
   vd.person_id,

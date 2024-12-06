@@ -1,11 +1,9 @@
-{{
-  config(
-    materialized = "incremental",
-    tags = ['omop', 'observation'],
-    unique_key = ['unique_key']
 
-    )
-}}
+MODEL (
+  name lth_bronze.OBSERVATION,
+  kind FULL,
+  cron '@daily',
+);
 
 {%- if is_incremental() %}
 {%- set max_id = max_existing('observation_id') %}

@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = 'view',
-    tags = ['provider', 'bulk', 'source', 'flex']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_flex__emp_type_emp_facility,
+  kind FULL,
+  cron '@daily',
+);
 
 
 select

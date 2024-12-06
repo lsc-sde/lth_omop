@@ -1,8 +1,9 @@
-{{
-    config(
-        tags = ['vocab', 'drugs']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__drug_exposure,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   visit_occurrence_id,

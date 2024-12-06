@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['care_site', 'lookup', 'dimension', 'staging'],
-    docs = {
-        'name': 'stg__care_site',
-        'description': 'Care site view for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__care_site,
+  kind FULL,
+  cron '@daily',
+);
 
 with all_care_sites as (
   select

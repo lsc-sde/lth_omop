@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = "table"
-    )
-}}
+
+MODEL (
+  name lth_bronze.EPISODE_EVENT,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(null as bigint) as episode_id,

@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['procedures', 'vocab']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__procedure_occurrence,
+  kind FULL,
+  cron '@daily',
+);
 
 with concept as (
   select

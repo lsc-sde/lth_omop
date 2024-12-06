@@ -1,12 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['location', 'staging'],
-    docs = {
-        'name': 'stg__location'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__location,
+  kind FULL,
+  cron '@daily',
+);
 
 select distinct
   concat(10, dbo.IDGeneration(location_source_value)) as location_id,

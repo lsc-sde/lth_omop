@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = 'table',
-    )
-}}
+
+MODEL (
+  name lth_bronze.cdc__updated_at_final,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   'MEASUREMENT' as model,

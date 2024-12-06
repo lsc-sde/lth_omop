@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'cost']
-    )
-}}
+
+MODEL (
+  name lth_bronze.COST,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(null as bigint) as cost_id,

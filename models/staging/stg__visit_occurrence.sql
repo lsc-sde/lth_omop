@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['visit', 'staging'],
-    docs = {
-        'name': 'stg__visit_occurrence',
-        'description': 'Visit occurrence view for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__visit_occurrence,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   mpi.person_id,

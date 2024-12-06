@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = "table"
-    )
-}}
+
+MODEL (
+  name lth_bronze.NOTE_NLP,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(null as bigint) as note_nlp_id,

@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = 'view'
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_flex__implant_devices,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   visit_id,

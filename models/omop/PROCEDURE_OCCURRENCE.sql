@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'procedure']
-    )
-}}
+
+MODEL (
+  name lth_bronze.PROCEDURE_OCCURRENCE,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(row_number() over (order by NEWID()) as bigint)

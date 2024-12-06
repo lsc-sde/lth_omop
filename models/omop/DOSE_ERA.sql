@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = "table"
-    )
-}}
+
+MODEL (
+  name lth_bronze.DOSE_ERA,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(null as bigint) as dose_era_id,

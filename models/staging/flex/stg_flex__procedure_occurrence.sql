@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['bi', 'flex', 'staging', 'procedure']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__procedure_occurrence,
+  kind FULL,
+  cron '@daily',
+);
 
 with procedure_occ as (
   select

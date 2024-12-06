@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['bi', 'flex', 'staging', 'procedure']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__ae_procedures,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   visit_id,

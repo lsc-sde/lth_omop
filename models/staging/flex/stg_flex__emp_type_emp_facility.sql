@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['bi', 'flex', 'staging', 'provider']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__emp_type_emp_facility,
+  kind FULL,
+  cron '@daily',
+);
 
 select distinct
   emp_provider_id,

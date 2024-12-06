@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['specimen', 'vocab'],
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__specimen,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   person_id,

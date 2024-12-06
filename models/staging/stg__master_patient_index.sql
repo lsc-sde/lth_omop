@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized='table',
-    unique_key='unique_id',
-    docs = {
-        'name': 'stg__master_patient_index',
-        'description': 'Merging of all patient details for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__master_patient_index,
+  kind FULL,
+  cron '@daily',
+);
 
 with flex_person as (
   select

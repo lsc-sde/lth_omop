@@ -1,15 +1,15 @@
-{{
-    config(
-        materialized='table',
-        tags = ['results', 'cdc', 'bi'],
-        post_hook = [
-          "{{ create_nonclustered_index(
-                columns=['last_edit_time'],
-                includes=['patient_id', 'visit_id', 'referring_emp_code'])
-            }}"
-        ]
-    )
-}}
+
+MODEL (
+  name lth_bronze.cdc_bi__referrals,
+  kind FULL,
+  cron '@daily',
+);
+
+MODEL (
+  name lth_bronze.cdc_bi__referrals,
+  kind FULL,
+  cron '@daily',
+);
 
 with cdc as (
   select min(updated_at) as updated_at

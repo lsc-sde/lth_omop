@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'era', 'condition']
-    )
-}}
+
+MODEL (
+  name lth_bronze.era__condition_target,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   co.PERSON_ID,

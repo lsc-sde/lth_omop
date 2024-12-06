@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['provider', 'staging'],
-    docs = {
-        'name': 'stg__provider',
-        'description': 'Provider view for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__provider,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   translate(provider_source_value, '0123456789', '0239687154') as provider_id,

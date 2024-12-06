@@ -1,15 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['mappings', 'vocab'],
-    as_columnstore = false,
-    post_hook = [
-      "CREATE INDEX idx_vstcm_source_code ON {{ this }} (source_code ASC);",
-      "CREATE INDEX idx_vstcm_source_code_description ON {{ this }} (source_code_description ASC);",
-      "CREATE INDEX idx_vstcm_source_code_group ON {{ this }} ([group] ASC);",
-    ]
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__source_to_concept_map,
+  kind FULL,
+  cron '@daily',
+);
 
 select distinct
   source_code,

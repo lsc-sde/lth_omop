@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['person', 'staging', 'death'],
-    docs = {
-        'name': 'stg__person',
-        'description': 'Merging of all patient details for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__person,
+  kind FULL,
+  cron '@daily',
+);
 
 with person as (
     select distinct

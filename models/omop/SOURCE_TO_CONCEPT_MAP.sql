@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'visit_occurrence', 'visit']
-    )
-}}
+
+MODEL (
+  name lth_bronze.SOURCE_TO_CONCEPT_MAP,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(source_code as varchar(50)) as source_code,

@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['measurement', 'vocab'],
-    docs = {
-        'name': 'vocab__measurement',
-        'description': 'Measurement for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__measurement,
+  kind FULL,
+  cron '@daily',
+);
 
 select distinct
   r.person_id,

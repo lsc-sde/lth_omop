@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['drugs', 'staging'],
-    docs = {
-        'name': 'stg__drug_exposure',
-        'description': 'Drug exposures view for all sources'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg__drug_exposure,
+  kind FULL,
+  cron '@daily',
+);
 
 
 select

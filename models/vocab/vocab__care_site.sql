@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized = "table",
-        tags = ['vocab', 'care_site']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__care_site,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   care_site_id,

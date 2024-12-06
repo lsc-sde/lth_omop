@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['scr', 'staging', 'measurement']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_scr__measurement,
+  kind FULL,
+  cron '@daily',
+);
 
 
 SELECT

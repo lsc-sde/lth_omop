@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'visit_detail', 'visit']
-    )
-}}
+
+MODEL (
+  name lth_bronze.VISIT_DETAIL,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(visit_detail_id as bigint) as visit_detail_id,

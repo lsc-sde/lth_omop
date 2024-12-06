@@ -1,10 +1,9 @@
-{{
-  config(
-    materialized = "incremental",
-    tags = ['omop', 'visit_occurrence', 'visit'],
-    unique_key= ['visit_occurrence_id']
-    )
-}}
+
+MODEL (
+  name lth_bronze.VISIT_OCCURRENCE,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(visit_occurrence_id as bigint) as visit_occurrence_id,

@@ -1,8 +1,9 @@
-{{
-  config(
-    tags = ['lookup', 'dimension', 'staging', 'care_site']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_ext__care_site,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   e.*,

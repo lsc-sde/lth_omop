@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='table',
-        tags = ['person', 'bulk', 'source', 'flex']
-)
-}}
+
+MODEL (
+  name lth_bronze.src_flex__person,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   person_source_value,

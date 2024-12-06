@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['flex', 'staging', 'devices'],
-    docs = {
-        'name': 'stg_flex__devices',
-        'description': 'Devices staging table'
-    }
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__devices,
+  kind FULL,
+  cron '@daily',
+);
 
 with devices as
 (

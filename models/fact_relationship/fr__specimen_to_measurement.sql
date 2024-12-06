@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "incremental",
-    unique_key= ['measurement_key']
-    )
-}}
+
+MODEL (
+  name lth_bronze.fr__specimen_to_measurement,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   s.domain_concept_id_1,

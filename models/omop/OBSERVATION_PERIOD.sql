@@ -1,8 +1,9 @@
-{{
-  config(
-    materialized = "table"
-    )
-}}
+
+MODEL (
+  name lth_bronze.OBSERVATION_PERIOD,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   cast(null as bigint) as observation_period_id,

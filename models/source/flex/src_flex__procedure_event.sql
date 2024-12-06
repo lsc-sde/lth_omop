@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='incremental',
-        tags = ['procedure', 'bulk', 'source', 'flex']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_flex__procedure_event,
+  kind FULL,
+  cron '@daily',
+);
 
 with source_data as (
 select

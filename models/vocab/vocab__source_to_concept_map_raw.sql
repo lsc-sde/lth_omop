@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['mappings', 'vocab']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__source_to_concept_map_raw,
+  kind FULL,
+  cron '@daily',
+);
 
 select *
 from (

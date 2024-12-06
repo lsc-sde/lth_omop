@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'location']
-    )
-}}
+
+MODEL (
+  name lth_bronze.LOCATION,
+  kind FULL,
+  cron '@daily',
+);
 
 select distinct
   cast(location_id as bigint) as location_id,

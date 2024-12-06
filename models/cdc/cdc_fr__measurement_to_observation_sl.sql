@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "view",
-    tags = ['omop', 'fact_relationship']
-    )
-}}
+
+MODEL (
+  name lth_bronze.cdc_fr__measurement_to_observation_sl,
+  kind FULL,
+  cron '@daily',
+);
 
 with cdc as (
   select min(updated_at) as updated_at

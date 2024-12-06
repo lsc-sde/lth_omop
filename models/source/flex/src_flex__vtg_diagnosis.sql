@@ -1,10 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['condition', 'bulk', 'source', 'flex']
 
-)
-}}
+MODEL (
+  name lth_bronze.src_flex__vtg_diagnosis,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   visit_number,

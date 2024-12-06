@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['lookup', 'dimension', 'ext']
-    )
-}}
+
+MODEL (
+  name lth_bronze.ext__data_opt_out,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   MRN as mrn,

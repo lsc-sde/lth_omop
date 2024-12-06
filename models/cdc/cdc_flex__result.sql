@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['results', 'cdc', 'flex']
-        )
-}}
+
+MODEL (
+  name lth_bronze.cdc_flex__result,
+  kind FULL,
+  cron '@daily',
+);
 
 with cdc as (
   select min(updated_at) as updated_at

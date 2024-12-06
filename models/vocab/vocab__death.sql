@@ -1,8 +1,9 @@
-{{
-    config(
-        tags = ['vocab', 'death', 'person']
-    )
-}}
+
+MODEL (
+  name lth_bronze.vocab__death,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   person_id,

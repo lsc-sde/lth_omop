@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['scr', 'staging', 'condition']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_scr__condition_occurrence,
+  kind FULL,
+  cron '@daily',
+);
 
 
 select

@@ -1,9 +1,9 @@
-{{
-  config(
-    materialized = "table",
-    tags = ['omop', 'provider']
-    )
-}}
+
+MODEL (
+  name lth_bronze.PROVIDER,
+  kind FULL,
+  cron '@daily',
+);
 
 select distinct
   cast(provider_id as bigint) as provider_id,

@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['endoscopy', 'bulk', 'source', 'condition']
-    )
-}}
+
+MODEL (
+  name lth_bronze.src_gireport__uppergi_diagnosis,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   person_source_value,

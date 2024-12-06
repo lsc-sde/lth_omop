@@ -1,9 +1,9 @@
-{{
-    config(
-        materialized='view',
-        tags = ['condition', 'bulk', 'staging', 'flex']
-    )
-}}
+
+MODEL (
+  name lth_bronze.stg_flex__vtg_diagnosis,
+  kind FULL,
+  cron '@daily',
+);
 
 select
   index_nbr,
