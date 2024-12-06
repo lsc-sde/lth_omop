@@ -37,7 +37,7 @@ select distinct
   end as operator_concept_id,
   r.datasource,
   r.updated_at
-from {{ ref('stg__result') }} as r
+from lth_bronze.stg__result as r
 inner join
   (
     select distinct
@@ -45,7 +45,7 @@ inner join
       target_concept_id,
       target_domain_id,
       [group]
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where
       [group] = 'result'
       or (
@@ -66,7 +66,7 @@ left join
       source_code_description,
       target_concept_id,
       target_domain_id
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] = 'units'
   ) as um
   on r.source_code = um.source_code
@@ -76,7 +76,7 @@ left join
       target_concept_id,
       source_code,
       source_code_description
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] in ('decoded', 'bacteriology_other_result')
   ) as dc
   on
@@ -131,7 +131,7 @@ select distinct
   end as operator_concept_id,
   r.datasource,
   r.updated_at
-from {{ ref('stg__result') }} as r
+from lth_bronze.stg__result as r
 left join
   (
     select
@@ -139,7 +139,7 @@ left join
       source_code_description,
       target_concept_id,
       target_domain_id
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] = 'scr_fields'
   ) as c
   on r.source_code = c.source_code
@@ -150,7 +150,7 @@ left join
       source_code_description,
       target_concept_id,
       target_domain_id
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] = 'scr_results'
   ) as c2
   on

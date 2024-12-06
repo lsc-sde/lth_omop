@@ -15,4 +15,4 @@ select
   s.measurement_key,
   s.unique_key,
   s.last_edit_time
-from {{ ref('cdc_fr__specimen_to_measurement') }} as s
+from lth_bronze.cdc_fr__specimen_to_measurement as s

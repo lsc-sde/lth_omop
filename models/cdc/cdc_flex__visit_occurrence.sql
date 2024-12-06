@@ -7,14 +7,14 @@
 
 with cdc as (
   select min(updated_at) as updated_at
-  from {{ ref('cdc__updated_at') }}
+  from lth_bronze.cdc__updated_at 
   where
     model in ('VISIT_OCCURRENCE') and datasource = 'flex'
 )
 
 select *
 from
-  {{ ref('src_flex__visit_segment') }} as sfv
+  lth_bronze.src_flex__visit_segment as sfv
 where
   sfv.last_edit_time > (
     select updated_at from cdc

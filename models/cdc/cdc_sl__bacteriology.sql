@@ -13,14 +13,14 @@
 
 with cdc as (
   select min(updated_at) as updated_at
-  from {{ ref('cdc__updated_at') }}
+  from lth_bronze.cdc__updated_at 
   where
     model in ('MEASUREMENT', 'OBSERVATION') and datasource = 'swl'
 )
 
 select *
 from
-  {{ ref('stg_sl__bacteriology') }} as ssb
+  lth_bronze.stg_sl__bacteriology as ssb
 where
   ssb.updated_at > (
     select dateadd(d, -5, updated_at) from cdc

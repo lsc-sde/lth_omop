@@ -5,7 +5,7 @@
     )
 }}
 with ae_visits as (
-  select distinct visit_id from {{ ref('src_flex__visit_detail_ae') }}
+  select distinct visit_id from lth_bronze.src_flex__visit_detail_ae 
 )
 
 select
@@ -53,13 +53,13 @@ select
   vo.visit_type_id,
   vo.last_edit_time,
   vo.updated_at
-from {{ ref('stg__visit_occurrence') }} as vo
+from lth_bronze.stg__visit_occurrence as vo
 left join
   (
     select
       target_concept_id,
       source_code
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] = 'discharge_destination'
   ) as csd
   on vo.discharged_to_source_value = csd.source_code
@@ -68,7 +68,7 @@ left join
     select
       target_concept_id,
       source_code
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] = 'admission_source'
   ) as csa
   on vo.admitted_from_source_value = csa.source_code

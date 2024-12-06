@@ -30,4 +30,4 @@ select
   lag(vd.visit_detail_id) over (
     partition by vd.person_id order by vd.checkin_datetime
   ) as preceding_visit_detail_id
-from {{ ref('stg__visit_detail') }} as vd
+from lth_bronze.stg__visit_detail as vd

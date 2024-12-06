@@ -14,7 +14,7 @@ from (
     care_site_source_value,
     care_site_location as postcode,
     'GP Practice' as place_of_service_source_value
-  from {{ ref('src_flex__care_site_gp') }}
+  from lth_bronze.src_flex__care_site_gp 
 
   union
 
@@ -44,7 +44,7 @@ from (
     'NHS Trust' as place_of_service_source_value
 ) as e
 
-left join {{ ref('ext__postcodes') }} as p
+left join lth_bronze.ext__postcodes as p
   on
     case
       when e.postcode = '1' then 'PR29HT' when

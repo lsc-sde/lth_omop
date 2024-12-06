@@ -47,6 +47,6 @@ select
     }} as unique_key,
   vm.datasource,
   vm.updated_at
-from {{ ref('vocab__measurement') }} as vm
-left join {{ ref('PROVIDER') }} as pr
+from lth_bronze.vocab__measurement as vm
+left join lth_bronze.PROVIDER as pr
   on vm.provider_id = pr.provider_source_value

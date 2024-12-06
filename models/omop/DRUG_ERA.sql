@@ -14,5 +14,5 @@ select
   sum(drug_exposure_count) as drug_exposure_count,
   datediff(day, min(drug_sub_exposure_start_date), drug_era_end_date)
   - sum(days_exposed) as gap_days
-from {{ ref('era__drug_era_ends') }}
+from lth_bronze.era__drug_era_ends 
 group by person_id, drug_concept_id, drug_era_end_date;

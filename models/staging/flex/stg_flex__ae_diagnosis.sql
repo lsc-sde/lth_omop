@@ -25,7 +25,7 @@ from (
     last_edit_time,
     updated_at,
     value as diag_list
-  from {{ ref('src_flex__ae_diagnosis') }}
+  from lth_bronze.src_flex__ae_diagnosis 
   cross apply string_split(diag_list, '~')
 ) as t
 cross apply string_split(diag_list, '|')

@@ -20,11 +20,11 @@ select
   device_lot_number,
   device_details,
   expiry_date
-from {{ ref('stg_flex__devices') }} as dvc
-left join {{ ref('stg__visit_detail') }} as vd
+from lth_bronze.stg_flex__devices as dvc
+left join lth_bronze.stg__visit_detail as vd
   on
     dvc.visit_id = vd.visit_id
     and dvc.date_time >= vd.checkin_datetime
     and dvc.date_time < vd.checkout_datetime
-inner join {{ ref('stg__master_patient_index') }} as mpi
+inner join lth_bronze.stg__master_patient_index as mpi
   on dvc.patient_id = mpi.flex_patient_id

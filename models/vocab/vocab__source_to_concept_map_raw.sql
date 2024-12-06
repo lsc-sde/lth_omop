@@ -18,7 +18,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__drugs_mappings') }}
+  from lth_bronze.flex__drugs_mappings 
 
   union
 
@@ -32,7 +32,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__job_role') }}
+  from lth_bronze.flex__job_role 
 
   union
 
@@ -46,7 +46,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__medical_specialty') }}
+  from lth_bronze.flex__medical_specialty 
 
   union
 
@@ -60,7 +60,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__radiology_mappings') }}
+  from lth_bronze.flex__radiology_mappings 
 
   union
 
@@ -74,7 +74,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__vital_signs_mappings') }}
+  from lth_bronze.flex__vital_signs_mappings 
 
   union
 
@@ -88,7 +88,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__patient_demographics') }}
+  from lth_bronze.flex__patient_demographics 
 
   union
 
@@ -102,7 +102,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__drug_routes') }}
+  from lth_bronze.flex__drug_routes 
 
   union
 
@@ -116,7 +116,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__blood_mappings') }}
+  from lth_bronze.flex__blood_mappings 
 
   union
 
@@ -130,7 +130,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__unit_mappings') }}
+  from lth_bronze.flex__unit_mappings 
   where sourceCode not in ('RD/3698/13',
                           'RD/3891/13',
                           'RD/1962/14',
@@ -160,7 +160,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__unit_mappings_bloods') }}
+  from lth_bronze.flex__unit_mappings_bloods 
   
   union
 
@@ -174,7 +174,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__decoded') }}
+  from lth_bronze.flex__decoded 
 
   union
 
@@ -188,7 +188,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__discharge_destination') }}
+  from lth_bronze.flex__discharge_destination 
 
   union
 
@@ -202,7 +202,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__admission_source') }}
+  from lth_bronze.flex__admission_source 
 
   union
 
@@ -216,7 +216,7 @@ from (
     'swisslab' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('swisslab__site_mappings') }}
+  from lth_bronze.swisslab__site_mappings 
 
   union
 
@@ -230,7 +230,7 @@ from (
     'swisslab' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('swisslab__anatomical_site_mappings') }}
+  from lth_bronze.swisslab__anatomical_site_mappings 
 
   union
 
@@ -244,7 +244,7 @@ from (
     'bi_referrals' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__referrals') }}
+  from lth_bronze.flex__referrals 
 
   union
 
@@ -258,7 +258,7 @@ from (
     'bi_referrals' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__referral_priority') }}
+  from lth_bronze.flex__referral_priority 
 
   union
 
@@ -272,7 +272,7 @@ from (
     'swisslab' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('swisslab__bacteria_presence') }}
+  from lth_bronze.swisslab__bacteria_presence 
 
   union
 
@@ -286,7 +286,7 @@ from (
     'swisslab' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('swisslab__bacteria_observation') }}
+  from lth_bronze.swisslab__bacteria_observation 
 
   union
 
@@ -300,7 +300,7 @@ from (
     'swisslab' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('swisslab__antibiotic_sensitivities') }}
+  from lth_bronze.swisslab__antibiotic_sensitivities 
 
   union
 
@@ -314,7 +314,7 @@ from (
     'swisslab' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('swisslab__misc_test') }}
+  from lth_bronze.swisslab__misc_test 
 
   union
 
@@ -328,7 +328,7 @@ from (
     'swisslab' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('swisslab__misc_test_result') }}
+  from lth_bronze.swisslab__misc_test_result 
 
   union
 
@@ -342,7 +342,7 @@ from (
     'flex' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('flex__devices') }}
+  from lth_bronze.flex__devices 
 
   union
 
@@ -356,7 +356,7 @@ from (
     'scr' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('scr__results') }}
+  from lth_bronze.scr__results 
 
   union
 
@@ -370,7 +370,7 @@ from (
     'scr' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('scr__field_mappings') }}
+  from lth_bronze.scr__field_mappings 
 
   union
 
@@ -384,7 +384,7 @@ from (
     'scr' as source,
     sourceFrequency as frequency,
     mappingStatus as mapping_status
-  from {{ ref('scr__conditions_other') }}
+  from lth_bronze.scr__conditions_other 
 
 ) as cm
 

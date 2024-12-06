@@ -24,18 +24,18 @@ select
   cast(null as bigint) as race_source_concept_id,
   cast(null as varchar(50)) as ethnicity_source_value,
   cast(null as bigint) as ethnicity_source_concept_id
-from {{ ref('vocab__person') }} as p
+from lth_bronze.vocab__person as p
 left join
   (select distinct
     provider_id,
     provider_source_value
-  from {{ ref('PROVIDER') }}) as pr
+  from lth_bronze.PROVIDER as pr
   on p.provider_id = pr.provider_source_value
 left join
   (select distinct
     care_site_id,
     care_site_source_value
-  from {{ ref('CARE_SITE') }}) as cs
+  from lth_bronze.CARE_SITE as cs
   on p.gp_prac_code = cs.care_site_source_value
-left join {{ ref('vocab__location') }} as vl
+left join lth_bronze.vocab__location as vl
   on p.mailing_code = vl.postcode

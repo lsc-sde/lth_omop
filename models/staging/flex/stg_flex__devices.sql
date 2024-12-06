@@ -21,7 +21,7 @@ select
   lot_number as device_lot_number,
   cath_details as device_details,
   null as expiry_date
-from {{ ref('src_flex__cathether_devices') }}
+from lth_bronze.src_flex__cathether_devices 
 
 union all
 
@@ -35,7 +35,7 @@ select
   batch_lot_number,
   ammendments,
   expiry_date
-from {{ ref('src_flex__implant_devices') }}
+from lth_bronze.src_flex__implant_devices 
 ),
 
 visits as (
@@ -44,7 +44,7 @@ visits as (
     visit_id,
     first_visit_id,
     person_source_value
-  from {{ ref('stg_flex__facility_transfer') }}
+  from lth_bronze.stg_flex__facility_transfer 
 )
 
 select

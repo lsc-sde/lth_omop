@@ -72,7 +72,7 @@ condition as (
     co.source_code as condition_source_value,
     cm.concept_id as condition_source_concept_id,
     co.data_source as datasource
-  from {{ ref('stg__condition_occurrence') }} as co
+  from lth_bronze.stg__condition_occurrence as co
   inner join concept as cm
     on replace(co.source_code, '.', '') = cm.concept_code
   left join mappings as mp
@@ -105,8 +105,8 @@ select
   r.value_source_value as condition_source_value,
   sc.target_concept_id as condition_source_concept_id,
   datasource
-from {{ ref('stg__result') }} as r
-inner join {{ ref('vocab__source_to_concept_map') }} as sc
+from lth_bronze.stg__result as r
+inner join lth_bronze.vocab__source_to_concept_map as sc
   on
     r.source_name = sc.source_code_description
     and r.value_source_value = sc.source_code

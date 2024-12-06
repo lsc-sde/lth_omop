@@ -20,4 +20,4 @@ select
     '-'
   ) as visit_number
 from
-  {{ ref('src_flex__vtg_diagnosis') }}
+  lth_bronze.src_flex__vtg_diagnosis 

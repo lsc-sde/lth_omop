@@ -21,8 +21,8 @@ with cond as (
     fco.last_edit_time,
     fco.updated_at,
     data_source
-  from {{ ref('stg_flex__condition_occurrence') }} as fco
-  inner join {{ ref('stg__master_patient_index') }} as mpi
+  from lth_bronze.stg_flex__condition_occurrence as fco
+  inner join lth_bronze.stg__master_patient_index as mpi
     on fco.patient_id = mpi.flex_patient_id
 ),
 
@@ -31,7 +31,7 @@ person as (
     *,
     row_number() over (partition by person_id order by last_edit_time desc)
       as id
-  from {{ ref('stg__master_patient_index') }}
+  from lth_bronze.stg__master_patient_index 
 )
 
 select
@@ -66,7 +66,7 @@ select
   'scr' as datasource,
   stg_scr.last_edit_time,
   stg_scr.updated_at
-from {{ ref('stg_scr__condition_occurrence') }} as stg_scr
+from lth_bronze.stg_scr__condition_occurrence as stg_scr
 left join person as p1
   on
     cast(stg_scr.mrn as varchar) = cast(p1.flex_mrn as varchar)

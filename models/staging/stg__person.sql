@@ -24,10 +24,10 @@ with person as (
     first_value(isnull(fp.death_datetime, sp.date_of_death)) over (partition by mpi.person_id order by case when isnull(fp.death_datetime, sp.date_of_death) is not null then 1 else 2 end, fp.last_edit_time desc) as death_datetime,
 	  first_value(fp.mother_patient_id) over (partition by mpi.person_id order by case when fp.mother_patient_id is not null then 1 else 2 end, fp.last_edit_time desc) as mother_person_source_value,
 	  isnull(first_value(fp.last_edit_time) over (partition by mpi.person_id order by fp.last_edit_time desc), getdate()) as last_edit_time
-  from {{ ref('stg__master_patient_index') }} as mpi
-  left join {{ ref('src_flex__person') }} as fp
+  from lth_bronze.stg__master_patient_index as mpi
+  left join lth_bronze.src_flex__person as fp
     on mpi.flex_patient_id = fp.person_source_value and mpi.source = 'flex'
-  left join {{ ref('src_scr__person') }} as sp
+  left join lth_bronze.src_scr__person as sp
     on mpi.nhs_number = sp.nhs_number and mpi.source = 'scr'
   where
     collapsed_into_patient_id is null

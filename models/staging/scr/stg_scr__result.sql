@@ -39,7 +39,7 @@ from
       last_edit_time,
       updated_at
     from
-      {{ ref('src_scr__cosd') }}
+      lth_bronze.src_scr__cosd 
   ) as staging_source
 unpivot
 (
@@ -69,7 +69,7 @@ select
   last_edit_time,
   updated_at
 from
-  {{ ref('src_scr__pathology') }}
+  lth_bronze.src_scr__pathology 
 where max_tumour_diameter_mm is not null
 
 union
@@ -106,7 +106,7 @@ from
       her2 as HER2,
       her2_fish as [HER2 FISH]
     from
-      {{ ref('src_scr__breast_markers') }}
+      lth_bronze.src_scr__breast_markers 
     where
       tumour_marker_date is not null
   ) as markers_source
@@ -149,7 +149,7 @@ from
       assessment_date,
       cast(menstrual_status as VARCHAR) as [Menstrual Status],
       cast(smoking_status as VARCHAR) as [Smoking Status]
-    from {{ ref('src_scr__initial_assessment') }}
+    from lth_bronze.src_scr__initial_assessment 
   ) as assessment_source
 unpivot
 (
@@ -174,7 +174,7 @@ select
   grade_of_differentiation as value,
   last_edit_time,
   updated_at
-from {{ ref('src_scr__diagnosis') }}
+from lth_bronze.src_scr__diagnosis 
 where grade_of_differentiation is not null
 
 union
@@ -192,7 +192,7 @@ select
   clinical_trial_status as value,
   GETDATE() as last_edit_time,
   GETDATE() as updated_at
-from {{ ref('src_scr__trials') }}
+from lth_bronze.src_scr__trials 
 where
   clinical_trial_status = 'Patient eligible, consented to and entered trial'
   and start_date is not null

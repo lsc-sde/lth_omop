@@ -19,7 +19,7 @@ select
     ),
     dateadd(day, 1, drug_exposure_start_date)
   ) as drug_exposure_end_date
-from {{ ref('DRUG_EXPOSURE') }} as d
+from lth_bronze.DRUG_EXPOSURE as d
 inner join
   vocab.concept_ancestor as ca
   on ca.descendant_concept_id = d.drug_concept_id

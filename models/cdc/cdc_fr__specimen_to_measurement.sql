@@ -6,20 +6,20 @@
 
 with cdc as (
   select min(updated_at) as updated_at
-  from {{ ref('cdc__updated_at') }}
+  from lth_bronze.cdc__updated_at 
   where
     model in ('fr__specimen_to_measurement')
 ),
 
 specimen as (
-select * from {{ ref('SPECIMEN') }} s 
+select * from lth_bronze.SPECIMEN s 
 where s.updated_at > (
     select dateadd(d, -5, updated_at) from cdc
   )
 ),
 
 measurement as (
-select * from {{ ref('MEASUREMENT') }} s 
+select * from lth_bronze.MEASUREMENT s 
 where measurement_event_id in (select specimen_event_id from specimen)
 )
 

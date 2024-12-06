@@ -12,9 +12,9 @@ select
   MIN(e.end_date) as drug_era_end_date,
   drug_exposure_count,
   days_exposed
-from {{ ref('era__drug_final_target') }} as ft
+from lth_bronze.era__drug_final_target as ft
 inner join
-  {{ ref('era__drug_end_dates') }} as e
+  lth_bronze.era__drug_end_dates as e
   on
     ft.person_id = e.person_id
     and ft.ingredient_concept_id = e.ingredient_concept_id

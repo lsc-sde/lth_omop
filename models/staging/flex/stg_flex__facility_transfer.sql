@@ -10,7 +10,7 @@ with multiple_visits as (
     visit_number,
     visit_id,
     COUNT(*) over (partition by visit_number) as total_records
-  from {{ ref('src_flex__visit_segment') }}
+  from lth_bronze.src_flex__visit_segment 
   group by
     visit_number,
     visit_id
@@ -90,7 +90,7 @@ merged_visits as (
       partition by vs.visit_number order by activation_time desc
     ) as last_edit_time,
     convert(smalldatetime, SYSDATETIME()) as updated_at
-  from {{ ref('src_flex__visit_segment') }} as vs
+  from lth_bronze.src_flex__visit_segment as vs
   inner join multiple_visits as mv
     on
       vs.visit_number = mv.visit_number

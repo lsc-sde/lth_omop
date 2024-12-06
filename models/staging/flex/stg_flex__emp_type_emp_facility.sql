@@ -8,4 +8,4 @@
 select distinct
   emp_provider_id,
   emp_type_id
-from {{ ref('src_flex__emp_type_emp_facility') }}
+from lth_bronze.src_flex__emp_type_emp_facility 

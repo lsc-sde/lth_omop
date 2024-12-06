@@ -13,13 +13,13 @@ select
   vm.source_code_description,
   vm.target_concept_id,
   cons_org_code
-from {{ ref('stg__provider') }} as p
+from lth_bronze.stg__provider as p
 left join
   (
     select distinct
       source_code_description,
       target_concept_id
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] = 'specialty'
   ) as vm
   on p.specialty_source_value = vm.source_code_description

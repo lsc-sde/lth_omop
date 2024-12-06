@@ -34,7 +34,7 @@ from
           partition by person_id, ingredient_concept_id
           order by drug_exposure_start_date
         ) as start_ordinal
-      from {{ ref('era__drug_pre_target') }}
+      from lth_bronze.era__drug_pre_target 
 
       union all
 
@@ -44,7 +44,7 @@ from
         drug_exposure_end_date,
         1 as event_type,
         null
-      from {{ ref('era__drug_pre_target') }}
+      from lth_bronze.era__drug_pre_target 
     ) as RAWDATA
   ) as e
 where (2 * e.start_ordinal) - e.overall_ord = 0

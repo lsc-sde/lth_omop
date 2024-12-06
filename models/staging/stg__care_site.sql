@@ -17,7 +17,7 @@ with all_care_sites as (
     postcode,
     place_of_service_source_value,
     location_source_value
-  from {{ ref('stg_ext__care_site') }}
+  from lth_bronze.stg_ext__care_site 
 
   union all
 
@@ -28,7 +28,7 @@ with all_care_sites as (
     cast(postcode as varchar),
     place_of_service_source_value,
     location_source_value
-  from {{ ref('stg_flex__care_site') }}
+  from lth_bronze.stg_flex__care_site 
 
   union all
 
@@ -39,7 +39,7 @@ with all_care_sites as (
     cast(postcode as varchar),
     place_of_service_source_value,
     location_source_value
-  from {{ ref('stg_sl__care_site') }}
+  from lth_bronze.stg_sl__care_site 
 )
 
 select

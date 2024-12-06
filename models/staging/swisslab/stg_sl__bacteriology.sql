@@ -32,10 +32,10 @@ with merged as (
     result_value,
     'live' as source,
     updated_at
-  from {{ ref('src_sl__bacteriology_live') }}
+  from lth_bronze.src_sl__bacteriology_live 
   where
     result_value not in (
-      select invalid_results from {{ ref('swisslab__invalid_results') }}
+      select invalid_results from lth_bronze.swisslab__invalid_results 
     )
     and result_value not like '#%'
 
@@ -61,10 +61,10 @@ with merged as (
     result_value,
     'archive' as source,
     updated_at
-  from {{ ref('src_sl__bacteriology_archive') }}
+  from lth_bronze.src_sl__bacteriology_archive 
   where
     result_value not in (
-      select invalid_results from {{ ref('swisslab__invalid_results') }}
+      select invalid_results from lth_bronze.swisslab__invalid_results 
     )
     and result_value not like '#%'
 ),
@@ -127,9 +127,9 @@ select
   null as priority,
   dd.updated_at
 from de_duped as dd
-left join {{ ref('stg__provider') }} as pr
+left join lth_bronze.stg__provider as pr
   on dd.clinician_code = pr.cons_org_code
-left join {{ ref('stg_flex__visit_occurrence') }} as vo
+left join lth_bronze.stg_flex__visit_occurrence as vo
   on dd.visit_number = vo.visit_number
 where test not in (
   'Quadramed req.'

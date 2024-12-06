@@ -7,7 +7,7 @@
 
 with cdc as (
   select min(updated_at) as updated_at
-  from {{ ref('cdc__updated_at') }}
+  from lth_bronze.cdc__updated_at 
   where
     model in ('fr__observation_to_measurement_sl')
 ),
@@ -21,19 +21,19 @@ observes as (
     slb.isolate_event_id,
     ob.unique_key,
     ob.updated_at as last_edit_time
-  from {{ ref('OBSERVATION') }} as ob
+  from lth_bronze.OBSERVATION as ob
   inner join (
     select distinct
       source_code,
       target_concept_id,
       target_domain_id,
       [group]
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] = 'bacteria_observation'
 
   ) as m
     on ob.observation_source_value = m.source_code
-  left join {{ ref('stg_sl__bacteriology') }} as slb
+  left join lth_bronze.stg_sl__bacteriology as slb
     on ob.observation_event_id = slb.measurement_event_id
   where
     slb.updated_at > (
@@ -52,7 +52,7 @@ measures as (
     measurement_id,
     measurement_event_id,
     unique_key
-  from {{ ref('MEASUREMENT') }}
+  from lth_bronze.MEASUREMENT 
   where person_id in (select distinct person_id from observes)
 )
 
@@ -72,7 +72,7 @@ select distinct
     }} as unique_key,
   ob.last_edit_time
 from observes as ob
-inner join {{ ref('stg_sl__bacteriology') }} as slb
+inner join lth_bronze.stg_sl__bacteriology as slb
   on
     ob.isolate_event_id = slb.isolate_event_id
     and ob.observation_event_id != slb.measurement_event_id

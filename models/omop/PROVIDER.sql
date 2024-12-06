@@ -19,11 +19,11 @@ select distinct
   cast(null as bigint) as specialty_source_concept_id,
   cast(null as varchar(50)) as gender_source_value,
   cast(null as bigint) as gender_source_concept_id
-from {{ ref('vocab__provider') }} as p
+from lth_bronze.vocab__provider as p
 left join
   (
     select *
-    from {{ ref('CARE_SITE') }}
+    from lth_bronze.CARE_SITE 
     where place_of_service_source_value = 'NHS Trust'
   ) as c
   on cast(p.care_site_id as varchar) = c.care_site_source_value

@@ -49,6 +49,6 @@ select
     }} as unique_key,
   datasource,
   updated_at
-from {{ ref('vocab__observation') }} as vo
-left join {{ ref('PROVIDER') }} as pr
+from lth_bronze.vocab__observation as vo
+left join lth_bronze.PROVIDER as pr
   on vo.provider_id = pr.provider_source_value

@@ -6,7 +6,7 @@
 
 with cdc as (
   select min(updated_at) as updated_at
-  from {{ ref('cdc__updated_at') }}
+  from lth_bronze.cdc__updated_at 
   where
     model in ('fr__mother_to_child')
 )
@@ -23,8 +23,8 @@ select
         ])
     }} as unique_key,
   c.last_edit_time
-from {{ ref('stg__person') }} as c
-inner join {{ ref('stg__person') }} as m
+from lth_bronze.stg__person as c
+inner join lth_bronze.stg__person as m
   on c.mother_person_source_value = m.person_source_value
 where
   c.last_edit_time > (

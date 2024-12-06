@@ -19,6 +19,6 @@ select
   vd.checkout_datetime,
   vd.last_edit_time,
   updated_at
-from {{ ref('stg_flex__visit_detail') }} as vd
-inner join {{ ref('stg__master_patient_index') }} as mpi
+from lth_bronze.stg_flex__visit_detail as vd
+inner join lth_bronze.stg__master_patient_index as mpi
   on mpi.flex_patient_id = vd.patient_id

@@ -40,7 +40,7 @@ FROM (
           PARTITION BY PERSON_ID,
           CONDITION_CONCEPT_ID ORDER BY CONDITION_START_DATE
         ) AS START_ORDINAL
-      FROM {{ ref('era__condition_target') }}
+      FROM lth_bronze.era__condition_target 
 
       UNION ALL
 
@@ -51,7 +51,7 @@ FROM (
         DATEADD(DAY, 30, CONDITION_END_DATE),
         1 AS EVENT_TYPE,
         NULL
-      FROM {{ ref('era__condition_target') }}
+      FROM lth_bronze.era__condition_target 
     ) AS RAWDATA
   ) AS E1
   INNER JOIN (
@@ -63,7 +63,7 @@ FROM (
         PARTITION BY PERSON_ID,
         CONDITION_CONCEPT_ID ORDER BY CONDITION_START_DATE
       ) AS START_ORDINAL
-    FROM {{ ref('era__condition_target') }}
+    FROM lth_bronze.era__condition_target 
   ) AS E2
     ON
       E1.PERSON_ID = E2.PERSON_ID

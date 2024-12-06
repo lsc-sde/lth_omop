@@ -10,9 +10,9 @@ select
   dt.ingredient_concept_id as drug_concept_id,
   dt.drug_exposure_start_date,
   min(e.end_date) as drug_sub_exposure_end_date
-from {{ ref('era__drug_pre_target') }} as dt
+from lth_bronze.era__drug_pre_target as dt
 inner join
-  {{ ref('era__drug_sub_exposure_end_dates') }} as e
+  lth_bronze.era__drug_sub_exposure_end_dates as e
   on
     dt.person_id = e.person_id
     and dt.ingredient_concept_id = e.ingredient_concept_id

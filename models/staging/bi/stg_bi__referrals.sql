@@ -23,6 +23,6 @@ select
     as priority,
   bi.last_edit_time,
   bi.updated_at
-from {{ ref('cdc_bi__referrals') }} as bi
-left join {{ ref('stg__provider') }} as pr
+from lth_bronze.cdc_bi__referrals as bi
+left join lth_bronze.stg__provider as pr
   on bi.referring_emp_code = pr.provider_source_value

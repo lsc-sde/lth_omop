@@ -17,7 +17,7 @@ with condition_occ as (
     replace(
       left(icd10_code, 3) + '.' + substring(icd10_code, 4, 10), '.X', ''
     ) as source_code
-  from {{ ref('src_flex__vtg_diagnosis') }}
+  from lth_bronze.src_flex__vtg_diagnosis 
 ),
 
 visit_detail as (
@@ -26,7 +26,7 @@ visit_detail as (
     visit_id,
     first_visit_id,
     person_source_value
-  from {{ ref('stg_flex__facility_transfer') }}
+  from lth_bronze.stg_flex__facility_transfer 
 )
 
 select
@@ -57,7 +57,7 @@ left join
       visit_number,
       visit_id,
       person_source_value
-    from {{ ref('src_flex__visit_segment') }}
+    from lth_bronze.src_flex__visit_segment 
     where
       visit_number not in (select distinct visit_number from visit_detail)
   ) as vs
@@ -82,7 +82,7 @@ select
   updated_at,
   coalesce(v.first_visit_id, ae.visit_id) as visit_occurrence_id,
   'ae_diagnosis' as data_source
-from {{ ref('stg_flex__ae_diagnosis') }} as ae
+from lth_bronze.stg_flex__ae_diagnosis as ae
 left join
   (
     select distinct

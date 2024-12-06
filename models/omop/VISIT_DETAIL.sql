@@ -26,6 +26,6 @@ select
   cast(preceding_visit_detail_id as bigint) as preceding_visit_detail_id,
   cast(parent_visit_detail_id as bigint) as parent_visit_detail_id,
   cast(visit_occurrence_id as bigint) as visit_occurrence_id
-from {{ ref('vocab__visit_detail') }} as vd
-left join {{ ref('CARE_SITE') }} as cs
+from lth_bronze.vocab__visit_detail as vd
+left join lth_bronze.CARE_SITE as cs
   on vd.location_id = cs.care_site_source_value

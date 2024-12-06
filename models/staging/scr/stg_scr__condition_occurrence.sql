@@ -21,5 +21,5 @@ select
   basis_of_diagnosis,
   last_edit_time,
   updated_at
-from {{ ref('src_scr__diagnosis') }}
+from lth_bronze.src_scr__diagnosis 
 where icd_primary_diagnosis is not null

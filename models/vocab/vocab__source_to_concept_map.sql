@@ -22,5 +22,5 @@ select distinct
   source,
   mapping_status
 from
-  {{ ref('vocab__source_to_concept_map_raw') }}
+  lth_bronze.vocab__source_to_concept_map_raw 
 where mapping_status = 'APPROVED'

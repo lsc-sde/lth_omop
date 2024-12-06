@@ -13,6 +13,6 @@ select distinct
   cast(care_site_source_value as varchar(50)) as care_site_source_value,
   cast(place_of_service_source_value as varchar(50))
     as place_of_service_source_value
-from {{ ref('vocab__care_site') }} as cs
-left join {{ ref('LOCATION') }} as l
+from lth_bronze.vocab__care_site as cs
+left join lth_bronze.LOCATION as l
   on cs.location_source_value = l.location_source_value

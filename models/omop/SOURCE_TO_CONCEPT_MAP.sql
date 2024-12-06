@@ -16,7 +16,7 @@ select
   c.valid_end_date,
   c.invalid_reason,
   frequency
-from {{ ref('vocab__source_to_concept_map_raw') }} as r
+from lth_bronze.vocab__source_to_concept_map_raw as r
 left join vocab.CONCEPT as c
   on r.target_concept_id = c.concept_id
 where

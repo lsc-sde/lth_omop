@@ -16,6 +16,6 @@ select
   MIN(drug_exposure_start_date) as drug_sub_exposure_start_date,
   drug_sub_exposure_end_date,
   COUNT(*) as drug_exposure_count
-from {{ ref('era__drug_exposure_ends') }}
+from lth_bronze.era__drug_exposure_ends 
 group by person_id, drug_concept_id, drug_sub_exposure_end_date
 --ORDER BY person_id, drug_concept_id

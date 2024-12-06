@@ -13,7 +13,7 @@ with person as (
 select
     *,
     row_number() over (partition by person_id order by last_edit_time desc) as id
-from {{ ref('stg__master_patient_index') }}
+from lth_bronze.stg__master_patient_index 
 )
 
 select distinct
@@ -26,7 +26,7 @@ select distinct
   order_number,
   measurement_event_id,
   last_edit_time as updated_at
-from {{ ref('stg_sl__bacteriology') }} as sl_ba
+from lth_bronze.stg_sl__bacteriology as sl_ba
 inner join person as mpi
   on sl_ba.nhs_number = cast(mpi.nhs_number as varchar)
   and id = 1

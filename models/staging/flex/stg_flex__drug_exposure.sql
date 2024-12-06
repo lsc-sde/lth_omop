@@ -19,7 +19,7 @@ with drug_exp as (
     last_edit_time,
     updated_at,
     replace(dosage, ' ' + adm_route, '') as dosage
-  from {{ ref('src_flex__procedure_event') }}
+  from lth_bronze.src_flex__procedure_event 
   where
     kardex_group_id in (17, 43, 44)
     and event_status_id in (6, 11)
@@ -31,7 +31,7 @@ visit_detail as (
     visit_id,
     first_visit_id,
     person_source_value
-  from {{ ref('stg_flex__facility_transfer') }}
+  from lth_bronze.stg_flex__facility_transfer 
 )
 
 select

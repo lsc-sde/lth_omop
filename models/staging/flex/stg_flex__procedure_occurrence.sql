@@ -17,7 +17,7 @@ with procedure_occ as (
     replace(
       left(opcs4_code, 3) + '.' + substring(opcs4_code, 4, 10), '.X', ''
     ) as source_code
-  from {{ ref('src_flex__vtg_procedure') }} as d
+  from lth_bronze.src_flex__vtg_procedure as d
 ),
 
 rad_proc_occ as (
@@ -33,7 +33,7 @@ rad_proc_occ as (
     last_edit_time,
     updated_at,
     'flex_radiology' as data_source
-  from {{ ref('src_flex__procedure_event') }}
+  from lth_bronze.src_flex__procedure_event 
   where
     kardex_group_id = 24
     and event_status_id in (6, 11)
@@ -45,7 +45,7 @@ visit_detail as (
     visit_id,
     first_visit_id,
     person_source_value
-  from {{ ref('stg_flex__facility_transfer') }}
+  from lth_bronze.stg_flex__facility_transfer 
 )
 
 select
@@ -75,7 +75,7 @@ left join
       visit_number,
       visit_id,
       person_source_value
-    from {{ ref('src_flex__visit_segment') }}
+    from lth_bronze.src_flex__visit_segment 
     where
       visit_number not in (select distinct visit_number from visit_detail)
   ) as vs
@@ -109,4 +109,4 @@ select
   last_edit_time,
   updated_at,
   'ae_procedures' as data_source
-from {{ ref('stg_flex__ae_procedures') }} as ae_po
+from lth_bronze.stg_flex__ae_procedures as ae_po

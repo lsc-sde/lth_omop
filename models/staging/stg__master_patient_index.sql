@@ -18,7 +18,7 @@ with flex_person as (
     death_datetime,
     last_edit_time,
     'flex' as data_source
-  from {{ ref('src_flex__person') }}
+  from lth_bronze.src_flex__person 
   group by
     person_source_value,
     mrn,
@@ -37,7 +37,7 @@ scr_person as (
     cast(date_of_birth as datetime) as birth_datetime,
     cast(date_of_death as datetime) as death_datetime,
     null as last_edit_time
-  from {{ ref('src_scr__person') }}
+  from lth_bronze.src_scr__person 
   group by
     person_source_value,
     mrn,
@@ -55,7 +55,7 @@ sl_person as (
     cast(date_of_birth as datetime) as birth_datetime,
     null as death_datetime,
     null as last_edit_time
-  from {{ ref('stg_sl__bacteriology') }}
+  from lth_bronze.stg_sl__bacteriology 
   group by
     mrn,
     date_of_birth,
@@ -195,7 +195,7 @@ mpi_final_all as (
       as person_source_value,
     mpi.*
   from mpi_final_base as mpi
-  left join {{ ref('src_flex__person') }} as p
+  left join lth_bronze.src_flex__person as p
     on mpi.flex_patient_id = p.person_source_value
 ),
 

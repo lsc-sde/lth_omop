@@ -13,5 +13,5 @@ select
   person_id,
   person_source_value,
   death_datetime
-from {{ ref('stg__person') }}
+from lth_bronze.stg__person 
 where death_datetime is not null

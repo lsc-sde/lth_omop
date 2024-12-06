@@ -23,7 +23,7 @@ from (
         then '3'
     end as postcode,
     'Quadramed Location' as place_of_service_source_value
-  from {{ ref('src_flex__care_site_ip') }}
+  from lth_bronze.src_flex__care_site_ip 
 
   union
 
@@ -33,10 +33,10 @@ from (
     care_site_source_value,
     location_id as postcode,
     'Outpatient Clinic' as place_of_service_source_value
-  from {{ ref('src_flex__care_site_op') }}
+  from lth_bronze.src_flex__care_site_op 
 ) as e
 
-left join {{ ref('ext__postcodes') }} as p
+left join lth_bronze.ext__postcodes as p
   on
     case
       when e.postcode = '1' then 'PR29HT' when

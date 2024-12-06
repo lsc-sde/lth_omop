@@ -12,7 +12,7 @@ select
   cast(fact_id_2 as bigint) as fact_id_2,
   cast(relationship_concept_id as bigint) as relationship_concept_id,
   cast(last_edit_time as datetime) as last_edit_time
-from {{ ref('fr__observation_to_measurement_sl') }}
+from lth_bronze.fr__observation_to_measurement_sl 
 
 union all
 
@@ -23,7 +23,7 @@ select
   fact_id_2,
   relationship_concept_id,
   cast(last_edit_time as datetime) as last_edit_time
-from {{ ref('fr__measurement_to_observation_sl') }}
+from lth_bronze.fr__measurement_to_observation_sl 
 
 union all
 
@@ -34,7 +34,7 @@ select
   fact_id_2,
   relationship_concept_id,
   cast(last_edit_time as datetime) as last_edit_time
-from {{ ref('fr__specimen_to_measurement') }}
+from lth_bronze.fr__specimen_to_measurement 
 
 union all
 
@@ -45,4 +45,4 @@ select
   fact_id_2,
   relationship_concept_id,
   cast(last_edit_time as datetime) as last_edit_time
-from {{ ref('fr__mother_to_child') }}
+from lth_bronze.fr__mother_to_child 

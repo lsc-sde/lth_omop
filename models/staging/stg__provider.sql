@@ -16,4 +16,4 @@ select
   provider_source_value,
   specialty_source_value,
   cons_org_code
-from {{ ref('stg_flex__provider') }}
+from lth_bronze.stg_flex__provider 

@@ -34,12 +34,12 @@ with provider_base as (
           else 0
         end desc
     ) as identifier
-  from {{ ref('src_flex__emp_provider') }} as ep
-  left join {{ ref('stg_flex__provider_specialty') }} as emp_med_spec
+  from lth_bronze.src_flex__emp_provider as ep
+  left join lth_bronze.stg_flex__provider_specialty as emp_med_spec
     on ep.emp_provider_id = emp_med_spec.emp_provider_id
-  left join {{ ref('stg_flex__emp_type_emp_facility') }} as e
+  left join lth_bronze.stg_flex__emp_type_emp_facility as e
     on ep.emp_provider_id = e.emp_provider_id
-  left join {{ ref('src_flex__emp_type') }} as et
+  left join lth_bronze.src_flex__emp_type as et
     on e.emp_type_id = et.emp_type_id
 )
 
@@ -51,6 +51,6 @@ select
   c.cons_org_code,
   row_number() over (order by newid()) as provider_id
 from provider_base as p
-left join {{ ref('src_flex__emp_consultant') }} as c
+left join lth_bronze.src_flex__emp_consultant as c
   on p.provider_source_value = c.cons_emp_provider_id
 where p.identifier = 1

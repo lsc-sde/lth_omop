@@ -7,7 +7,7 @@
 
 with cdc as (
   select min(updated_at) as updated_at
-  from {{ ref('cdc__updated_at') }}
+  from lth_bronze.cdc__updated_at 
   where
     model in ('MEASUREMENT', 'OBSERVATION') and datasource = 'flex'
 )

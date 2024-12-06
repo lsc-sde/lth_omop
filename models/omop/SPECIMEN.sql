@@ -23,4 +23,4 @@ select
   cast(NULL as varchar(50)) as disease_status_source_value,
   cast(measurement_event_id as varchar(50)) as specimen_event_id,
   cast(updated_at as datetime) as updated_at
-from {{ ref('vocab__specimen') }}
+from lth_bronze.vocab__specimen 

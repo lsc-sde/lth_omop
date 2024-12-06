@@ -17,11 +17,11 @@ from (
     Location_Code as care_site_source_value,
     null as postcode,
     'Swisslab' as place_of_service_source_value
-  from {{ ref('swisslab__locations') }}
+  from lth_bronze.swisslab__locations 
   where Quadramed_Code is null
 ) as e
 
-left join {{ ref('ext__postcodes') }} as p
+left join lth_bronze.ext__postcodes as p
   on
     case
       when e.postcode = '1' then 'PR29HT'

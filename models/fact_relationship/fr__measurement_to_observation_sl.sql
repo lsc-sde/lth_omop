@@ -15,4 +15,4 @@ select distinct
   slb.measurement_key,
   slb.unique_key,
   slb.last_edit_time
-from {{ ref('cdc_fr__measurement_to_observation_sl') }} as slb
+from lth_bronze.cdc_fr__measurement_to_observation_sl as slb

@@ -30,6 +30,6 @@ select
   cast(null as bigint) as drug_source_concept_id,
   cast(adm_route as varchar(50)) as route_source_value,
   cast(null as varchar(50)) as dose_unit_source_value
-from {{ ref('vocab__drug_exposure') }} as de
-left join {{ ref('PROVIDER') }} as pr
+from lth_bronze.vocab__drug_exposure as de
+left join lth_bronze.PROVIDER as pr
   on de.provider_id = pr.provider_source_value

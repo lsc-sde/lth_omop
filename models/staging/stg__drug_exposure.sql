@@ -22,6 +22,6 @@ select
   fdo.adm_route,
   fdo.last_edit_time,
   fdo.updated_at
-from {{ ref('stg_flex__drug_exposure') }} as fdo
-inner join {{ ref('stg__master_patient_index') }} as mpi
+from lth_bronze.stg_flex__drug_exposure as fdo
+inner join lth_bronze.stg__master_patient_index as mpi
   on fdo.person_source_value = mpi.flex_patient_id

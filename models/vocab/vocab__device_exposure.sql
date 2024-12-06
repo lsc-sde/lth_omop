@@ -45,11 +45,11 @@ WITH Devices AS (
       WHEN device_type_group = 'catheter' THEN device_type_group
       ELSE isnull(device_type, device_details)
     END AS device_source_value
-  FROM {{ ref('stg__device_exposure') }}
+  FROM lth_bronze.stg__device_exposure 
   LEFT JOIN
     (
       SELECT *
-      FROM {{ ref('vocab__source_to_concept_map') }}
+      FROM lth_bronze.vocab__source_to_concept_map 
       WHERE [group] = 'devices'
     ) AS cm
     ON CASE

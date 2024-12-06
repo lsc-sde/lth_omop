@@ -18,12 +18,12 @@ select
   adm_route,
   last_edit_time,
   updated_at
-from {{ ref('stg__drug_exposure') }} as de
+from lth_bronze.stg__drug_exposure as de
 inner join (
   select distinct
     source_code,
     target_concept_id
-  from {{ ref('vocab__source_to_concept_map') }}
+  from lth_bronze.vocab__source_to_concept_map 
   where
     [group] = 'drugs'
 ) as c_cm
@@ -32,7 +32,7 @@ inner join (
   select
     target_concept_id,
     source_code
-  from {{ ref('vocab__source_to_concept_map') }}
+  from lth_bronze.vocab__source_to_concept_map 
   where
     [group] = 'drug_routes'
 ) as r_cm

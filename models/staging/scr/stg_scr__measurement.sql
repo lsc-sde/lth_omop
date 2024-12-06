@@ -39,7 +39,7 @@ FROM
       last_edit_time,
       updated_at
     FROM
-      {{ ref('src_scr__cosd') }}
+      lth_bronze.src_scr__cosd 
   ) AS staging_source
 UNPIVOT
 (
@@ -69,7 +69,7 @@ SELECT
   last_edit_time,
   updated_at
 FROM
-  {{ ref('src_scr__pathology') }}
+  lth_bronze.src_scr__pathology 
 WHERE max_tumour_diameter_mm IS NOT NULL
 
 UNION
@@ -106,7 +106,7 @@ FROM
       her2 AS HER2,
       her2_fish AS [HER2 FISH]
     FROM
-      {{ ref('src_scr__breast_markers') }}
+      lth_bronze.src_scr__breast_markers 
     WHERE
       tumour_marker_date IS NOT NULL
   ) AS markers_source

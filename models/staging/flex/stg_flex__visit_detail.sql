@@ -20,7 +20,7 @@ with ip_detail as (
     ) as checkout_datetime,
     last_edit_time,
     updated_at
-  from {{ ref('src_flex__visit_detail_ip') }}
+  from lth_bronze.src_flex__visit_detail_ip 
 ),
 
 ae_detail as (
@@ -33,7 +33,7 @@ ae_detail as (
     date_time_out as checkout_datetime,
     last_edit_time,
     updated_at
-  from {{ ref('src_flex__visit_detail_ae') }}
+  from lth_bronze.src_flex__visit_detail_ae 
 )
 
 select
@@ -74,5 +74,5 @@ from (
       as ae
     on ip.visit_id = ae.visit_id
 ) as a
-left join {{ ref('stg_flex__facility_transfer') }} as ft
+left join lth_bronze.stg_flex__facility_transfer as ft
   on a.visit_id = ft.visit_id

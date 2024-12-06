@@ -41,6 +41,6 @@ select distinct
   end as discharged_to_source_value,
   coalesce(ft.last_edit_time, vs.last_edit_time) as last_edit_time,
   coalesce(ft.updated_at, vs.updated_at) as updated_at
-from {{ ref('cdc_flex__visit_occurrence') }} as vs
-left join {{ ref('stg_flex__facility_transfer') }} as ft
+from lth_bronze.cdc_flex__visit_occurrence as vs
+left join lth_bronze.stg_flex__facility_transfer as ft
   on vs.visit_number = ft.visit_number

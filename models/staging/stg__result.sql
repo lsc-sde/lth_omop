@@ -31,7 +31,7 @@ with results_union as (
     try_cast(null as varchar) as priority,
     'flex' as datasource,
     last_edit_time as updated_at
-  from {{ ref('stg_flex__result') }}
+  from lth_bronze.stg_flex__result 
 
   union all
 
@@ -50,7 +50,7 @@ with results_union as (
     try_cast(priority as varchar) as priority,
     'bi' as datasource,
     updated_at
-  from {{ ref('stg_bi__referrals') }} as bi
+  from lth_bronze.stg_bi__referrals as bi
 
   union all
 
@@ -69,7 +69,7 @@ with results_union as (
     try_cast(priority as varchar) as priority,
     'swl' as datasource,
     updated_at
-  from {{ ref('cdc_sl__bacteriology') }}
+  from lth_bronze.cdc_sl__bacteriology 
 
   union all
 
@@ -96,14 +96,14 @@ with results_union as (
     null as priority,
     'scr' as datasource,
     updated_at
-  from {{ ref('stg_scr__result') }}
+  from lth_bronze.stg_scr__result 
 ),
 
 person as (
 select
     *,
     row_number() over (partition by person_id order by last_edit_time desc) as id
-from {{ ref('stg__master_patient_index') }}
+from lth_bronze.stg__master_patient_index 
 ),
 
 results as (

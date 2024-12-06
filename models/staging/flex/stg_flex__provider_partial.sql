@@ -29,10 +29,10 @@ select distinct
         else 0
       end desc
   ) as identifier
-from {{ ref('src_flex__emp_provider') }} as ep
-left join {{ ref('stg_flex__provider_specialty') }} as emp_med_spec
+from lth_bronze.src_flex__emp_provider as ep
+left join lth_bronze.stg_flex__provider_specialty as emp_med_spec
   on ep.emp_provider_id = emp_med_spec.emp_provider_id
-left join {{ ref('stg_flex__emp_type_emp_facility') }} as e
+left join lth_bronze.stg_flex__emp_type_emp_facility as e
   on ep.emp_provider_id = e.emp_provider_id
-left join {{ ref('src_flex__emp_type') }} as et
+left join lth_bronze.src_flex__emp_type as et
   on e.emp_type_id = et.emp_type_id

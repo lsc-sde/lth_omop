@@ -13,4 +13,4 @@ select
   cast(null as bigint) as cause_concept_id,
   cast(null as varchar(50)) as cause_source_value,
   cast(null as bigint) as cause_source_concept_id
-from {{ ref('vocab__death') }}
+from lth_bronze.vocab__death 

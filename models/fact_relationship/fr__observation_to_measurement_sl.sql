@@ -15,4 +15,4 @@ select
   ob.measurement_key, 
   ob.unique_key,
   ob.last_edit_time
-from {{ ref('cdc_fr__observation_to_measurement') }} as ob
+from lth_bronze.cdc_fr__observation_to_measurement as ob

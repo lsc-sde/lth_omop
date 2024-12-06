@@ -13,4 +13,4 @@ select
   relationship_concept_id,
   unique_key,
   last_edit_time
-from {{ ref('cdc_fr__mother_to_child') }}
+from lth_bronze.cdc_fr__mother_to_child 

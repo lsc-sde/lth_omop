@@ -24,12 +24,12 @@ select
   cast(condition_source_concept_id as bigint) as condition_source_concept_id,
   cast(null as varchar(50)) as condition_status_source_value,
   datasource
-from {{ ref('vocab__condition_occurrence') }} as c
-left join {{ ref('vocab__provider') }} as pr1
+from lth_bronze.vocab__condition_occurrence as c
+left join lth_bronze.vocab__provider as pr1
   on
     c.provider_id = pr1.cons_org_code
     and Isnumeric(c.provider_id) = 0
-left join {{ ref('vocab__provider') }} as pr2
+left join lth_bronze.vocab__provider as pr2
   on
     c.provider_id = pr2.provider_source_value
     and Isnumeric(c.provider_id) = 1

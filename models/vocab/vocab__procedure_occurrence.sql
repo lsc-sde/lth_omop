@@ -17,7 +17,7 @@ with concept as (
     target_concept_id,
     source_code,
     target_concept_name
-  from {{ ref('vocab__source_to_concept_map') }}
+  from lth_bronze.vocab__source_to_concept_map 
   where [group] = 'radiology'
 ),
 
@@ -35,7 +35,7 @@ procs as (
     cm.concept_id,
     last_edit_time,
     data_source
-  from {{ ref('stg__procedure_occurrence') }} as po
+  from lth_bronze.stg__procedure_occurrence as po
   inner join concept as cm
     on po.source_code = cm.concept_code
 )
@@ -55,7 +55,7 @@ select
 from procs as p
 inner join vocab.CONCEPT as cn
   on p.concept_id = cn.concept_id
-left join {{ ref('vocab__provider') }} as pr1
+left join lth_bronze.vocab__provider as pr1
   on
     p.provider_id = case
       when isnumeric(p.provider_id) = 0

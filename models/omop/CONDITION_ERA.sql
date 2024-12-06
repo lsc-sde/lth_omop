@@ -14,7 +14,7 @@ SELECT
   min(CONDITION_START_DATE) AS CONDITION_ERA_START_DATE,
   ERA_END_DATE AS CONDITION_ERA_END_DATE,
   count(*) AS CONDITION_OCCURRENCE_COUNT
-FROM {{ ref('era__condition_ends') }}
+FROM lth_bronze.era__condition_ends 
 GROUP BY
   person_id,
   CONDITION_CONCEPT_ID,

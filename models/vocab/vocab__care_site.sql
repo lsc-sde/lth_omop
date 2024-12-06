@@ -32,4 +32,4 @@ select
     when place_of_service_source_value = 'GP Practice' then null
     when place_of_service_source_value = 'NHS Trust' then '8717'
   end as place_of_service_concept_id
-from {{ ref('stg__care_site') }}
+from lth_bronze.stg__care_site 

@@ -18,4 +18,4 @@ select distinct
   cast(country_source_value as varchar(80)) as country_source_value,
   cast(null as float) as latitude,
   cast(null as float) as longitude
-from {{ ref('vocab__location') }}
+from lth_bronze.vocab__location 

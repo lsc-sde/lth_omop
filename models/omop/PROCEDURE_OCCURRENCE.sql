@@ -25,4 +25,4 @@ select
   cast(null as varchar(50)) as modifier_source_value,  
   cast(last_edit_time as datetime) as last_edit_time,
   data_source
-from {{ ref('vocab__procedure_occurrence') }} as p
+from lth_bronze.vocab__procedure_occurrence as p

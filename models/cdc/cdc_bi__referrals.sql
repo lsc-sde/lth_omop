@@ -13,7 +13,7 @@
 
 with cdc as (
   select min(updated_at) as updated_at
-  from {{ ref('cdc__updated_at') }}
+  from lth_bronze.cdc__updated_at 
   where
     model in ('OBSERVATION') and datasource = 'bi'
 )
@@ -35,7 +35,7 @@ select
   last_edit_time,
   updated_at
 from
-  {{ ref('src_bi__referrals') }} as sbr
+  lth_bronze.src_bi__referrals as sbr
 where
   sbr.updated_at > (
     select updated_at from cdc

@@ -17,14 +17,14 @@ select
   qualifier as anatomic_site_source_value,
   measurement_event_id,
   updated_at
-from {{ ref('stg__specimen') }} as sp
+from lth_bronze.stg__specimen as sp
 inner join
   (
     select
       target_concept_id,
       target_concept_name,
       source_code
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where
       source = 'swisslab'
       and [group] = 'specimen_type'
@@ -35,7 +35,7 @@ left join
     select
       target_concept_id,
       source_code
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where
       source = 'swisslab'
       and [group] = 'anatomical_site'

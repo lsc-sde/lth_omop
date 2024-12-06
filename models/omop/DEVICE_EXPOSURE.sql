@@ -25,4 +25,4 @@ SELECT
   CAST(NULL AS bigint) AS unit_concept_id,
   CAST(NULL AS varchar) AS unit_source_value,
   CAST(NULL AS bigint) AS unit_source_concept_id
-FROM {{ ref('vocab__device_exposure') }}
+FROM lth_bronze.vocab__device_exposure 

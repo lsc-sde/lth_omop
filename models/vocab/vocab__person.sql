@@ -26,13 +26,13 @@ select
     end,
     0
   ) as race_concept_id
-from {{ ref('stg__person') }} as p
+from lth_bronze.stg__person as p
 left join
   (
     select
       target_concept_id,
       source_code
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] = 'demographics'
   ) as v
   on p.gender_source_value = v.source_code
@@ -42,7 +42,7 @@ left join
       target_concept_id,
       source_code,
       source_code_description
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where [group] = 'demographics'
   ) as v2
   on cast(p.race_source_value as varchar) = v2.source_code_description

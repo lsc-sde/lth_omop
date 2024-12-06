@@ -32,13 +32,13 @@ select
   vo.visit_status_id,
   vo.last_edit_time,
   vo.updated_at
-from {{ ref('vocab__visit_occurrence') }} as vo
-left join {{ ref('PROVIDER') }} as pr
+from lth_bronze.vocab__visit_occurrence as vo
+left join lth_bronze.PROVIDER as pr
   on cast(vo.provider_id as varchar) = pr.provider_source_value
 left join
   (
     select *
-    from {{ ref('CARE_SITE') }}
+    from lth_bronze.CARE_SITE 
     where place_of_service_source_value = 'NHS Trust'
   ) as cs
   on cast(vo.care_site_id as varchar) = cs.care_site_source_value

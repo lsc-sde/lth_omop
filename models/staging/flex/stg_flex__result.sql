@@ -11,7 +11,7 @@ with visit_detail as (
     visit_id,
     first_visit_id,
     person_source_value
-  from {{ ref('stg_flex__facility_transfer') }}
+  from lth_bronze.stg_flex__facility_transfer 
 )
 
 select distinct
@@ -36,6 +36,6 @@ select distinct
   fr.updated_at,
   isnull(vd.first_visit_id, fr.visit_id) as visit_occurrence_id,
   concat(fr.visit_id, fr.event_id) as measurement_event_id
-from {{ ref('cdc_flex__result') }} as fr
+from lth_bronze.cdc_flex__result as fr
 left join visit_detail as vd
   on fr.visit_id = vd.visit_id

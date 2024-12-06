@@ -10,5 +10,5 @@ select
   country_concept_id,
   country_source_value,
   postcode
-from {{ ref('stg__location') }}
+from lth_bronze.stg__location 
 where location_id is not null

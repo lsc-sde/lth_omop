@@ -40,7 +40,7 @@ mappings as (
 
 cdc as (
   select min(updated_at) as updated_at
-  from {{ ref('cdc__updated_at') }}
+  from lth_bronze.cdc__updated_at 
   where
     model in ('OBSERVATION') and datasource = 'ukcoder'
 ),
@@ -62,7 +62,7 @@ condition as (
     co.data_source,
     co.updated_at,
 	  row_number() over (partition by visit_occurrence_id, co.source_code, episode_start_dt order by isnull(episode_end_dt,getdate()) desc) as id
-  from {{ ref('stg__condition_occurrence') }} as co
+  from lth_bronze.stg__condition_occurrence as co
   inner join concept as cm
     on co.source_code = cm.concept_code
   left join mappings as mp
@@ -97,14 +97,14 @@ select distinct
   null as obs_event_field_concept_id,
   r.datasource,
   r.updated_at
-from {{ ref('stg__result') }} as r
+from lth_bronze.stg__result as r
 inner join
   (
     select
       source_code,
       target_concept_id,
       target_domain_id
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where
       [group] = 'result'
       or ([group] = 'bacteria_observation' and source = 'swisslab')
@@ -116,7 +116,7 @@ left join
       source_code,
       target_concept_id,
       target_domain_id
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where
       [group] in ('referral_priority')
   ) as cm_rp
@@ -128,7 +128,7 @@ left join
       source_code_description,
       target_concept_id,
       target_domain_id
-    from {{ ref('vocab__source_to_concept_map') }}
+    from lth_bronze.vocab__source_to_concept_map 
     where
       [group] in ('decoded')
   ) as cm_dc
@@ -192,5 +192,5 @@ select distinct
   null as obs_event_field_concept_id,
   'mesh' as datasource,
   insert_datetime as updated_at
-from {{ ref('ext__data_opt_out') }}
+from lth_bronze.ext__data_opt_out 
 where person_id is not null

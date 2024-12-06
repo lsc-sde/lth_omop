@@ -14,5 +14,5 @@ select distinct
   42035286 as country_concept_id,
   postcode,
   'United Kingdom of Great Britain and Northern Ireland' as country_source_value
-from {{ ref('ext__postcodes') }}
+from lth_bronze.ext__postcodes 
 where location_id is not null
