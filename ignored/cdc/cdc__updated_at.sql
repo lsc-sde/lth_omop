@@ -9,4 +9,4 @@ select
   datasource,
   updated_at
 from
-  {{ target.database }}.{{ target.schema }}_dbt_clones.cdc__updated_at_clone
+  lth_bronze.cdc__updated_at_clone

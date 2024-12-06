@@ -15,4 +15,4 @@ select
   episode_end_dt,
   last_edit_time,
   updated_at
-from @catalaog_src.@schema_src.src_flex__vtg_diagnosis
+from @catalog_src.@schema_src.src_flex__vtg_diagnosis

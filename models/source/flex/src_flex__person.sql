@@ -20,4 +20,4 @@ select
   death_datetime,
   last_edit_time,
   updated_at
-from @catalaog_src.@schema_src.src_flex__person
+from @catalog_src.@schema_src.src_flex__person

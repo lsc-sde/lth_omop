@@ -17,5 +17,5 @@ select
   ammendments,
   code_number,
   batch_lot_number
-from @catalaog_src.@schema_src.src_flex__implant_devices
+from @catalog_src.@schema_src.src_flex__implant_devices
 

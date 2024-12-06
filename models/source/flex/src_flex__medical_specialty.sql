@@ -10,4 +10,4 @@ select
   name,
   facility_id,
   parent_physician_service_id
-from @catalaog_src.@schema_src.src_flex__medical_specialty
+from @catalog_src.@schema_src.src_flex__medical_specialty

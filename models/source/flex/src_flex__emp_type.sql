@@ -8,4 +8,4 @@ MODEL (
 select
   emp_type_id,
   name
-from @catalaog_src.@schema_src.src_flex__emp_type
+from @catalog_src.@schema_src.src_flex__emp_type

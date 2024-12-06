@@ -36,8 +36,8 @@ gateway_mssql = GatewayConfig(
         concurrent_tasks=os.getenv("MSSQL_CONCURRENT_TASKS", default=4),
     ),
     state_connection=MSSQLConnectionConfig(
-        host=os.environ["MSSQL_STATE_DB_HOST"],
-        database=os.environ["MSSQL_STATE_DB_DATABASE"],
+        host=os.environ["MSSQL_STATE_HOST"],
+        database=os.environ["MSSQL_STATE_DATABASE"],
     ),
     state_schema=state_schema,
 )
@@ -62,7 +62,7 @@ class SQLMeshSettings(BaseModel):
 
     project: str
     model_defaults: ModelDefaultsConfig = ModelDefaultsConfig(
-        kind=ModelKindName.VIEW, dialect="mssql", cron="@daily", owner="LTH DST",
+        kind=ModelKindName.VIEW, dialect="tsql", cron="@daily", owner="LTH DST",
         start='2024-01-01'
     )
     gateways: Dict[str, GatewayConfig] = gateways
@@ -82,6 +82,9 @@ class SQLMeshSettings(BaseModel):
 variables = {
         "global_start_date": "2005-01-01",
         "minimum_observation_period_start_date": "2005-01-01",
+        "catalog_src": os.environ['MSSQL_DATABASE_SOURCE'],
+        "schema_src": os.environ['MSSQL_SCHEMA_SOURCE'],
+        "schema_vocab": os.environ['MSSQL_SCHEMA_VOCAB']
     }
 
-config = Config(**dict(SQLMeshSettings(project="stroma", variables=variables)))
+config = Config(**dict(SQLMeshSettings(project="lth_omop_bronze", variables=variables)))

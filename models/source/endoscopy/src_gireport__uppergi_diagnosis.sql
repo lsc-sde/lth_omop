@@ -9,4 +9,4 @@ select
   person_source_value,
   visit_occurrence_id,
   condition_source_value
-from @catalaog_src.@schema_src.src_gireport__uppergi_diagnosis
+from @catalog_src.@schema_src.src_gireport__uppergi_diagnosis

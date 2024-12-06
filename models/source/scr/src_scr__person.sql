@@ -16,4 +16,4 @@ select
   gp_practice,
   date_of_death,
   ethnicity
-from @catalaog_src.@schema_src.src_scr__person
+from @catalog_src.@schema_src.src_scr__person

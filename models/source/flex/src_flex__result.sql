@@ -29,7 +29,7 @@ select
   emp_provider_id,
   last_edit_time,
   updated_at
-from @catalaog_src.@schema_src.src_flex__result sfr
+from @catalog_src.@schema_src.src_flex__result sfr
 where
   sfr.last_edit_time > (
     select updated_at from cdc

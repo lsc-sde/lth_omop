@@ -21,4 +21,4 @@ select
   treatment_function_name,
   last_edit_time,
   updated_at
-from @catalaog_src.@schema_src.src_bi__referrals
+from @catalog_src.@schema_src.src_bi__referrals

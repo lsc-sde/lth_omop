@@ -14,4 +14,4 @@ procedure_datetime,
 procedure_concept_id,
 procedure_source_value,
 provider_id
-from @catalaog_src.@schema_src.src_gireport__uppergi_procedure
+from @catalog_src.@schema_src.src_gireport__uppergi_procedure

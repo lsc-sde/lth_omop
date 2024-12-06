@@ -6,4 +6,4 @@ MODEL (
 );
 
 select *
-from @catalaog_src.@schema_src.src_scr__metastases
+from @catalog_src.@schema_src.src_scr__metastases

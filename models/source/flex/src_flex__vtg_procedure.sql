@@ -14,4 +14,4 @@ select
   procedure_date,
   last_edit_time,
   updated_at
-from @catalaog_src.@schema_src.src_flex__vtg_procedure
+from @catalog_src.@schema_src.src_flex__vtg_procedure

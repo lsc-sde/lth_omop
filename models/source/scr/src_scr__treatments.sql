@@ -24,4 +24,4 @@ select
   validated_upload,
   last_edit_time,
   updated_at
-from @catalaog_src.@schema_src.src_scr__treatments
+from @catalog_src.@schema_src.src_scr__treatments

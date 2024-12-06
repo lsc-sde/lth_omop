@@ -8,7 +8,7 @@ MODEL (
 with source_data as (
 select
   *
-from @catalaog_src.@schema_src.src_flex__procedure_event
+from @catalog_src.@schema_src.src_flex__procedure_event
 )
 
 {% if is_incremental() %}

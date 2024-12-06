@@ -21,4 +21,4 @@ select
   care_site_name,
   care_site_source_value,
   care_site_location
-from @catalaog_src.@schema_src.src_flex__care_site_gp
+from @catalog_src.@schema_src.src_flex__care_site_gp

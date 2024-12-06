@@ -10,4 +10,4 @@ select
   facility_id,
   physician_service_id,
   item_nbr
-from @catalaog_src.@schema_src.src_flex__emp_facility_med_spec
+from @catalog_src.@schema_src.src_flex__emp_facility_med_spec

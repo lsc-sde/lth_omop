@@ -8,7 +8,7 @@ MODEL (
 with source_data as (
 select
   *
-from @catalaog_src.@schema_src.src_flex__visit_segment
+from @catalog_src.@schema_src.src_flex__visit_segment
 )
 
 {% if is_incremental() %}
