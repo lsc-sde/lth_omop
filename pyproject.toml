@@ -1,0 +1,17 @@
+[project]
+name = "lth-omop"
+version = "0.1.0"
+description = "LTH OMOP Source to Bronze ETL"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "python-dotenv>=1.0.1",
+    "sqlmesh>=0.139.0",
+]
+
+[dependency-groups]
+dev = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.5.47",
+    "pre-commit>=4.0.1",
+]
