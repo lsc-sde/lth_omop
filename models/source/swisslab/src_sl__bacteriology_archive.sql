@@ -24,4 +24,4 @@ select
   test,
   result_value,
   updated_at
-from {{ source('omop_source', 'src_sl__bacteriology_archive') }}
+from @catalaog_src.@schema_src.src_sl__bacteriology_archive

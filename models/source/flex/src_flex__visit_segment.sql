@@ -9,7 +9,7 @@
 with source_data as (
 select
   *
-from {{ source('omop_source', 'src_flex__visit_segment') }}
+from @catalaog_src.@schema_src.src_flex__visit_segment
 )
 
 {% if is_incremental() %}

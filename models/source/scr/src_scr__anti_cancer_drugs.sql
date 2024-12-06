@@ -6,4 +6,4 @@
 }}
 
 select *
-from {{ source('omop_source', 'src_scr__anti_cancer_drugs') }}
+from @catalaog_src.@schema_src.src_scr__anti_cancer_drugs

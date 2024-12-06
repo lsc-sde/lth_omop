@@ -10,4 +10,4 @@ select
   name,
   emp_provider_id,
   provider_id
-from {{ source('omop_source', 'src_flex__emp_provider') }}
+from @catalaog_src.@schema_src.src_flex__emp_provider

@@ -9,4 +9,4 @@ select
 cons_org_code,
 cons_emp_provider_id,
 cons_provider
-from {{ source('omop_source', 'src_flex__emp_consultant') }}
+from @catalaog_src.@schema_src.src_flex__emp_consultant

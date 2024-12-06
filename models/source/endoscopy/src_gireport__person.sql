@@ -9,4 +9,4 @@ select
   mrn,
   person_source_value,
   nhs_number
-from {{ source('omop_source', 'src_gireport__person') }}
+from @catalaog_src.@schema_src.src_gireport__person

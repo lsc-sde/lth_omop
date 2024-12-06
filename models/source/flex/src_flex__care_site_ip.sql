@@ -23,4 +23,4 @@ select
   subarea,
   sub_subarea,
   facility
-from {{ source('omop_source', 'src_flex__care_site_ip') }}
+from @catalaog_src.@schema_src.src_flex__care_site_ip

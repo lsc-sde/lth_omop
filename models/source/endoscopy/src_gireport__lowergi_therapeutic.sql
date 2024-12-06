@@ -11,4 +11,4 @@ select
   anatomic_site_source_value,
   parent_procedure_source_value,
   procedure_source_value
-from {{ source('omop_source', 'src_gireport__lowergi_therapeutic') }}
+from @catalaog_src.@schema_src.src_gireport__lowergi_therapeutic

@@ -10,4 +10,4 @@ select
   facility_id,
   physician_service_id,
   item_nbr
-from {{ source('omop_source', 'src_flex__emp_facility_med_spec') }}
+from @catalaog_src.@schema_src.src_flex__emp_facility_med_spec

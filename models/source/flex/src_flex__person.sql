@@ -20,4 +20,4 @@ select
   death_datetime,
   last_edit_time,
   updated_at
-from {{ source('omop_source', 'src_flex__person') }}
+from @catalaog_src.@schema_src.src_flex__person

@@ -6,4 +6,4 @@
 }}
 
 select *
-from {{ source('omop_source', 'src_scr__metastases') }}
+from @catalaog_src.@schema_src.src_scr__metastases

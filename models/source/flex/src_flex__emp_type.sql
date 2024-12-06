@@ -8,4 +8,4 @@
 select
   emp_type_id,
   name
-from {{ source('omop_source', 'src_flex__emp_type') }}
+from @catalaog_src.@schema_src.src_flex__emp_type

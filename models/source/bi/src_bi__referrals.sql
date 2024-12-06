@@ -21,4 +21,4 @@ select
   treatment_function_name,
   last_edit_time,
   updated_at
-from {{ source('omop_source', 'src_bi__referrals') }}
+from @catalaog_src.@schema_src.src_bi__referrals

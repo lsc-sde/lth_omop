@@ -14,4 +14,4 @@ procedure_datetime,
 procedure_concept_id,
 procedure_source_value,
 provider_id
-from {{ source('omop_source', 'src_gireport__uppergi_procedure') }}
+from @catalaog_src.@schema_src.src_gireport__uppergi_procedure

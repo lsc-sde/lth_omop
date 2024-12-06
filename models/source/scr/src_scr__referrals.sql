@@ -59,4 +59,4 @@ select
   val_for_upload,
   last_edit_time,
   updated_at
-from {{ source('omop_source', 'src_scr__referrals') }}
+from @catalaog_src.@schema_src.src_scr__referrals

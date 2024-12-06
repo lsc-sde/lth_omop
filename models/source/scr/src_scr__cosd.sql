@@ -45,4 +45,4 @@ select
   cns_seen_indicator_code,
   last_edit_time,
   updated_at
-from {{ source('omop_source', 'src_scr__cosd') }}
+from @catalaog_src.@schema_src.src_scr__cosd

@@ -12,5 +12,5 @@ select
   cath_type,
   lot_number,
   cath_details
-from {{ source('omop_source', 'src_flex__cathether_devices') }}
+from @catalaog_src.@schema_src.src_flex__cathether_devices
 

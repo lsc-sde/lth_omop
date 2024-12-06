@@ -54,4 +54,4 @@ select
   primary_cancer_site,
   last_edit_time,
   updated_at
-from {{ source('omop_source', 'src_scr__diagnosis') }}
+from @catalaog_src.@schema_src.src_scr__diagnosis

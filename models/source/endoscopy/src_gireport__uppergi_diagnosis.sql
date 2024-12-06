@@ -9,4 +9,4 @@ select
   person_source_value,
   visit_occurrence_id,
   condition_source_value
-from {{ source('omop_source', 'src_gireport__uppergi_diagnosis') }}
+from @catalaog_src.@schema_src.src_gireport__uppergi_diagnosis

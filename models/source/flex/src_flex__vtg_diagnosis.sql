@@ -16,4 +16,4 @@ select
   episode_end_dt,
   last_edit_time,
   updated_at
-from {{ source('omop_source', 'src_flex__vtg_diagnosis') }}
+from @catalaog_src.@schema_src.src_flex__vtg_diagnosis

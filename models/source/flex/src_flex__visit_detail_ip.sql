@@ -16,4 +16,4 @@ select
   location_hx_time,
   last_edit_time,
   updated_at
-from {{ source('omop_source', 'src_flex__visit_detail_ip') }}
+from @catalaog_src.@schema_src.src_flex__visit_detail_ip

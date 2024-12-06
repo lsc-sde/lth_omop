@@ -10,4 +10,4 @@ select
   name,
   facility_id,
   parent_physician_service_id
-from {{ source('omop_source', 'src_flex__medical_specialty') }}
+from @catalaog_src.@schema_src.src_flex__medical_specialty

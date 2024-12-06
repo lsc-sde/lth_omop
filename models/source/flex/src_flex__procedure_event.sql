@@ -8,7 +8,7 @@
 with source_data as (
 select
   *
-from {{ source('omop_source', 'src_flex__procedure_event') }}
+from @catalaog_src.@schema_src.src_flex__procedure_event
 )
 
 {% if is_incremental() %}
