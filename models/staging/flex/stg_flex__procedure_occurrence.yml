@@ -1,0 +1,10 @@
+version: 2
+models:
+  - name: stg_flex__procedure_occurrence
+    description: |
+      <http://omop-erd.surge.sh/omop_cdm/tables/PROCEDURE_OCCURRENCE.html>
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - visit_occurrence_id
+            - procedure_source_value

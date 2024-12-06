@@ -1,0 +1,31 @@
+version: 2
+models:
+  - name: stg_flex__ae_diagnosis
+    description: |
+      Brings data through from src_flex__ae_diagnosis.
+
+      Uses CROSS APPLY STRING_SPLIT twice to split the diagnosis string into one row per diagnosis per visit_id.
+
+      Removes rows where len(value) is less that 1 as these are empty rows.
+      
+      Removes snomed code 410605003 which is for confirmation of presence.
+
+    columns:
+      - name: visit_id
+        description: visit_id for each row
+      - name: patient_id
+        description: flex patient_id for each row
+      - name: provider_id
+        description: provider_id associated with each visit_id
+      - name: activation_time
+        description: time of visit activation
+      - name: admission_date_time
+        description: time of visit admission - may be inpatient admission time if patient admitted
+      - name: discharge_date_time
+        description: time of visit discharge - may be inpatient discharge time if patient admitted
+      - name: last_edit_time
+        description: last edit time for each visit
+      - name: updated_at
+        description: generated at time of table creation
+      - name: diagnosis_list
+        description: diagnosis associated with visit

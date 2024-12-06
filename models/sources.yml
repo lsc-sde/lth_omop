@@ -1,0 +1,90 @@
+version: 2
+
+sources:
+  - name: refs
+    tags: [refs, flex]
+    description: |
+      BI Referral Data
+    database: LTHSQLBI.ODS
+    quoting:
+      database: false
+      schema: false
+      identifier: true
+    schema: refs
+    tables:
+    - name: referrals
+      identifier: Referrals
+  - name: flex.ud_master
+    description: |
+      Access to tables under the UD_MASTER schema in UKPROD Flex Oracle DW
+      accessed as a linked server from SQL Server.
+    database: UKPROD.
+    quoting:
+      database: false
+      schema: false
+      identifier: true
+    schema: UD_MASTER
+    tables:
+      # - name: patient
+      #   identifier: PATIENT
+      #   description: UD_MASTER.PATIENT table on Flex DW
+      # - name: visit
+      #   identifier: VISIT
+      # - name: event
+      #   identifier: EVENT
+      - name: location
+        identifier: LOCATION
+      - name: d1_location_dimension
+        identifier: D1_LOCATION_DIMENSION
+      # - name: event_order_def_result
+      #   identifier: EVENT_ORDER_DEF_RESULT
+      # - name: proc_event
+      #   identifier: PROC_EVENT
+      # - name: proc_event_archive
+      #   identifier: PROC_EVENT_ARCHIVE
+      # - name: proc_order_def
+      #   identifier: PROC_ORDER_DEF
+      # - name: resource_entity
+      #   identifier: RESOURCE_ENTITY
+      #########################################################################
+      # EMPLOYEE PROVIDER SPECIALITY
+      - name: emp_provider
+        identifier: EMP_PROVIDER
+      - name: medical_specialty
+        identifier: MEDICAL_SPECIALTY
+      - name: emp_facility_med_spec
+        identifier: EMP_FACILITY_MED_SPEC
+      - name: emp_type
+        identifier: EMP_TYPE
+      - name: emp_type_emp_facility
+        identifier: EMP_TYPE_EMP_FACILITY
+      #########################################################################
+      # RESULT LOOKUPS
+      - name: result_profile
+        identifier: RESULT_PROFILE
+      - name: result_field
+        identifier: RESULT_FIELD
+      - name: numeric_result_field
+        identifier: NUMERIC_RESULT_FIELD
+      #########################################################################
+      - name: proc
+        identifier: 'PROC'
+      - name: proc_result_result_profile
+        identifier: PROC_RESULT_RESULT_PROFILE
+
+  - name: flex.ukcoder
+    description: |
+      Access to tables under the UKCODER schema in UKPROD Flex Oracle DW.
+    database: UKPROD.
+    quoting:
+      database: false
+      schema: false
+      identifier: true
+    schema: UKCODER
+    # tables:
+    #   - name: vtg_episode
+    #     identifier: VTG_EPISODE
+    #   - name: vtg_diagnosis
+    #     identifier: VTG_DIAGNOSIS
+    #   - name: vtg_procedure
+    #     identifier: VTG_PROCEDURE

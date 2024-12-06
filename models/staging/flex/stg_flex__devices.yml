@@ -1,0 +1,16 @@
+version: 2
+models:
+  - name: stg_flex__devices
+    description: |
+      Combines `src_flex__cathether_devices` and `src_flex__implant_devices` into
+      one single table.
+
+      No transformations required at present.
+
+    columns:
+      - name: visit_id
+        description: visit id from flex
+      - name: date_time
+        description: date time recorded for device
+      - name: manufacturer
+        description: recorded manufacturer

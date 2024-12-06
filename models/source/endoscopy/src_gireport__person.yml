@@ -1,0 +1,34 @@
+version: 2
+models:
+  - name: src_gireport__person
+    description: |
+      Minimal patient identifiers from UniSoft GIReport Database.
+
+
+    # Only available in dbt-core>=1.6
+    # constraints:
+    #   - type: primary_key
+    #     columns: person_source_value
+
+    columns:
+      - name: person_source_value
+        description: |
+          `Combo ID` is the unique patient identifier within this database but may represent more than one patient.
+          This becomes `person_source_value` at the source layer which will be replaced by the
+          Flex `patient_id`/`person_source_value` in later layers.
+        tests:
+          - not_null
+          - unique
+
+      - name: nhs_number
+        description: |
+          NHS Number in GIReport is stored as `nvarchar` and is converted to `numeric` in this step.
+          Values failing conversion are stored as `null`.
+        # todo:
+        # tests: check if nhs_number is valid.
+
+      - name: mrn
+        description: |
+          Medical Record Number. Use this to join on the `mrn` from the person table from `Flex`.
+        tests:
+          - not_null

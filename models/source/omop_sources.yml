@@ -1,0 +1,116 @@
+version: 2
+
+sources:
+  - name: omop_source
+    tags: [src]
+    description: |
+      LTH OMOP Source References
+    database: LTHDATASCIENCE.dbt_omop
+    quoting:
+      database: false
+      schema: false
+      identifier: true
+    schema: source
+    tables:
+    - name: ext__postcodes
+      identifier: ext__postcodes
+    - name: src_atticus__devices
+      identifier: src_atticus__devices
+    - name: src_bi__referrals
+      identifier: src_bi__referrals
+    - name: src_flex__ae_diagnosis
+      identifier: src_flex__ae_diagnosis
+    - name: src_flex__ae_procedures
+      identifier: src_flex__ae_procedures
+    - name: src_flex__care_site_gp
+      identifier: src_flex__care_site_gp
+    - name: src_flex__care_site_ip
+      identifier: src_flex__care_site_ip
+    - name: src_flex__care_site_op
+      identifier: src_flex__care_site_op
+    - name: src_flex__cathether_devices
+      identifier: src_flex__cathether_devices
+    - name: src_flex__emp_consultant
+      identifier: src_flex__emp_consultant
+    - name: src_flex__emp_facility_med_spec
+      identifier: src_flex__emp_facility_med_spec
+    - name: src_flex__emp_provider
+      identifier: src_flex__emp_provider
+    - name: src_flex__emp_type
+      identifier: src_flex__emp_type
+    - name: src_flex__emp_type_emp_facility
+      identifier: src_flex__emp_type_emp_facility
+    - name: src_flex__implant_devices
+      identifier: src_flex__implant_devices
+    - name: src_flex__medical_specialty
+      identifier: src_flex__medical_specialty
+    - name: src_flex__orders
+      identifier: src_flex__orders
+    - name: src_flex__person
+      identifier: src_flex__person
+    - name: src_flex__procedure_event
+      identifier: src_flex__procedure_event
+    - name: src_flex__result
+      identifier: src_flex__result
+    - name: src_flex__visit_detail_ae
+      identifier: src_flex__visit_detail_ae
+    - name: src_flex__visit_detail_ip
+      identifier: src_flex__visit_detail_ip
+    - name: src_flex__visit_segment
+      identifier: src_flex__visit_segment
+    - name: src_flex__vtg_procedure
+      identifier: src_flex__vtg_procedure
+    - name: src_gireport__condition_occurrence
+      identifier: src_gireport__condition_occurrence
+    - name: src_gireport__diagnostic_codes
+      identifier: src_gireport__diagnostic_codes
+    - name: src_gireport__lowergi_diagnosis
+      identifier: src_gireport__lowergi_diagnosis
+    - name: src_gireport__lowergi_procedure
+      identifier: src_gireport__lowergi_procedure
+    - name: src_gireport__lowergi_therapeutic
+      identifier: src_gireport__lowergi_therapeutic
+    - name: src_gireport__person
+      identifier: src_gireport__person
+    - name: src_gireport__uppergi_diagnosis
+      identifier: src_gireport__uppergi_diagnosis
+    - name: src_gireport__uppergi_procedure
+      identifier: src_gireport__uppergi_procedure
+    - name: src_sl__bacteriology_archive
+      identifier: src_sl__bacteriology_archive
+    - name: src_sl__bacteriology_live
+      identifier: src_sl__bacteriology_live
+    - name: stg_ext__care_site
+      identifier: stg_ext__care_site
+    - name: src_flex__vtg_diagnosis
+      identifier: src_flex__vtg_diagnosis
+    - name: src_scr__care_plan_mdt
+      identifier: src_scr__care_plan_mdt
+    - name: src_scr__cosd
+      identifier: src_scr__cosd
+    - name: src_scr__diagnosis
+      identifier: src_scr__diagnosis
+    - name: src_scr__investigations
+      identifier: src_scr__investigations
+    - name: src_scr__pathology
+      identifier: src_scr__pathology
+    - name: src_scr__person
+      identifier: src_scr__person
+    - name: src_scr__referrals
+      identifier: src_scr__referrals
+    - name: src_scr__treatments
+      identifier: src_scr__treatments
+    - name: src_scr__breast_markers
+      identifier: src_scr__breast_markers
+    - name: src_scr__initial_assessments
+      identifier: src_scr__initial_assessments
+    - name: src_scr__metastases
+      identifier: src_scr__metastases
+    - name: src_scr__trials
+      identifier: src_scr__trials
+    - name: src_scr__brachytherapy
+      identifier: src_scr__brachytherapy
+    - name: src_scr__anti_cancer_drugs
+      identifier: src_scr__anti_cancer_drugs
+    - name: src_scr__teletherapy
+      identifier: src_scr__teletherapy

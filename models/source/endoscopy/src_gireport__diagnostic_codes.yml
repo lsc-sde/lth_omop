@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: src_gireport__diagnostic_codes
+    description: |
+      This is a minimal lookup table of ICD10 and OPCS codes from GIReport (GastroLTHTRLive).
+      Not all diagnoses or procedures have codes assigned in this table.
+      See `condition_source_value` and `condition_source_concept_id` in <http://omop-erd.surge.sh/omop_cdm/tables/CONDITION_OCCURRENCE.html>
+      Also see [github discussion in #33](https://github.com/LTHTR-DST/dbt_omop/pull/33#discussion_r1269153211)
+    columns:
+      - name: table_name
+        description: The name of the source table to join on.
+        tests:
+          - accepted_values:
+              values:
+                - Colon Diagnoses
+                - Upper GI Diagnoses
+                - OCPS
+      - name: field_name
+        description: |
+          This column contains the actual verbatim diagnosis.
+          In the case of procedures, this column contains the 4-digit OPCS code without the period.
+      - name: condition_source_value
+        description: |
+          ICD10/OPCS code from source database.

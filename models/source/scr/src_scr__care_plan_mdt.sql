@@ -1,0 +1,47 @@
+{{
+    config(
+        materialized='table',
+        tags = ['bulk', 'source', 'scr', 'care_plan']
+    )
+}}
+
+select
+  care_id,
+  cancer_site,
+  nhs_number,
+  mrn,
+  care_plan_agreed_date,
+  organisation,
+  cancer_care_plan_intent,
+  first_treatment,
+  second_treatment,
+  third_treatment,
+  fourth_treatment,
+  to_be_actioned_by,
+  performance_status,
+  comorbidity_index,
+  was_patient_discussed_mdt,
+  mdt_meeting_site,
+  sub_site,
+  mdt_meeting_date,
+  location,
+  care_plan_agreed_mdt,
+  mdt_comments,
+  referred_to,
+  who_referred_to,
+  reviewed_pathologist_before_mdt,
+  reviewed_by,
+  no_treatment_reason,
+  discussed_network_mdt,
+  date_network_meeting,
+  network_decision,
+  network_to_be_actioned_by,
+  network_comments,
+  egfr_requested_status,
+  resective_path_discussed,
+  restorative_dentist_asked_assessment_needed,
+  restorative_dentist_assessment_needed,
+  discussion_type,
+  last_edit_time,
+  updated_at
+from {{ source('omop_source', 'src_scr__care_plan_mdt') }}

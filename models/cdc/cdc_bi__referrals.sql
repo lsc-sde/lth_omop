@@ -1,0 +1,43 @@
+{{
+    config(
+        materialized='table',
+        tags = ['results', 'cdc', 'bi'],
+        post_hook = [
+          "{{ create_nonclustered_index(
+                columns=['last_edit_time'],
+                includes=['patient_id', 'visit_id', 'referring_emp_code'])
+            }}"
+        ]
+    )
+}}
+
+with cdc as (
+  select min(updated_at) as updated_at
+  from {{ ref('cdc__updated_at') }}
+  where
+    model in ('OBSERVATION') and datasource = 'bi'
+)
+
+select
+  referral_received_date,
+  patient_id,
+  visit_id,
+  referral_source,
+  gp_priority,
+  consultant_priority,
+  consultant_code,
+  referring_emp_code,
+  priority,
+  two_week_referral,
+  suspected_cancer_type,
+  treatment_function_code,
+  treatment_function_name,
+  last_edit_time,
+  updated_at
+from
+  {{ ref('src_bi__referrals') }} as sbr
+where
+  sbr.updated_at > (
+    select updated_at from cdc
+  )
+  and sbr.updated_at <= getdate()

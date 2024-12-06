@@ -1,0 +1,50 @@
+{{
+  config(
+    materialized = "table",
+    tags = ['omop', 'era', 'drugs', 'lookup', 'dimension']
+    )
+}}
+
+select
+  person_id,
+  ingredient_concept_id,
+  dateadd(day, -30, event_date) as end_date
+from
+  (
+    select
+      person_id,
+      ingredient_concept_id,
+      event_date,
+      event_type,
+      max(start_ordinal) over (
+        partition by person_id, ingredient_concept_id
+        order by event_date, event_type rows unbounded preceding
+      ) as start_ordinal,
+      row_number() over (
+        partition by person_id, ingredient_concept_id
+        order by event_date, event_type
+      ) as overall_ord
+    from (
+      select
+        person_id,
+        ingredient_concept_id,
+        drug_sub_exposure_start_date as event_date,
+        -1 as event_type,
+        row_number() over (
+          partition by person_id, ingredient_concept_id
+          order by drug_sub_exposure_start_date
+        ) as start_ordinal
+      from {{ ref('era__drug_final_target') }}
+
+      union all
+
+      select
+        person_id,
+        ingredient_concept_id,
+        dateadd(day, 30, drug_sub_exposure_end_date),
+        1 as event_type,
+        null
+      from {{ ref('era__drug_final_target') }}
+    ) as RAWDATA
+  ) as e
+where (2 * e.start_ordinal) - e.overall_ord = 0

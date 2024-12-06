@@ -1,0 +1,70 @@
+version: 2
+models:
+  - name: src_gireport__lowergi_diagnosis
+    description: |
+      Diagnoses from Lower GI endoscopy that are stored as boolean values in source.
+      There are additional models for specific diagnostic groups such as perianal lesions.
+    columns:
+      - name: person_source_value
+        description: |
+          `Combo ID` is the unique patient identifier within this database but may represent more than one patient.
+          In tables other than the `Patient` table, this column is called 'Patient No'.
+          This becomes `person_source_value` at the source layer which will be replaced by the
+          Flex `patient_id`/`person_source_value` in later layers.
+        tests:
+          - not_null
+
+      - name: visit_occurrence_id
+        description: |
+          This is the unique identifier for each endoscopy episode `[Episode No]`.
+          Each episode may have one or more procedures associated with it.
+        tests:
+          - not_null
+
+      - name: condition_source_value
+        description: |
+          The values in this column are obtained by performing an 'UNPIVOT' on a wide table in source.
+          This results in loss of some information that is stored in non-boolean fields.
+          These other fields are loaded separately.
+        tests:
+          - not_null
+          - accepted_values:
+              name: accepted_values_lowergi_diagnoses
+              values:
+                - Normal
+                - Diverticulosis
+                - Diverticulitis
+                - Haemorrhoids
+                - Pseudo obstruction
+                - Colonic polyps
+                - Rectal polyps
+                - Colonic tumor
+                - Colonic carcinoma
+                - Rectal carcinoma
+                - Colitis/ileitis
+                - Rectal tumour
+                - Redundant anterior rectal mucosa
+                - Telangiectasia/angioma
+                - Ileitis
+                - IBD
+                - Anal fissure
+                - Angiodysplasia
+                - Colerectal cancer
+                - Crohn''s terminal ileum
+                - Fistula
+                - Foreign body
+                - Lipoma
+                - Melanosis
+                - Parasites
+                - Pneumatosis coli
+                - Polyposis syndrome
+                - Postoperative appearance
+                - Proctitis
+                - Stricture inflammatory
+                - Stricture malignant
+                - Stricture postoperative
+                - Rectal ulcer
+                - Colonic tumor probable
+                - Colonic carcinoma probable
+                - Rectal carcinoma probable
+                - Rectal tumour probable

@@ -1,0 +1,245 @@
+version: 2
+
+sources:
+  - name: gireport
+    tags: [endoscopy, gireport]
+    description: |
+      Legacy endoscopy database (Gastro_LTHTR_LIVE, backend for UniSoft GI Reporting Tool).
+      This was replaced by Solus Endoscopy in early 2021.
+    database: LTHDATASCIENCE.Gastro_LTHTR_LIVE
+    quoting:
+      database: false
+      schema: false
+      identifier: true
+    schema: dbo
+    tables:
+      # - identifier: 18w Look-up
+      #   name: 18w_look_up
+      # - identifier: 18w Result
+      #   name: 18w_result
+      # - identifier: AColon Lesions
+      #   name: colon_lesions
+      # - identifier: AColon Other
+      #   name: colon_other
+      # - identifier: AColon Perianal Lesions
+      #   name: colon_perianal_lesions
+      # - identifier: AERCP Duct/Parenchyma
+      #   name: ercp_duct_parenchyma
+      # - identifier: AERCP Papilla
+      #   name: ercp_papilla
+      # - identifier: AUpper GI Barrett's Epithelium
+      #   name: ugi_barretts_epithelium
+      # - identifier: AUpper GI Duodenum
+      #   name: ugi_duodenum
+      # - identifier: AUpper GI Gastric Other
+      #   name: ugi_gastric_other
+      # - identifier: AUpper GI Gastric Polyps
+      #   name: ugi_gastric_polyps
+      # - identifier: AUpper GI Gastric Ulcer/Malignancy
+      #   name: ugi_gastric_ulcer_malignancy
+      # - identifier: AUpper GI Gastritis
+      #   name: ugi_gastritis
+      # - identifier: AUpper GI Hiatus Hernia/Varices
+      #   name: ugi_hiatus_hernia_varices
+      # - identifier: AUpper GI Oesophagitis
+      #   name: ugi_oesophagitis
+      # - identifier: AUpper GI Oesophagus Other
+      #   name: ugi_oesophagus_other
+      # - identifier: AuditLog
+      #   name: auditlog
+      # - identifier: Breath test
+      #   name: breath_test
+      # - identifier: Coding
+      #   name: coding
+      - identifier: Colon Diagnoses
+        name: colon_diagnoses
+      # - identifier: Colon Extent/Limiting Factors
+      #   name: colon_extent_limiting_factors
+      # - identifier: Colon Follow Up
+      #   name: colon_follow_up
+      # - identifier: Colon Indications
+      #   name: colon_indications
+      - identifier: Colon Procedure
+        name: colon_procedure
+      # - identifier: Colon QA
+      #   name: colon_qa
+      - identifier: Colon Sites
+        name: colon_sites
+      # - identifier: Colon Specimens
+      #   name: colon_specimens
+      - identifier: Colon Therapeutic
+        name: colon_therapeutic
+      # - identifier: Configuration settings
+      #   name: configuration_settings
+      # - identifier: Consultant
+      #   name: consultant
+      # - identifier: Consultant Group
+      #   name: consultant_group
+      # - identifier: Consultant/Operators
+      #   name: consultant_operators
+      # - identifier: Consultant/Operators (non-GI)
+      #   name: consultant_operators_non_gi
+      # - identifier: Control
+      #   name: control
+      # - identifier: DNA Analysis
+      #   name: dna_analysis
+      # - identifier: Defaults
+      #   name: defaults
+      - identifier: Diagnostic Codes
+        name: diagnostic_codes
+      # - identifier: Drug list
+      #   name: drug_list
+      # - identifier: Drug regimen
+      #   name: drug_regimen
+      # - identifier: ERCP Diagnoses
+      #   name: ercp_diagnoses
+      # - identifier: ERCP Follow up
+      #   name: ercp_follow_up
+      # - identifier: ERCP Indications
+      #   name: ercp_indications
+      # - identifier: ERCP Papillary Anatomy
+      #   name: ercp_papillary_anatomy
+      # - identifier: ERCP Procedure
+      #   name: ercp_procedure
+      # - identifier: ERCP QA
+      #   name: ercp_qa
+      # - identifier: ERCP Sites
+      #   name: ercp_sites
+      # - identifier: ERCP Specimens
+      #   name: ercp_specimens
+      # - identifier: ERCP Therapeutic
+      #   name: ercp_therapeutic
+      # - identifier: ERCP Visualisation
+      #   name: ercp_visualisation
+      # - identifier: EUS procedure
+      #   name: eus_procedure
+      # - identifier: Endoscopist
+      #   name: endoscopist
+      # - identifier: Episode
+      #   name: episode
+      # - identifier: ExportLog
+      #   name: exportlog
+      # - identifier: Ext Ref Cons Hospital
+      #   name: ext_ref_cons_hospital
+      # - identifier: GP
+      #   name: gp
+      # - identifier: Historic data
+      #   name: historic_data
+      # - identifier: Information
+      #   name: information
+      # - identifier: Instrument crop
+      #   name: instrument_crop
+      # - identifier: Instrument crop1
+      #   name: instrument_crop1
+      # - identifier: JAG_GRS rep selected consultants
+      #   name: jag_grs_rep_selected_consultants
+      # - identifier: JAG_GRS rep selection recall
+      #   name: jag_grs_rep_selection_recall
+      # - identifier: LA selected consultants
+      #   name: la_selected_consultants
+      # - identifier: LA selection recall
+      #   name: la_selection_recall
+      # - identifier: List audit
+      #   name: list_audit
+      # - identifier: List call in times
+      #   name: list_call_in_times
+      # - identifier: List cancel reasons
+      #   name: list_cancel_reasons
+      # - identifier: List configuration
+      #   name: list_configuration
+      # - identifier: List definition
+      #   name: list_definition
+      # - identifier: List locking
+      #   name: list_locking
+      # - identifier: List patients
+      #   name: list_patients
+      # - identifier: List rules
+      #   name: list_rules
+      # - identifier: List schedule
+      #   name: list_schedule
+      # - identifier: Lists
+      #   name: lists
+      # - identifier: NED Colon Extent
+      #   name: ned_colon_extent
+      # - identifier: NED Upper GI Extent
+      #   name: ned_ugi_extent
+      # - identifier: NED Visualisation
+      #   name: ned_visualisation
+      # - identifier: NEDExportLog
+      #   name: nedexportlog
+      # - identifier: NEDProfile
+      #   name: nedprofile
+      # - identifier: Operating Hospital
+      #   name: operating_hospital
+      # - identifier: Pathology Results
+      #   name: pathology_results
+      - identifier: Patient
+        name: patient
+      # - identifier: Patient (non-GI)
+      #   name: patient_non_gi
+      # - identifier: Patient Medication
+      #   name: patient_medication
+      # - identifier: Patient Premedication
+      #   name: patient_premedication
+      # - identifier: Photos
+      #   name: photos
+      # - identifier: Photos1
+      #   name: photos1
+      # - identifier: PhotosCopy
+      #   name: photoscopy
+      # - identifier: Phrase Library
+      #   name: phrase_library
+      # - identifier: Post proc comp
+      #   name: post_proc_comp
+      # - identifier: Print spooler
+      #   name: print_spooler
+      # - identifier: Procedures by Endoscopist 1
+      #   name: procedures_by_endoscopist_1
+      # - identifier: Procedures by Endoscopist 1_Excel_Export
+      #   name: procedures_by_endoscopist_1_excel_export
+      # - identifier: Procedures by Ref Cons
+      #   name: procedures_by_ref_cons
+      # - identifier: Procedures by Ref Cons_Excel_Export
+      #   name: procedures_by_ref_cons_excel_export
+      # - identifier: Referral Hospitals
+      #   name: referral_hospitals
+      # - identifier: Report criteria defaults
+      #   name: report_criteria_defaults
+      # - identifier: Rockall Blatchford Scores
+      #   name: rockall_blatchford_scores
+      # - identifier: Room rules
+      #   name: room_rules
+      # - identifier: TCI
+      #   name: tci
+      # - identifier: Temp print spooler
+      #   name: temp_print_spooler
+      # - identifier: Temp_Episode
+      #   name: temp_episode
+      # - identifier: Temp_OtherTable
+      #   name: temp_othertable
+      - identifier: Upper GI Diagnoses
+        name: ugi_diagnoses
+      # - identifier: Upper GI Follow up
+      #   name: ugi_follow_up
+      # - identifier: Upper GI Indications
+      #   name: ugi_indications
+      - identifier: Upper GI Procedure
+        name: ugi_procedure
+      # - identifier: Upper GI QA
+      #   name: ugi_qa
+      # - identifier: Upper GI Sites
+      #   name: ugi_sites
+      # - identifier: Upper GI Specimens
+      #   name: ugi_specimens
+      # - identifier: Upper GI Therapeutic
+      #   name: ugi_therapeutic
+      # - identifier: User premedication defaults
+      #   name: user_premedication_defaults
+      # - identifier: Users
+      #   name: users
+      # - identifier: Web Links
+      #   name: web_links
+      # - identifier: Web Users
+      #   name: web_users
+      # - identifier: XMLProfiles
+      #   name: xmlprofiles

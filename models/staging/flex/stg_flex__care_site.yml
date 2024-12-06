@@ -1,0 +1,39 @@
+version: 2
+models:
+  - name: stg_flex__care_site
+    description: |
+      Merge of care sites into one table.
+
+      Brings inpatient, outpatient and GP locations together.
+      
+      Linked to ext__postcodes to add `location_source_value`
+
+    columns:
+      - name: care_site_name
+        description: name of care site, eg ward, gp practice or clinic name
+        tests:
+          - not_null
+      - name: care_site_source_value
+        description: id of care site, eg flex location id, gp practice code or clinic resource entity
+        tests:
+          - not_null
+          - unique
+      - name: postcode
+        description: 1 represents RPH, 3 represents CDH. All other entries are postcodes of physical location
+        tests:
+          - not_null
+      - name: place_of_service_source_value
+        description: identification of source - Quadramed, GP or Outpatient
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Outpatient Clinic', 'Quadramed Location', 'GP Practice']
+      - name: location_source_value
+        description: location value - LSOA code from ext__postcodes
+        tests:
+          - not_null
+      - name: care_site_id
+        description: generated on creation of table - unique id per care_site
+        tests:
+          - not_null
+          - unique

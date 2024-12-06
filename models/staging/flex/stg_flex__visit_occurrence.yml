@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: stg_flex__visit_occurrence
+    description: |
+      The VISIT_OCCURRENCE table contains the spans of time a Person
+      continuously receives medical services from one or more providers at a
+      Care Site in a given setting within the health care system.
+
+      List of completed visits from Flex visit table.
+
+      Assumptions:
+      - Visit types 5 & 8 (Referral and Lifecare) are removed.
+      - Visit status 8 & 9 (cancelled and closed cancelled) are removed.
+
+    columns:
+      - name: person_source_value
+        tests:
+          - not_null
+      - name: visit_occurrence_id
+        tests:
+          - not_null
+          - unique
+      - name: visit_number
+        tests:
+          - not_null
+          - unique

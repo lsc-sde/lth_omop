@@ -1,0 +1,165 @@
+version: 2
+models:
+  - name: src_flex__ae_diagnosis
+    description: |
+      A&E DIAGNOSIS SOURCE DATA
+
+      CONTEXT:
+      - Extraction of a&e visit diagnoses.
+
+      RESULT EXPECTATION:
+      - List of visits and diagnoses for visit. One row entry per visit.
+
+      ASSUMPTION:
+      - NA
+
+    columns:
+      - name: visit_id
+        tests:
+          - not_null
+          - unique
+      - name: patient_id
+        tests:
+          - not_null
+      - name: diag_list
+        tests:
+          - not_null
+      - name: activation_time
+        tests:
+          - not_null
+      - name: admission_date_time
+        tests:
+          - not_null
+      - name: discharge_date_time
+        tests:
+          - not_null
+      - name: last_edit_time
+        tests:
+          - not_null
+      - name: updated_at
+        tests:
+          - not_null
+
+  - name: src_flex__ae_procedures
+    description: |
+      A&E PROCEDURE SOURCE DATA
+
+      CONTEXT:
+      - Extraction of a&e visit procedures.
+
+      RESULT EXPECTATION:
+      - List of visits and procedures for visit. One row entry per visit.
+
+      ASSUMPTION:
+      - NA
+
+    columns:
+      - name: visit_id
+        tests:
+          - not_null
+          - unique
+      - name: patient_id
+        tests:
+          - not_null
+      - name: list
+        tests:
+          - not_null
+      - name: activation_time
+        tests:
+          - not_null
+      - name: admission_date_time
+        tests:
+          - not_null
+      - name: discharge_date_time
+        tests:
+          - not_null
+      - name: last_edit_time
+        tests:
+          - not_null
+      - name: updated_at
+        tests:
+          - not_null
+
+  - name: src_flex__care_site_gp
+    description: |
+      GP PRACTICE DATA
+
+      CONTEXT:
+      - List of all GP practice codes, names and postcodes.
+      - List from CSV.
+
+      RESULT EXPECTATION:
+      - List of all GP practice codes, names and postcodes.
+
+      ASSUMPTION:
+      - NA
+
+    columns:
+      - name: care_site_name
+        tests:
+          - not_null
+      - name: care_site_id
+        tests:
+          - not_null
+          - unique
+      - name: care_site_location
+        tests:
+          - not_null
+
+  - name: src_flex__care_site_ip
+    description: |
+      IP AREA DATA
+
+      CONTEXT:
+      - List of all Flex Inpatient locations.
+      - List from DW LOCATIONS table.
+
+      RESULT EXPECTATION:
+      - List of all IP locations.
+
+      ASSUMPTION:
+      - NA
+
+  - name: src_flex__care_site_op
+    description: |
+      OP AREA DATA
+
+      CONTEXT:
+      - List of all Flex Outpatient locations.
+      - List from the resource entity table.
+
+      RESULT EXPECTATION:
+      - List of all OP locations.
+
+      ASSUMPTION:
+      - NA
+
+  - name: src_flex__cathether_devices
+    description: |
+      CATHETHER DEVICES
+
+      CONTEXT:
+      - List of all Flex cathether devices.
+
+      RESULT EXPECTATION:
+      - One row per device per patient.
+
+  - name: src_flex__emp_consultant
+    description: |
+      CONSULTANT CODES
+
+      CONTEXT:
+      - List of all Flex consultant codes and EMP ids.
+
+      RESULT EXPECTATION:
+      - One row per emp ID per consultant code.
+
+  - name: src_flex__emp_facility_med_spec
+    description: |
+      EMP CODE SERVICE
+
+      CONTEXT:
+      - List of emp ids and related service id.
+
+      RESULT EXPECTATION:
+      - One row per emp ID per service code.

@@ -1,0 +1,540 @@
+version: 2
+
+models:
+  - name: CARE_SITE
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/CARE_SITE.html>      
+    columns:
+      - name: care_site_id
+        description: A unique identifier for each Care Site.
+        tests:
+          - not_null
+          - unique
+      - name: care_site_name
+        description: A unique identifier for each Care Site.
+      - name: place_of_service_concept_id
+        description: A foreign key that refers to a Place of Service Concept ID in the Standardized Vocabularies.
+      - name: location_id
+        description: A foreign key to the geographic Location in the LOCATION table, where the detailed address information is stored.
+      - name: care_site_source_value
+        description: 	The identifier for the Care Site in the source data, stored here for reference.
+      - name: place_of_service_source_value
+        description: 	The source code for the Place of Service as it appears in the source data, stored here for reference.
+        
+  - name: CONDITION_OCCURRENCE
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/CARE_SITE.html>      
+    columns:
+      - name: condition_occurrence_id
+        description: 	A unique identifier for each Condition Occurrence event.
+        tests:
+          - not_null
+          - unique
+      - name: person_id
+        description: A foreign key identifier to the Person who is experiencing the condition. The demographic details of that Person are stored in the PERSON table.
+        tests:
+          - not_null
+      - name: condition_concept_id
+        description: A foreign key that refers to a Standard Condition Concept identifier in the Standardized Vocabularies.
+        tests:
+          - not_null
+      - name: condition_start_date
+        description: The date when the instance of the Condition is recorded.
+        tests:
+          - not_null
+      - name: condition_start_datetime
+        description: The date and time when the instance of the Condition is recorded.
+      - name: condition_end_date
+        description: The date when the instance of the Condition is considered to have ended.
+      - name: condition_end_datetime
+        description: The date and time when the instance of the Condition is recorded.
+      - name: condition_type_concept_id
+        description: |
+          A foreign key to the predefined Concept identifier in the Standardized Vocabularies reflecting the source data from which the condition was recorded, 
+          the level of standardization, and the type of occurrence
+      - name: stop_reason
+        description: The reason that the condition was no longer present, as indicated in the source data.
+      - name: provider_id
+        description: A foreign key to the Provider in the PROVIDER table who was responsible for capturing (diagnosing) the Condition.
+      - name: visit_occurrence_id
+        description: A foreign key to the visit in the VISIT table during which the Condition was determined (diagnosed).
+      - name: condition_status_concept_id
+        description: A foreign key to the predefined concept in the standard vocabulary reflecting the condition status.
+      - name: condition_source_concept_id
+        description: A foreign key to a Condition Concept that refers to the code used in the source.
+      - name: condition_source_value
+        description: |
+          The source code for the condition as it appears in the source data. 
+          This code is mapped to a standard condition concept in the Standardized Vocabularies and the original code is stored here for reference.
+      - name: condition_status_source_value
+        description: The date when the instance of the Condition is considered to have ended.
+
+  - name: DEATH
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/DEATH.html>      
+    columns:
+      - name: person_id
+        description: 	A foreign key identifier to the deceased person. The demographic details of that person are stored in the person table.
+        tests:
+          - not_null
+          - unique
+      - name: death_date
+        description: |
+          The date the person was deceased. 
+          If the precise date including day or month is not known or not allowed, December is used as the default month, and the last day of the month the default day.
+        tests:
+          - not_null
+      - name: death_datetime
+        description: |
+          The date and time the person was deceased. 
+          If the precise date including day or month is not known or not allowed, December is used as the default month, and the last day of the month the default day.
+      - name: death_type_concept_id
+        description: 	A foreign key referring to the predefined concept identifier in the Standardized Vocabularies reflecting how the death was represented in the source data.
+        tests:
+          - not_null
+      - name: cause_concept_id
+        description: 	A foreign key referring to a standard concept identifier in the Standardized Vocabularies for conditions.
+      - name: cause_source_value
+        description: |
+          The source code for the cause of death as it appears in the source data. 
+          This code is mapped to a standard concept in the Standardized Vocabularies and the original code is, stored here for reference.
+      - name: cause_source_concept_id
+        description: | 
+          A foreign key to the concept that refers to the code used in the source. 
+          Note, this variable name is abbreviated to ensure it will be allowable across database platforms.
+
+  - name: DRUG_EXPOSURE
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/DRUG_EXPOSURE.html>      
+    columns:
+      - name: drug_exposure_id
+        description: A system-generated unique identifier for each Drug utilization event.
+        tests:
+          - not_null
+          - unique
+      - name: person_id
+        description: A foreign key identifier to the person who is subjected to the Drug. The demographic details of that person are stored in the person table.
+        tests:
+          - not_null
+      - name: drug_concept_id
+        description: A foreign key that refers to a Standard Concept identifier in the Standardized Vocabularies for the Drug concept.
+        tests:
+          - not_null
+      - name: drug_exposure_start_date
+        description: |
+          The start date for the current instance of Drug utilization. 
+          Valid entries include a start date of a prescription, the date a prescription was filled, or the date on which a Drug administration procedure was recorded.
+        tests:
+          - not_null
+      - name: drug_exposure_start_datetime
+        description: |
+          The start date and time for the current instance of Drug utilization. 
+          Valid entries include a start date of a prescription, the date a prescription was filled, or the date on which a Drug administration procedure was recorded.
+      - name: drug_exposure_end_date
+        description: The end date for the current instance of Drug utilization. It is not available from all sources.
+      - name: drug_exposure_end_datetime
+        description: The end date and time for the current instance of Drug utilization. It is not available from all sources.
+      - name: drug_type_concept_id
+        description: |
+          A foreign key to the predefined Concept identifier in the Standardized Vocabularies reflecting the type of Drug Exposure recorded. 
+          It indicates how the Drug Exposure was represented in the source data.
+        tests:
+          - not_null
+      - name: stop_reason
+        description: The reason the Drug was stopped. Reasons include regimen completed, changed, removed, etc.
+      - name: refills
+        description: The number of refills after the initial prescription. The initial prescription is not counted, values start with 0.
+      - name: quantity
+        description: The quantity of drug as recorded in the original prescription or dispensing record.
+      - name: days_supply
+        description: The number of days of supply of the medication as recorded in the original prescription or dispensing record.
+      - name: sig
+        description: The directions (“signetur”) on the Drug prescription as recorded in the original prescription (and printed on the container) or dispensing record.
+      - name: route_concept_id
+        description: A foreign key to a predefined concept in the Standardized Vocabularies reflecting the route of administration.
+      - name: effective_drug_dose
+        description: Numerical value of Drug dose for this Drug Exposure record.
+      - name: dose_unit_concept_ id
+        description: A foreign key to a predefined concept in the Standardized Vocabularies reflecting the unit the effective_drug_dose value is expressed.
+      - name: lot_number
+        description: An identifier assigned to a particular quantity or lot of Drug product from the manufacturer.
+      - name: provider_id
+        description: A foreign key to the provider in the provider table who initiated (prescribed or administered) the Drug Exposure.
+      - name: visit_occurrence_id
+        description: A foreign key to the visit in the visit table during which the Drug Exposure was initiated.
+      - name: drug_source_value
+        description: |
+          The source code for the Drug as it appears in the source data. 
+          This code is mapped to a Standard Drug concept in the Standardized Vocabularies and the original code is, stored here for reference.
+      - name: drug_source_concept_id
+        description: A foreign key to a Drug Concept that refers to the code used in the source.
+      - name: route_source_value
+        description: The information about the route of administration as detailed in the source.
+      - name: dose_unit_source_value
+        description: The information about the dose unit as detailed in the sources.
+
+  - name: LOCATION
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/LOCATION.html>      
+    columns:
+      - name: location_id
+        description: A unique identifier for each geographic location.
+        tests:
+          - not_null
+          - unique
+      - name: address_1
+        description: The address field 1, typically used for the street address, as it appears in the source data.
+      - name: address_2
+        description: The address field 2, typically used for additional detail such as buildings, suites, floors, as it appears in the source data.
+      - name: city
+        description: The city field as it appears in the source data.
+      - name: state
+        description: The state field as it appears in the source data.
+      - name: zip
+        description: The zip or postal code.
+      - name: county
+        description: The county.
+      - name: location_source_value
+        description: The verbatim information that is used to uniquely identify the location as it appears in the source data.
+
+  - name: MEASUREMENT
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/MEASUREMENT.html>      
+    columns:
+      - name: measurement_id
+        description: A unique identifier for each Measurement.
+        tests:
+          - not_null
+          - unique
+      - name: person_id
+        tests:
+          - not_null
+        description: A foreign key identifier to the Person about whom the measurement was recorded. The demographic details of that Person are stored in the PERSON table.
+      - name: measurement_concept_id
+        description: A foreign key to the standard measurement concept identifier in the Standardized Vocabularies.
+        tests:
+          - not_null
+      - name: measurement_date
+        description: The date of the Measurement.
+        tests:
+          - not_null
+      - name: measurement_datetime
+        description: |
+          The date and time of the Measurement. (Some database systems don't have a datatype of time. 
+          To accomodate all temporal analyses, datatype datetime can be used (combining measurement_date and measurement_time)Relevant Forum Discussion
+      - name: measurement_type_concept_id
+        description: A foreign key to the predefined Concept in the Standardized Vocabularies reflecting the provenance from where the Measurement record was recorded.
+      - name: operator_concept_id
+        description: |
+          A foreign key identifier to the predefined Concept in the Standardized Vocabularies reflecting the mathematical operator that is applied to the value_as_number. 
+          Operators are <, ≤, =, ≥, >.
+      - name: value_as_number
+        description: A Measurement result where the result is expressed as a numeric value.
+      - name: value_as_concept_id
+        description: A foreign key to a Measurement result represented as a Concept from the Standardized Vocabularies (e.g., positive/negative, present/absent, low/high, etc.).
+      - name: unit_concept_id
+        description: A foreign key to a Standard Concept ID of Measurement Units in the Standardized Vocabularies.
+      - name: range_low
+        description: The lower limit of the normal range of the Measurement result. The lower range is assumed to be of the same unit of measure as the Measurement value.
+      - name: range_high
+        description: The upper limit of the normal range of the Measurement. The upper range is assumed to be of the same unit of measure as the Measurement value.
+      - name: provider_id
+        description: A foreign key to the provider in the PROVIDER table who was responsible for initiating or obtaining the measurement.
+      - name: visit_occurrence_id
+        description: A foreign key to the Visit in the VISIT_OCCURRENCE table during which the Measurement was recorded.
+      - name: measurement_source_value
+        description: |
+          The Measurement name as it appears in the source data. 
+          This code is mapped to a Standard Concept in the Standardized Vocabularies and the original code is stored here for reference.
+      - name: measurement_source_concept_id
+        description: A foreign key to a Concept in the Standard Vocabularies that refers to the code used in the source.
+      - name: unit_source_value
+        description: |
+          The source code for the unit as it appears in the source data. 
+          This code is mapped to a standard unit concept in the Standardized Vocabularies and the original code is stored here for reference.
+      - name: value_source_value
+        description: The source value associated with the content of the value_as_number or value_as_concept_id as stored in the source data.
+
+  - name: OBSERVATION
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/OBSERVATION.html>      
+    columns:
+      - name: observation_id
+        description: A unique identifier for each observation.
+        tests:
+          - not_null
+          - unique
+      - name: person_id
+        description: A foreign key identifier to the Person about whom the observation was recorded. The demographic details of that Person are stored in the PERSON table.
+        tests:
+          - not_null
+      - name: observation_concept_id
+        description: A foreign key to the standard observation concept identifier in the Standardized Vocabularies.
+        tests:
+          - not_null
+      - name: observation_date
+        description: The date of the observation.
+        tests:
+          - not_null
+      - name: observation_datetime
+        description: The date and time of the observation.
+      - name: observation_type_concept_id
+        description: A foreign key to the predefined concept identifier in the Standardized Vocabularies reflecting the type of the observation.
+        tests:
+          - not_null
+      - name: value_as_number
+        description: The observation result stored as a number. This is applicable to observations where the result is expressed as a numeric value.
+      - name: value_as_string
+        description: The observation result stored as a string. This is applicable to observations where the result is expressed as verbatim text.
+      - name: value_as_concept_id
+        description: |
+          A foreign key to an observation result stored as a Concept ID. 
+          This is applicable to observations where the result can be expressed as a Standard Concept from the Standardized Vocabularies (e.g., positive/negative, present/absent, low/high, etc.).
+      - name: qualifier_concept_id
+        description: A foreign key to a Standard Concept ID for a qualifier (e.g., severity of drug-drug interaction alert)
+      - name: unit_concept_id
+        description: A foreign key to a Standard Concept ID of measurement units in the Standardized Vocabularies.
+      - name: provider_id
+        description: A foreign key to the provider in the PROVIDER table who was responsible for making the observation.
+      - name: visit_occurrence_id
+        description: A foreign key to the visit in the VISIT_OCCURRENCE table during which the observation was recorded.
+      - name: observation_source_value
+        description: |
+          The observation code as it appears in the source data. 
+          This code is mapped to a Standard Concept in the Standardized Vocabularies and the original code is, stored here for reference.
+      - name: observation_source_concept_id
+        description: A foreign key to a Concept that refers to the code used in the source.
+      - name: unit_source_value
+        description: |
+          The source code for the unit as it appears in the source data. 
+          This code is mapped to a standard unit concept in the Standardized Vocabularies and the original code is, stored here for reference.
+      - name: qualifier_source_value
+        description: The source value associated with a qualifier to characterize the observation
+
+  - name: PERSON
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/PERSON.html>      
+    columns:
+      - name: person_id
+        description: A unique identifier for each person.
+        tests:
+          - not_null
+          - unique
+      - name: gender_concept_id
+        description: A foreign key that refers to an identifier in the CONCEPT table for the unique gender of the person.
+        tests:
+          - not_null
+      - name: year_of_birth
+        description: |
+          The year of birth of the person. For data sources with date of birth, the year is extracted. 
+          For data sources where the year of birth is not available, the approximate year of birth is derived based on any age group categorization available.
+        tests:
+          - not_null
+      - name: month_of_birth
+        description: The month of birth of the person. For data sources that provide the precise date of birth, the month is extracted and stored in this field.
+      - name: day_of_birth
+        description: The day of the month of birth of the person. For data sources that provide the precise date of birth, the day is extracted and stored in this field.
+      - name: birth_datetime
+        description: The date and time of birth of the person.
+      - name: race_concept_id
+        description: A foreign key that refers to an identifier in the CONCEPT table for the unique race of the person.
+        tests:
+          - not_null
+      - name: ethnicity_concept_id
+        description: A foreign key that refers to the standard concept identifier in the Standardized Vocabularies for the ethnicity of the person.
+        tests:
+          - not_null
+      - name: location_id
+        description: A foreign key to the place of residency for the person in the location table, where the detailed address information is stored.
+      - name: provider_id
+        description: A foreign key to the primary care provider the person is seeing in the provider table.
+      - name: care_site_id
+        description: A foreign key to the site of primary care in the care_site table, where the details of the care site are stored.
+      - name: person_source_value
+        description: |
+          An (encrypted) key derived from the person identifier in the source data. 
+          This is necessary when a use case requires a link back to the person data at the source dataset.
+      - name: gender_source_value
+        description: |
+          The source code for the gender of the person as it appears in the source data. 
+          The gender is mapped to a standard gender concept in the Standardized Vocabularies; the original value is stored here for reference.
+      - name: gender_source_concept_id
+        description: A foreign key to the gender concept that refers to the code used in the source.
+      - name: race_source_value
+        description: |
+          The source code for the race of the person as it appears in the source data. 
+          The person race is mapped to a standard race concept in the Standardized Vocabularies and the original value is stored here for reference.
+      - name: race_source_concept_id
+        description: A foreign key to the race concept that refers to the code used in the source.
+      - name: ethnicity_source_value
+        description: |
+          The source code for the ethnicity of the person as it appears in the source data. 
+          The person ethnicity is mapped to a standard ethnicity concept in the Standardized Vocabularies and the original code is, stored here for reference.
+      - name: ethnicity_source_concept_id
+        description: A foreign key to the ethnicity concept that refers to the code used in the source.
+
+  - name: PROCEDURE_OCCURRENCE
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/PROCEDURE_OCCURRENCE.html>      
+    columns: 
+      - name: procedure_occurrence_id
+        description: A system-generated unique identifier for each Procedure Occurrence.
+        tests:
+          - not_null
+          - unique
+      - name: person_id
+        description: A foreign key identifier to the Person who is subjected to the Procedure. The demographic details of that Person are stored in the PERSON table.
+        tests:
+          - not_null
+      - name: procedure_concept_id
+        description: A foreign key that refers to a standard procedure Concept identifier in the Standardized Vocabularies.
+        tests:
+          - not_null
+      - name: procedure_date
+        description: The date on which the Procedure was performed.
+        tests:
+          - not_null
+      - name: procedure_datetime
+        description: The date and time on which the Procedure was performed.
+      - name: procedure_type_concept_id
+        description: A foreign key to the predefined Concept identifier in the Standardized Vocabularies reflecting the type of source data from which the procedure record is derived.
+        tests:
+          - not_null
+      - name: modifier_concept_id
+        description: A foreign key to a Standard Concept identifier for a modifier to the Procedure (e.g. bilateral)
+      - name: quantity
+        description: The quantity of procedures ordered or administered.
+      - name: provider_id
+        description: A foreign key to the provider in the provider table who was responsible for carrying out the procedure.
+      - name: visit_occurrence_id
+        description: A foreign key to the visit in the visit table during which the Procedure was carried out.
+      - name: procedure_source_value
+        description: |
+          The source code for the Procedure as it appears in the source data. 
+          This code is mapped to a standard procedure Concept in the Standardized Vocabularies and the original code is, stored here for reference. 
+          Procedure source codes are typically ICD-9-Proc, CPT-4, HCPCS or OPCS-4 codes.
+      - name: procedure_source_concept_id
+        description: A foreign key to a Procedure Concept that refers to the code used in the source.
+      - name: qualifier_source_value
+        description: The source code for the qualifier as it appears in the source data.
+
+  - name: PROVIDER
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/PROVIDER.html>      
+    columns: 
+      - name: provider_id
+        description: A unique identifier for each Provider.
+        tests:
+          - not_null
+          - unique
+      - name: provider_name
+        description: A description of the Provider.
+      - name: npi
+        description: The National Provider Identifier (NPI) of the provider.
+      - name: dea
+        description: The Drug Enforcement Administration (DEA) number of the provider.
+      - name: specialty_concept_id
+        description: A foreign key to a Standard Specialty Concept ID in the Standardized Vocabularies.
+      - name: care_site_id
+        description: A foreign key to the main Care Site where the provider is practicing.
+      - name: year_of_birth
+        description: The year of birth of the Provider.
+      - name: gender_concept_id
+        description: The gender of the Provider.
+      - name: provider_source_value
+        description: The identifier used for the Provider in the source data, stored here for reference.
+      - name: specialty_source_value
+        description: The source code for the Provider specialty as it appears in the source data, stored here for reference.
+      - name: specialty_source_concept_id
+        description: A foreign key to a Concept that refers to the code used in the source.
+      - name: gender_source_value
+        description: The gender code for the Provider as it appears in the source data, stored here for reference.
+      - name: gender_source_concept_id
+        description: A foreign key to a Concept that refers to the code used in the source.
+
+  - name: SPECIMEN
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/SPECIMEN.html>    
+    columns:
+      - name: specimen_id
+        description: A unique identifier for each specimen.
+        tests:
+          - not_null
+          - unique
+      - name: person_id
+        description: A foreign key identifier to the Person for whom the Specimen is recorded.
+        tests:
+          - not_null
+      - name: specimen_concept_id
+        description: A foreign key referring to a Standard Concept identifier in the Standardized Vocabularies for the Specimen.
+        tests:
+          - not_null
+      - name: specimen_type_concept_id
+        description: A foreign key referring to the Concept identifier in the Standardized Vocabularies reflecting the system of record from which the Specimen was represented in the source data.
+        tests:
+          - not_null
+      - name: specimen_date
+        description: The date the specimen was obtained from the Person.
+        tests:
+          - not_null
+      - name: specimen_datetime
+        description: The date and time on the date when the Specimen was obtained from the person.
+      - name: quantity
+        description: The amount of specimen collection from the person during the sampling procedure.
+      - name: unit_concept_id
+        description: A foreign key to a Standard Concept identifier for the Unit associated with the numeric quantity of the Specimen collection.
+      - name: anatomic_site_concept_id
+        description: A foreign key to a Standard Concept identifier for the anatomic location of specimen collection.
+      - name: disease_status_concept_id
+        description: A foreign key to a Standard Concept identifier for the Disease Status of specimen collection.
+      - name: specimen_source_id
+        description: The Specimen identifier as it appears in the source data.
+      - name: specimen_source_value
+        description: The Specimen value as it appears in the source data. This value is mapped to a Standard Concept in the Standardized Vocabularies and the original code is, stored here for reference.
+      - name: unit_source_value
+        description: The information about the Unit as detailed in the source.
+      - name: anatomic_site_source_value
+        description: The information about the anatomic site as detailed in the source.
+      - name: disease_status_source_value
+        description: The date the specimen was obtained from the Person.
+
+
+  - name: VISIT_OCCURRENCE
+    description: <http://omop-erd.surge.sh/omop_cdm/tables/VISIT_OCCURRENCE.html>      
+    columns: 
+      - name: visit_occurrence_id
+        description: A unique identifier for each Person's visit or encounter at a healthcare provider.
+        tests:
+          - not_null
+          - unique
+      - name: person_id
+        description: A foreign key identifier to the Person for whom the visit is recorded. The demographic details of that Person are stored in the PERSON table.
+        tests:
+          - not_null
+      - name: visit_concept_id
+        description: A foreign key that refers to a visit Concept identifier in the Standardized Vocabularies.
+        tests:
+          - not_null
+      - name: visit_start_date
+        description: The start date of the visit.
+        tests:
+          - not_null
+      - name: visit_start_datetime
+        description: The date and time of the visit started.
+      - name: visit_end_date
+        description: The end date of the visit. If this is a one-day visit the end date should match the start date.
+        tests:
+          - not_null
+      - name: visit_end_datetime
+        description: The date and time of the visit end.
+      - name: visit_type_concept_id
+        description: A foreign key to the predefined Concept identifier in the Standardized Vocabularies reflecting the type of source data from which the visit record is derived.
+        tests:
+          - not_null
+      - name: provider_id
+        description: A foreign key to the provider in the provider table who was associated with the visit.
+      - name: care_site_id
+        description: A foreign key to the care site in the care site table that was visited.
+      - name: admitting_source_concept_id
+        description: A foreign key to the predefined concept in the Place of Service Vocabulary reflecting the admitting source for a visit.
+      - name: discharge_to_concept_id
+        description: A foreign key to the predefined concept in the Place of Service Vocabulary reflecting the discharge disposition (destination) for a visit.
+      - name: preceding_visit_occurrence_id
+        description: A foreign key to the VISIT_OCCURRENCE table record of the visit immediately preceding this visit.
+      - name: visit_source_value
+        description: The source code for the visit as it appears in the source data.
+      - name: visit_source_concept_id
+        description: A foreign key to a Concept that refers to the code used in the source.
+      - name: admitting_source_value
+        description: The source code for the admitting source as it appears in the source data.
+      - name: discharge_to_source_value
+        description: The source code for the discharge disposition as it appears in the source data.

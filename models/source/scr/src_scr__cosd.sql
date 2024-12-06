@@ -1,0 +1,48 @@
+{{
+    config(
+        materialized='table',
+        tags = ['bulk', 'source', 'scr', 'cosd']
+    )
+}}
+
+select
+  care_id,
+  mrn,
+  nhs_number,
+  cancer_site,
+  icd_code,
+  snomed_diagnosis,
+  diagnosis_date,
+  diagnosis_basis,
+  diagnosis_organisation,
+  performance_status,
+  t_stage_pre_treatment,
+  n_stage_pre_treatment,
+  m_stage_pre_treatment,
+  staging_pre_treatment,
+  tnm_group_pre_treatment,
+  tnm_date_pre_treatment,
+  t_stage_final,
+  n_stage_final,
+  m_stage_final,
+  staging_final,
+  tnm_group_final,
+  tnm_date_final,
+  figo_stage,
+  figo_letter,
+  figo_number,
+  ann_arbor_stage,
+  ann_arbor_symptoms,
+  ann_arbor_extranodality,
+  ann_arbor_bulk,
+  binet_stage,
+  murphy_st_jude_stage,
+  wilms_tumour_stage,
+  rmh_stage_group,
+  barcelona_clinic_liver_cancer_stage,
+  r_iss_stage,
+  comorbidity_evaluation_score,
+  cns_seen_indicator_code,
+  last_edit_time,
+  updated_at
+from {{ source('omop_source', 'src_scr__cosd') }}

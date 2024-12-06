@@ -1,0 +1,90 @@
+version: 2
+models:
+  - name: src_gireport__lowergi_therapeutic
+    description: |
+      Procedures undertaken as part of colonoscopy, flexible sigmoidoscopy or proctoscopy
+
+    columns:
+      - name: person_source_value
+        description: |
+          `Combo ID` is the unique patient identifier within this database but may represent more than one patient.
+          In tables other than the `Patient` table, this column is called 'Patient No'.
+          This becomes `person_source_value` at the source layer which will be replaced by the
+          Flex `patient_id`/`person_source_value` in later layers.
+        tests:
+          - not_null
+
+      - name: visit_occurrence_id
+        description: |
+          This is the unique identifier for each endoscopy episode `[Episode No]`.
+          Each episode may have one or more procedures associated with it.
+        tests:
+          - not_null
+
+      - name: anatomic_site_source_value
+        description: |
+          Colon site where procedure was performe.
+        tests:
+          - accepted_values:
+              name: accepted_values_colon_sites
+              values:
+                - NULL
+                - ""
+                - Anal margin
+                - Anastomosis
+                - Appendiceal orifice
+                - Caecum
+                - Distal ascending
+                - Distal descending
+                - Distal sigmoid
+                - Distal transverse
+                - Hepatic flexure
+                - Ileal pouch
+                - Ileocecal valve
+                - Mid ascending
+                - Mid descending
+                - Mid transverse
+                - Neo-terminal ileum
+                - Proximal ascending
+                - Proximal descending
+                - Proximal sigmoid
+                - Proximal transverse
+                - Rectosigmoid junction
+                - Rectum
+                - Splenic flexure
+                - Terminal ileum
+
+      - name: parent_procedure_source_value
+        description: Type of lower GI endoscopy
+        tests:
+          - not_null
+          - accepted_values:
+              name: accepted_values_lower_gi_endoscopy_types
+              values:
+                - colonoscopy
+                - sigmoidoscopy
+                - proctoscopy
+
+      - name: procedure_source_value
+        description: Name of endoscopic therapy as recorded in source database
+        tests:
+          - not_null
+          - accepted_values:
+              name: accepted_values_lower_gi_therapies
+              values:
+                - Argon beam diathermy
+                - Balloon dilatation
+                - Banding of piles
+                - Clip
+                - EMR
+                - Heat probe
+                - Hot biopsy
+                - Injection
+                - Marking
+                - Polypectomy
+                - RFA
+                - Sigmoidopexy
+                - Stent insertion
+                - Stent removal
+                - Variceal banding
+                - YAG laser

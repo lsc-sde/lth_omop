@@ -1,0 +1,8 @@
+version: 2
+models:
+  - name: stg_flex__vtg_diagnosis
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - visit_number
+            - index_nbr

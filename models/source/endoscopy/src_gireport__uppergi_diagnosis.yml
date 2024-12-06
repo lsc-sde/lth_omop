@@ -1,0 +1,104 @@
+version: 2
+models:
+  - name: src_gireport__uppergi_diagnosis
+    description: |
+      Diagnoses from Upper GI endoscopy that are stored as boolean values in source.
+
+    columns:
+      - name: person_source_value
+        description: |
+          `Combo ID` is the unique patient identifier within this database but may represent more than one patient.
+          In tables other than the `Patient` table, this column is called 'Patient No'.
+          This becomes `person_source_value` at the source layer which will be replaced by the
+          Flex `patient_id`/`person_source_value` in later layers.
+        tests:
+          - not_null
+
+      - name: visit_occurrence_id
+        description: |
+          This is the unique identifier for each endoscopy episode `[Episode No]`.
+          Each episode may have one or more procedures associated with it.
+        tests:
+          - not_null
+
+      - name: condition_source_value
+        description: |
+          The values in this column are obtained by performing an 'UNPIVOT' on a wide table in source.
+          This results in loss of some information that is stored in non-boolean fields.
+          These other fields are loaded separately.
+        tests:
+          - not_null
+          - accepted_values:
+              name: accepted_values_uppergi_diagnoses
+              values:
+                - Duodenum 2nd part not entered
+                - Duodenum angiodysplasia
+                - Duodenum cancer
+                - Duodenum diverticulum
+                - Duodenum duodenitis
+                - Duodenum duodenitis erosive
+                - Duodenum duodenitis non-erosive
+                - Duodenum multiple ulcers
+                - Duodenum normal
+                - Duodenum not entered
+                - Duodenum polyp
+                - Duodenum scar
+                - Duodenum tumour benign
+                - Duodenum tumour malignant
+                - Duodenum ulcer
+                - Oesophagus achalasia
+                - Oesophagus Barrett''s mucosa
+                - Oesophagus benign tumour
+                - Oesophagus cancer
+                - Oesophagus candida
+                - Oesophagus def benign tumour
+                - Oesophagus def cancer
+                - Oesophagus diverticulum
+                - Oesophagus eosinophilia
+                - Oesophagus extrinsic comp
+                - Oesophagus fistula
+                - Oesophagus foreign body
+                - Oesophagus Hiatus hernia
+                - Oesophagus Mallory-Weiss tear
+                - Oesophagus Motility disorder
+                - Oesophagus normal
+                - Oesophagus not entered
+                - Oesophagus oesophagitis
+                - Oesophagus pharyngeal pouch
+                - Oesophagus poylp
+                - Oesophagus reflux
+                - Oesophagus Schatzki ring
+                - Oesophagus stricture
+                - Oesophagus stricture benign
+                - Oesophagus stricture malignant
+                - Oesophagus telangiectasia
+                - Oesophagus ulcer
+                - Oesophagus varices
+                - Oesophagus varices bleed
+                - Oesophagus web
+                - Overall normal
+                - Portal hypertensive gastropathy
+                - Stomach angioma
+                - Stomach cancer
+                - Stomach diefulafoy lesion
+                - Stomach diverticulum
+                - Stomach erosions
+                - Stomach fistula
+                - Stomach foreign body
+                - Stomach gastritis
+                - Stomach gastritis erosive
+                - Stomach gastritis non-erosive
+                - Stomach GAVE
+                - Stomach multiple ulcers
+                - Stomach normal
+                - Stomach not entered
+                - Stomach polyp
+                - Stomach post-surgical
+                - Stomach pyloric stenosis
+                - Stomach scar
+                - Stomach telangiectasia/angioma
+                - Stomach tumour benign
+                - Stomach tumour malignant
+                - Stomach tumour submucosal
+                - Stomach ulcer
+                - Stomach varices
