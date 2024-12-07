@@ -6,7 +6,8 @@ MODEL (
 );
 
 select distinct
-  concat(10, dbo.IDGeneration(location_source_value)) as location_id,
+  -- concat(10, dbo.IDGeneration(location_source_value)) as location_id,
+  postcode as location_id,
   location_source_value,
   42035286 as country_concept_id,
   postcode,
