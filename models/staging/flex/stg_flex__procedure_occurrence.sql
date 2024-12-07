@@ -25,7 +25,7 @@ rad_proc_occ as (
     visit_id as visit_occurrence_id,
     person_source_value as person_id,
     cast(
-      cast((event_id / 864000) - 21550 as datetime) as datetime2(0)
+      cast((event_id / 864000) - 21550 as char(8)) as datetime2(0)
     ) as procedure_datetime,
     provider_source_value as provider_id,
     flex_procedure_id,
