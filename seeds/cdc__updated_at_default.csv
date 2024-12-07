@@ -1,12 +1,12 @@
 model,datasource,updated_at
-fr__measurement_to_observation_sl, flex, 2023-10-01 00:00:00.000
-fr__observation_to_measurement_sl, flex, 2023-10-01 00:00:00.000
+fr__measurement_to_observation_sl,flex,2023-10-01 00:00:00.000
+fr__observation_to_measurement_sl,flex,2023-10-01 00:00:00.000
 MEASUREMENT,flex,2005-01-01 00:00:00.000
 MEASUREMENT,swl,2023-10-01 00:00:00.000
 OBSERVATION,flex,2005-01-01 00:00:00.000
 OBSERVATION,swl,2023-10-01 00:00:00.000
 OBSERVATION,bi,2009-01-01 00:00:00.000
 OBSERVATION,ukcoder,2005-01-01 00:00:00.000
-fr__mother_to_child, flex, 2005-01-01 00:00:00.000
-fr__specimen_to_measurement, flex, 2005-01-01 00:00:00.000
+fr__mother_to_child,flex,2005-01-01 00:00:00.000
+fr__specimen_to_measurement,flex,2005-01-01 00:00:00.000
 VISIT_OCCURRENCE,flex,2005-01-01 00:00:00.000
