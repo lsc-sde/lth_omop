@@ -1,17 +1,15 @@
 
 MODEL (
   name lth_bronze.stg_flex__drug_exposure,
-  kind FULL,
-  cron '@daily',
+  kind VIEW,
+  cron '@daily'
 );
 
 with drug_exp as (
   select
     visit_id as visit_occurrence_id,
     person_source_value,
-    cast(
-      cast((event_id / 864000) - 21550 as char(8)) as datetime2(0)
-    ) as procedure_datetime,
+    cast((event_id / 864000) - 21550 as varchar) as event_ts,
     provider_source_value as provider_id,
     flex_procedure_id,
     flex_procedure_name as procedure_source_value,
@@ -36,8 +34,12 @@ visit_detail as (
 
 select
   c.person_source_value,
-  cast(procedure_datetime as date) as drug_exposure_start_date,
-  procedure_datetime as drug_exposure_start_datetime,
+  dateadd(
+		SECOND,
+		86400*cast(substring(event_ts, charindex('.', event_ts), LEN(event_ts)) as float),
+		dateadd(DAY, cast(substring(event_ts,0, charindex('.', event_ts)) as int), '1900-01-01')
+		) as drug_exposure_start_datetime,
+  cast(drug_exposure_start_datetime as date) as drug_exposure_date,
   cast(provider_id as varchar) as provider_id,
   flex_procedure_id,
   dosage,
