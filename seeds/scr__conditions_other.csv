@@ -1,0 +1,6 @@
+sourceCode,sourceName,sourceFrequency,sourceAutoAssignedConceptIds,ADD_INFO:﻿source_code,matchScore,mappingStatus,equivalence,statusSetBy,statusSetOn,conceptId,conceptName,domainId,mappingType,comment,createdBy,createdOn,assignedReviewer
+G4 - Undifferentiated / anapla,Grade of Differentiation,-1,,Grade of Differentiation,0.69,APPROVED,EQUAL,TIM,1724406876839,4120176,G4 grade,Condition,MAPS_TO,,TIM,1724406874833,
+G2 - Moderately differentiated,Grade of Differentiation,-1,,Grade of Differentiation,0.69,APPROVED,EQUAL,TIM,1724406887466,4041008,G2 grade,Condition,MAPS_TO,,TIM,1724406886965,
+GX - Not appropriate or cannot,Grade of Differentiation,-1,,Grade of Differentiation,0.69,APPROVED,EQUAL,TIM,1724406954854,4264626,Grade not determined,Condition,MAPS_TO,,TIM,1724406954352,
+G1 - Well differentiated,Grade of Differentiation,-1,,Grade of Differentiation,0.69,APPROVED,EQUAL,TIM,1724406994236,4204361,G1 grade,Condition,MAPS_TO,,TIM,1724406993472,
+G3 - Poorly differentiated,Grade of Differentiation,-1,,Grade of Differentiation,0.69,APPROVED,EQUAL,TIM,1724406998716,4264742,G3 grade,Condition,MAPS_TO,,TIM,1724406997853,

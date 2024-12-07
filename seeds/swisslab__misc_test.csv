@@ -1,0 +1,10 @@
+sourceCode,sourceName,sourceFrequency,sourceAutoAssignedConceptIds,matchScore,mappingStatus,equivalence,statusSetBy,statusSetOn,conceptId,conceptName,domainId,mappingType,comment,createdBy,createdOn,assignedReviewer
+Pneumo urine Ag,Pneumo urine Ag,-1,,0.65,APPROVED,EQUAL,vvcb,1694610718532,3003479,Legionella pneumophila Ag [Presence] in Urine,Measurement,MAPS_TO,,<auto>,1694610191777,
+Adenovirus,Adenovirus,-1,,0.69,APPROVED,EQUAL,vvcb,1694610718532,3034465,Adenovirus sp identified in Specimen by Organism specific culture,Measurement,MAPS_TO,,<auto>,1694610191793,
+HPYA (H.pylori),HPYA (H.pylori),-1,,0.14,APPROVED,EQUAL,vvcb,1694610718532,3013139,Helicobacter pylori Ag [Presence] in Stool,Measurement,MAPS_TO,,vvcb,1694610709542,
+Legionella urine Ag,Legionella urine Ag,-1,,0.72,APPROVED,EQUAL,vvcb,1694610718532,3047726,Legionella sp identified in Urine by Organism specific culture,Measurement,MAPS_TO,,<auto>,1694610191839,
+Crypto/giardia RIDA,Crypto/giardia RIDA,-1,,0.27,APPROVED,EQUAL,vvcb,1694610718532,3052347,Giardia lamblia+Cryptosporidium sp Ag [Presence] in Stool,Measurement,MAPS_TO,,<auto>,1694610192418,
+C.difficile,C.difficile,-1,,0.40,APPROVED,EQUAL,vvcb,1694610718532,3032057,Clostridioides difficile [Presence] in Stool,Measurement,MAPS_TO,,vvcb,1694610330450,
+Quadramed req.,Quadramed req.,-1,,0.39,FLAGGED,EQUAL,vvcb,1694610198075,3034646,Quadrant Breast,Measurement,MAPS_TO,,<auto>,1694610192496,
+Rotavirus,Rotavirus,-1,,0.56,APPROVED,EQUAL,vvcb,1694610721071,3008284,Rotavirus Ag [Presence] in Stool,Measurement,MAPS_TO,,vvcb,1694610586750,
+Cepheid TB PCR,Cepheid TB PCR,-1,,0.33,APPROVED,EQUAL,vvcb,1694610721071,3036432,Mycobacterium tuberculosis genotype [Identifier] in Isolate,Measurement,MAPS_TO,,<auto>,1694610192809,

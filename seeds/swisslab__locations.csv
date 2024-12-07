@@ -1,0 +1,133 @@
+Location_Code,Description,Quadramed_Code,Flagged
+1,Ward 1          ,110,No
+10,Ward 10         ,157,No
+11,Ward 11         ,354,No
+12,Ward 12         ,155,No
+14,Ward 14         ,154,No
+15,Ward 15         ,148,No
+16,Ward 16         ,159,No
+17,Ward 17         ,147,No
+18,Ward 18         ,142,No
+20,Ward 20         ,171,No
+21,Ward 21         ,144,No
+23,Ward 23         ,140,No
+24,Ward 24         ,136,No
+25,Ward 25         ,139,No
+2A              ,Ward 2a         ,133,No
+2B              ,Ward 2b         ,134,No
+2C              ,Ward 2c         ,686,No
+3,Ward 3          ,112,No
+4,Ward 4          ,135,No
+5,Ward 5          ,542,No
+7,Ward 7          ,,Yes
+8,Ward 8          ,149,No
+8A              ,Ward 8a         ,149,No
+8B              ,Ward 8b         ,149,No
+8C              ,Ward 8c         ,149,No
+ADL             ,Adlington Wd    ,252,No
+AE              ,A&E RPH         ,28,No
+BAR             ,Barton Wd SGU   ,182,No
+BLEA            ,Bleasdale Wd    ,185,No
+BRIN            ,Brindle Wd CDH  ,247,No
+BRINA           ,Brindle A CDH   ,247,No
+BRINB           ,Brindle B CDH   ,247,No
+CCL             ,Cardiac Cath Lab,335,No
+CCU             ,CCU RPH         ,143,No
+CHAE            ,A&E CDH         ,232,No
+CHCCU           ,Coronary CU CDH ,243,No
+CHDIA           ,Dial Unit CDH   ,236,No
+CHHDU           ,HDU CDH         ,,Yes
+CHICU           ,Crit Care CDH   ,237,No
+CHMAU           ,MAU CDH         ,242,No
+CIU             ,Clin Invest Unit,483,No
+CRCU            ,Crit Care Unit  ,129,No
+CRCU1           ,Crit Care Area 1,129,No
+CRCU2           ,Crit Care Area 2,129,No
+CRCU3           ,CritCare Area 3 ,129,No
+CU              ,Card Unit CDH   ,373,No
+DAYTC           ,Day Treatment Ct,105,No
+DCU             ,Day Care Unit RP,,Yes
+DEL             ,Del Suite SGU   ,7,No
+DIA             ,Dialysis Unit RP,123,No
+DIS             ,Discharge Lounge,116,No
+EISC            ,Early Int Serv  ,,Yes
+EPAU            ,Early Preg AU SG,85,No
+FELL            ,Fell View SU SGU,183,No
+G1              ,Gynae Wd SGU    ,9,No
+GPAU            ,Emergency Med De,,Yes
+GYN             ,Rivington Wd CDH,344,No
+HAZ             ,Hazelwood Wd CDH,358,No
+HTWA            ,HDU Theatre     ,,Yes
+LDU             ,Longton DU CDH  ,294,No
+LEYL            ,Leyland Wd CDH  ,239,No
+LLAK            ,L&L Radio IP    ,,Yes
+LOS             ,Lostock Wd CDH  ,102,No
+M1              ,Mat Wd SGU      ,58,No
+MAT             ,Mat Wd CDH      ,,Yes
+MAU             ,MAU RPH         ,160,No
+NNU             ,Neonatal Unit RP,5,No
+PNRU            ,Preston Neuro RU,333,No
+RAD             ,Radiology       ,283,No
+RAW             ,Raw & WIn Wd CDH,378,No
+RDW             ,Ribblesdale Wd  ,146,No
+RWA             ,Rookwood A CDH  ,254,No
+RWB             ,Rookwood B CDH  ,244,No
+SEL             ,Sellars Wd CDH  ,255,No
+SGMDU           ,Mat DU SGU      ,58,No
+SSW             ,Short Stay Wd   ,59,Yes
+SUM             ,Sumner Wd CDH   ,320,No
+CRCU4           ,CritCare Area 4 ,129,No
+YDU             ,Neuro Rehab Unit,333,No
+NRU             ,Neuro Rehab Unit,333,No
+CRCU5           ,CritCare Area 5 ,129,No
+MTW             ,Major Trauma Wd ,441,No
+19,Ward 19         ,158,No
+UCC             ,Urgent Care Cent,456,No
+UCCCDH          ,Urgent Care Ctr ,443,No
+CCHEM           ,Chemo Unit CDH  ,457,No
+AHNI            ,Antrim Hosp     ,,Yes
+RECOV           ,Recovery 3 Main ,679,No
+AEC             ,Ambulatory Emerg,465,No
+SSWC            ,Short Stay UnitC,392,No
+SAC             ,Surgical Ambulat,201,No
+THE             ,"Theatre,RPH     ",57,No
+CHCIU           ,CIU Chorley     ,527,No
+THREN           ,Renal Theatre   ,475,No
+WWC             ,Worden Ward     ,424,No
+MEDAC           ,Medical Ambulato,536,No
+SAU             ,Surgical Assessm,485,No
+DTFV            ,Day Treatment FV,105,No
+RHCU            ,Respiratory High,487,No
+EOU             ,Emergency Obs Un,537,No
+AST             ,Astley Ward     ,250,No
+MEDE            ,Medical Escalati,490,No
+CHBEL           ,Belmont AC      ,256,No
+SDEC            ,Same Day EC     ,497,No
+CRCUB           ,CRCU Bluebell   ,129,No
+CRCUO           ,CRCU Orchid     ,129,No
+CRCUS           ,CRCU Sunflower  ,129,No
+CRCUI           ,CRCU Iris       ,129,No
+CRCUL           ,CRCU Lavender   ,129,No
+MDC             ,Medical Day Case,498,No
+AFU             ,Acute Frailty Un,548,No
+CBC             ,Chorley Birth Ce,554,No
+AUR             ,Avondale Unit Re,126,No
+POC             ,Point of Care   ,,Yes
+EHCW            ,Enhanced High Ca,508,No
+WD8PAU          ,Ward 8 PAU      ,510,No
+WD8CDC          ,Ward 8 Day Case ,509,No
+SECU            ,Surgical Enhance,556,No
+W2BRIB          ,W2B Ribblesdale ,146,No
+GAU             ,Gynae Assess Uni,512,No
+FVIEW           ,Fell View       ,518,No
+FELLVIEW        ,Fellview        ,518,No
+CUAST           ,CIU Astley      ,557,No
+W2B3T           ,Ward 2B - W3 Tem,519,No
+RAWDCU          ,Rawcliffe Day Un,554,No
+NSUB            ,Nightingale Surg,546,No
+NSUA            ,Nightingale Surg,566,No
+CDEN            ,Cuerden Ward    ,559,No
+RASU            ,Respiratory AU  ,495,No
+NHCU            ,Neuro High Care ,685,No
+FINH            ,Finney House CH ,,No
+AAU             ,Acute Assessment,695,No
