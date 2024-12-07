@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_flex__visit_detail_ip,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

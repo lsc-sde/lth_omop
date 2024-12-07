@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_flex__care_site_op,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 /*

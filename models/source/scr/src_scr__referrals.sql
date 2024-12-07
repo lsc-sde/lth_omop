@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_scr__referrals,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

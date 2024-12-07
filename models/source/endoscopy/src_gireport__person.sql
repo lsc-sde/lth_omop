@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_gireport__person,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

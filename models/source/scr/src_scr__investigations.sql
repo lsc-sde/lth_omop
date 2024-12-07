@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_scr__investigations,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

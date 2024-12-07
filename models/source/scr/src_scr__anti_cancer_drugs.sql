@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_scr__anti_cancer_drugs,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

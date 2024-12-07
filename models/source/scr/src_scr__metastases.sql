@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_scr__metastases,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

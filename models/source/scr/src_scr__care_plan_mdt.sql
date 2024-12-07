@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_scr__care_plan_mdt,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

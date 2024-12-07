@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_sl__bacteriology_live,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

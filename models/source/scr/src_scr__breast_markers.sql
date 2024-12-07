@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_scr__breast_markers,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

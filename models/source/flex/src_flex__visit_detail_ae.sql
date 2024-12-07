@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_flex__visit_detail_ae,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 

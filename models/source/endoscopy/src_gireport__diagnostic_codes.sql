@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.src_gireport__diagnostic_codes,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 
