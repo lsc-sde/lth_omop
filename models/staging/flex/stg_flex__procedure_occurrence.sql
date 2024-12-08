@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.stg_flex__procedure_occurrence,
-  kind FULL,
+  kind VIEW,
   cron '@daily',
 );
 
@@ -24,9 +24,8 @@ rad_proc_occ as (
   select
     visit_id as visit_occurrence_id,
     person_source_value as person_id,
-    cast(
-      cast((event_id / 864000) - 21550 as char(8)) as datetime2(0)
-    ) as procedure_datetime,
+    cast((event_id / 864000) - 21550 as varchar) as event_ts,
+    @convert_event_ts_to_datetime(event_ts) as procedure_datetime,
     provider_source_value as provider_id,
     flex_procedure_id,
     flex_procedure_name as procedure_source_value,
