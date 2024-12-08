@@ -6,7 +6,7 @@ MODEL (
 );
 
 select
-  trim(location_id) as location_id,
+  trim(location_id)::VARCHAR(10) as location_id,
   location_source_value,
   country_concept_id,
   country_source_value,

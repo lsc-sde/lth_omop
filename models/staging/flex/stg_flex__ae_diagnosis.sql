@@ -3,6 +3,9 @@ MODEL (
   name lth_bronze.stg_flex__ae_diagnosis,
   kind FULL,
   cron '@daily',
+  audits (
+    not_null(columns := (visit_id, patient_id, last_edit_time, updated_at, diagnosis_list))
+  )
 );
 
 select

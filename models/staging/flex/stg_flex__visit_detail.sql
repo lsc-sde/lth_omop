@@ -37,21 +37,21 @@ ae_detail as (
 )
 
 select
-  a.patient_id,
-  a.visit_number,
-  visit_type,
-  location_id,
-  checkin_datetime,
-  checkout_datetime,
-  a.last_edit_time,
-  a.updated_at,
+  a.patient_id::BIGINT,
+  a.visit_number::VARCHAR(50),
+  visit_type::VARCHAR(10),
+  location_id::VARCHAR(50),
+  checkin_datetime::DATETIME,
+  checkout_datetime::DATETIME,
+  a.last_edit_time::DATETIME,
+  a.updated_at::DATETIME,
   concat(
     coalesce(ft.first_visit_id, a.visit_id),
     row_number() over (
       partition by coalesce(ft.first_visit_id, a.visit_id)
       order by checkin_datetime
     )
-  ) as visit_detail_id,
+  )::BIGINT as visit_detail_id,
   coalesce(ft.first_visit_id, a.visit_id) as visit_id
 from (
   select
