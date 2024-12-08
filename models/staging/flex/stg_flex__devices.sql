@@ -44,14 +44,14 @@ visits as (
 )
 
 select
-  isnull(v.first_visit_id, d.visit_id) as visit_id::BIGINT,
+  isnull(v.first_visit_id, d.visit_id)::BIGINT as visit_id,
   patient_id::BIGINT,
   date_time::DATETIME,
-  manufacturer::VARCHAR,
-  device_type_group::VARCHAR,
-  device_type::VARCHAR,
-  device_lot_number::TEXT,
-  device_details::TEXT,
+  manufacturer::VARCHAR(MAX),
+  device_type_group::VARCHAR(MAX),
+  device_type::VARCHAR(MAX),
+  device_lot_number::VARCHAR(MAX),
+  device_details::VARCHAR(MAX),
   expiry_date::DATETIME
 from devices d
 left join visits as v
