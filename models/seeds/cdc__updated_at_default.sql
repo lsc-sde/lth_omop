@@ -5,8 +5,8 @@ MODEL (
     path '$root/seeds/cdc__updated_at_default.csv'
   ),
    columns (
-    model VARCHAR,
-    datasource VARCHAR,
-    updated_at DATETIME2
+    model VARCHAR(50),
+    datasource VARCHAR(50),
+    updated_at DATETIME
   )
 );
