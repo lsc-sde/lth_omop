@@ -1,0 +1,808 @@
+- name: '[dbt_omop].[admin].[postcodes]'
+  columns:
+    pcd7: NCHAR(10)
+    pcd8: NCHAR(10)
+    pcds: VARCHAR(50)
+    dointr: INTEGER
+    doterm: INTEGER
+    usertype: VARCHAR(50)
+    oa21cd: NCHAR(10)
+    lsoa21cd: NCHAR(10)
+    msoa21cd: NCHAR(10)
+    ladcd: NCHAR(10)
+    lsoa21nm: VARCHAR(50)
+    msoa21nm: VARCHAR(50)
+    ladnm: VARCHAR(50)
+    ladnmw: VARCHAR(50)
+- name: '[dbt_omop].[source].[src_bi__referrals]'
+  columns:
+    referral_received_date: DATETIME2
+    patient_id: NUMERIC(12, 0)
+    visit_id: NUMERIC(12, 0)
+    referral_source: VARCHAR(255)
+    gp_priority: VARCHAR(255)
+    consultant_priority: VARCHAR(255)
+    consultant_code: VARCHAR(255)
+    referring_emp_code: INTEGER
+    priority: VARCHAR(255)
+    two_week_referral: NVARCHAR(50)
+    suspected_cancer_type: VARCHAR(255)
+    treatment_function_code: VARCHAR(255)
+    treatment_function_name: VARCHAR(255)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__ae_diagnosis]'
+  columns:
+    visit_id: NUMERIC(12, 0)
+    patient_id: NUMERIC(12, 0)
+    diag_list: NVARCHAR(2048)
+    activation_time: DATETIME2
+    admission_date_time: DATETIME2
+    discharge_date_time: DATETIME2
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__ae_procedures]'
+  columns:
+    visit_id: NUMERIC(12, 0)
+    patient_id: NUMERIC(12, 0)
+    list: NVARCHAR(2048)
+    activation_time: DATETIME2
+    admission_date_time: DATETIME2
+    discharge_date_time: DATETIME2
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__care_site_gp]'
+  columns:
+    care_site_id: NVARCHAR(MAX)
+    care_site_name: VARCHAR(50)
+    care_site_source_value: VARCHAR(16)
+    care_site_location: VARCHAR(16)
+- name: '[dbt_omop].[source].[src_flex__care_site_ip]'
+  columns:
+    care_site_id: NVARCHAR(MAX)
+    location_id: NVARCHAR(12)
+    area: NVARCHAR(80)
+    subarea: NVARCHAR(80)
+    sub_subarea: NVARCHAR(80)
+    facility: NVARCHAR(100)
+- name: '[dbt_omop].[source].[src_flex__care_site_op]'
+  columns:
+    care_site_id: NVARCHAR(MAX)
+    care_site_name: NVARCHAR(100)
+    care_site_source_value: NVARCHAR(500)
+    location_id: NVARCHAR(1)
+- name: '[dbt_omop].[source].[src_flex__cathether_devices]'
+  columns:
+    visit_id: NUMERIC(12, 0)
+    patient_id: NUMERIC(12, 0)
+    date_time: DATETIME2
+    manufacturer: NVARCHAR(1023)
+    cath_type: NVARCHAR(1023)
+    lot_number: NVARCHAR(1023)
+    cath_details: NVARCHAR(1023)
+- name: '[dbt_omop].[source].[src_flex__emp_consultant]'
+  columns:
+    cons_org_code: NVARCHAR(101)
+    cons_emp_provider_id: NUMERIC(12, 0)
+    cons_provider: NVARCHAR(60)
+- name: '[dbt_omop].[source].[src_flex__emp_facility_med_spec]'
+  columns:
+    emp_provider_id: NUMERIC(12, 0)
+    facility_id: NUMERIC(12, 0)
+    physician_service_id: NVARCHAR(12)
+    item_nbr: NUMERIC(12, 0)
+- name: '[dbt_omop].[source].[src_flex__emp_provider]'
+  columns:
+    name: NVARCHAR(60)
+    emp_provider_id: NUMERIC(12, 0)
+    provider_id: BIGINT
+- name: '[dbt_omop].[source].[src_flex__emp_type]'
+  columns:
+    emp_type_id: NUMERIC(12, 0)
+    name: NVARCHAR(60)
+- name: '[dbt_omop].[source].[src_flex__emp_type_emp_facility]'
+  columns:
+    emp_type_id: NUMERIC(12, 0)
+    emp_provider_id: NUMERIC(12, 0)
+    facility_id: NUMERIC(12, 0)
+- name: '[dbt_omop].[source].[src_flex__implant_devices]'
+  columns:
+    visit_id: NUMERIC(12, 0)
+    patient_id: NUMERIC(12, 0)
+    date_time: DATETIME2
+    multi_field_occurrence_number: NUMERIC(3, 0)
+    manufacturer: NVARCHAR(1023)
+    theatre_implants: NVARCHAR(1023)
+    sterilisation: NVARCHAR(1023)
+    expiry_date: NVARCHAR(1023)
+    ammendments: NVARCHAR(1023)
+    code_number: NVARCHAR(1023)
+    batch_lot_number: NVARCHAR(1023)
+- name: '[dbt_omop].[source].[src_flex__medical_specialty]'
+  columns:
+    physician_service_id: NVARCHAR(12)
+    name: NVARCHAR(130)
+    facility_id: NUMERIC(12, 0)
+    parent_physician_service_id: NVARCHAR(12)
+- name: '[dbt_omop].[source].[src_flex__person]'
+  columns:
+    person_source_value: NUMERIC(12, 0)
+    gender_source_value: NVARCHAR(8)
+    race_source_value: NVARCHAR(100)
+    mailing_code: NVARCHAR(50)
+    collapsed_into_patient_id: NUMERIC(12, 0)
+    provider_id: NUMERIC(12, 0)
+    gp_prac_code: NVARCHAR(12)
+    mrn: NVARCHAR(20)
+    nhs_number: NUMERIC(10, 0)
+    mother_patient_id: NUMERIC(12, 0)
+    birth_datetime: DATETIME2
+    death_datetime: DATETIME2
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__procedure_event]'
+  columns:
+    visit_id: NUMERIC(12, 0)
+    event_id: NUMERIC(12, 0)
+    order_span_id: NUMERIC(12, 0)
+    order_span_state_id: NUMERIC(12, 0)
+    person_source_value: NUMERIC(12, 0)
+    provider_source_value: NUMERIC(12, 0)
+    flex_procedure_id: NUMERIC(12, 0)
+    flex_procedure_name: NVARCHAR(175)
+    kardex_group_id: NUMERIC(12, 0)
+    device_id: NUMERIC(12, 0)
+    dosage: NVARCHAR(75)
+    adm_route: NVARCHAR(75)
+    prn_dosage: NVARCHAR(25)
+    event_status_id: NUMERIC(12, 0)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__result]'
+  columns:
+    result_id: BIGINT
+    visit_id: NUMERIC(12, 0)
+    event_id: NUMERIC(12, 0)
+    person_source_value: NUMERIC(12, 0)
+    event_date_time: DATETIME2
+    data_element_id: NVARCHAR(25)
+    procedure_name: NVARCHAR(175)
+    kardex_group_id: NUMERIC(12, 0)
+    field_name: NVARCHAR(500)
+    result_value: NVARCHAR(1300)
+    trimmed_result_value: NVARCHAR(1300)
+    display_unit: NVARCHAR(100)
+    event_status_id: NUMERIC(12, 0)
+    emp_provider_id: NUMERIC(12, 0)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__visit_detail_ae]'
+  columns:
+    patient_id: NUMERIC(12, 0)
+    visit_id: NUMERIC(12, 0)
+    visit_number: NVARCHAR(40)
+    visit_segment_number: NUMERIC(12, 0)
+    visit_type_id: NUMERIC(12, 0)
+    visit_subtype_id: NUMERIC(12, 0)
+    visit_status_id: NUMERIC(12, 0)
+    facility_id: NUMERIC(12, 0)
+    location_id: NVARCHAR(12)
+    service_type: NVARCHAR(14)
+    admitting_emp_provider_id: NUMERIC(12, 0)
+    date_time_in: DATETIME2
+    date_time_out: DATETIME2
+    activation_time: DATETIME2
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__visit_detail_ip]'
+  columns:
+    visit_id: NUMERIC(12, 0)
+    visit_number: NVARCHAR(40)
+    patient_id: NUMERIC(12, 0)
+    activation_time: DATETIME2
+    admission_date_time: DATETIME2
+    discharge_date_time: DATETIME2
+    location_id: NVARCHAR(25)
+    location_hx_time: DATETIME2
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__visit_segment]'
+  columns:
+    person_source_value: NUMERIC(12, 0)
+    visit_id: NUMERIC(12, 0)
+    visit_number: NVARCHAR(40)
+    visit_type_id: NUMERIC(12, 0)
+    visit_subtype_id: NUMERIC(12, 0)
+    visit_status_id: NUMERIC(12, 0)
+    admission_source: FLOAT(53)
+    facility_id: NUMERIC(12, 0)
+    attending_emp_provider_id: NUMERIC(12, 0)
+    activation_time: DATETIME2
+    admission_date_time: DATETIME2
+    discharge_date_time: DATETIME2
+    discharge_type_id: NUMERIC(12, 0)
+    discharge_dest_code: NVARCHAR(1023)
+    discharge_dest_value: NVARCHAR(1300)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__vtg_diagnosis]'
+  columns:
+    visit_number: NVARCHAR(148)
+    episode_id: NVARCHAR(40)
+    index_nbr: FLOAT(53)
+    icd10_code: NVARCHAR(50)
+    provider_source_value: NVARCHAR(101)
+    episode_start_dt: DATETIME2
+    episode_end_dt: DATETIME2
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_flex__vtg_procedure]'
+  columns:
+    visit_number: NVARCHAR(148)
+    episode_id: NVARCHAR(40)
+    index_nbr: FLOAT(53)
+    opcs4_code: NVARCHAR(18)
+    provider_source_value: NVARCHAR(30)
+    procedure_date: DATETIME2
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_gireport__condition_occurrence]'
+  columns:
+    person_source_value: NVARCHAR(12)
+    visit_occurrence_id: INTEGER
+    condition_source_value: NVARCHAR(128)
+- name: '[dbt_omop].[source].[src_gireport__diagnostic_codes]'
+  columns:
+    table_name: NVARCHAR(50)
+    field_name: NVARCHAR(50)
+    condition_source_value: NVARCHAR(50)
+- name: '[dbt_omop].[source].[src_gireport__lowergi_diagnosis]'
+  columns:
+    person_source_value: NVARCHAR(12)
+    visit_occurrence_id: INTEGER
+    condition_source_value: NVARCHAR(128)
+- name: '[dbt_omop].[source].[src_gireport__lowergi_procedure]'
+  columns:
+    person_source_value: NVARCHAR(12)
+    visit_occurrence_id: INTEGER
+    care_site_id: SMALLINT
+    procedure_date: DATE
+    procedure_datetime: DATETIME2
+    provider_id: NVARCHAR(12)
+    procedure_concept_id: INTEGER
+    procedure_source_value: VARCHAR(13)
+- name: '[dbt_omop].[source].[src_gireport__lowergi_therapeutic]'
+  columns:
+    person_source_value: NVARCHAR(12)
+    visit_occurrence_id: INTEGER
+    anatomic_site_source_value: NVARCHAR(35)
+    parent_procedure_source_value: VARCHAR(13)
+    procedure_source_value: NVARCHAR(128)
+- name: '[dbt_omop].[source].[src_gireport__person]'
+  columns:
+    mrn: NVARCHAR(50)
+    person_source_value: NVARCHAR(12)
+    nhs_number: NUMERIC(18, 0)
+- name: '[dbt_omop].[source].[src_gireport__uppergi_diagnosis]'
+  columns:
+    person_source_value: NVARCHAR(12)
+    visit_occurrence_id: INTEGER
+    condition_source_value: NVARCHAR(128)
+- name: '[dbt_omop].[source].[src_gireport__uppergi_procedure]'
+  columns:
+    person_source_value: NVARCHAR(12)
+    visit_occurrence_id: INTEGER
+    care_site_id: SMALLINT
+    procedure_date: DATE
+    procedure_datetime: DATETIME2
+    procedure_concept_id: INTEGER
+    procedure_source_value: VARCHAR(3)
+    provider_id: NVARCHAR(12)
+- name: '[dbt_omop].[source].[src_scr__anti_cancer_drugs]'
+  columns:
+    care_id: INTEGER
+    consultant: VARCHAR(59)
+    cancer_site: VARCHAR(50)
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    date_decision_to_treat: DATETIME2
+    organisation: NVARCHAR(250)
+    date_treatment_start: DATETIME2
+    treatment_site_code: VARCHAR(5)
+    organisation_name: NVARCHAR(250)
+    planned_cycles: VARCHAR(10)
+    chemo_radiotherapy: VARCHAR(3)
+    treatment_event_type: VARCHAR(100)
+    treatment_setting: VARCHAR(50)
+    clinical_trial: VARCHAR(3)
+    drug_therapy_type: VARCHAR(50)
+    treatment_intent: VARCHAR(50)
+    adjunctive_therapy: VARCHAR(50)
+    route_of_administration: VARCHAR(50)
+    drug_regiment_acronym: VARCHAR(255)
+    tace_performed_indicator: VARCHAR(9)
+    chemo_cons_age_spec: VARCHAR(50)
+    rev_end_date: DATETIME2
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__brachytherapy]'
+  columns:
+    care_id: INTEGER
+    cancer_site: VARCHAR(50)
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    consultant: VARCHAR(59)
+    date_decision_to_treat: VARCHAR(30)
+    organisation_dtt: NVARCHAR(250)
+    date_treatment_start: VARCHAR(30)
+    organisation_site_code: VARCHAR(5)
+    organisation_name: NVARCHAR(250)
+    treatment_event_type: VARCHAR(100)
+    treatment_setting: VARCHAR(50)
+    clinical_trial: VARCHAR(7)
+    treatment_intent: VARCHAR(50)
+    adjunctive_therapy: VARCHAR(50)
+    short_long_course: VARCHAR(5)
+    treatment_site: VARCHAR(50)
+    anatomical_site: VARCHAR(255)
+    brachytherapy_type: VARCHAR(50)
+    isotype_type: VARCHAR(50)
+    delivery_type: VARCHAR(50)
+    anaesthetic_required: VARCHAR(5)
+    insealed_source_pt_type: VARCHAR(50)
+    prescribed_dose: FLOAT
+    prescribed_duration: INTEGER
+    prescribed_functions: FLOAT
+    actual_dose: FLOAT
+    actual_duration: INTEGER
+    no_of_insertions: INTEGER
+    dose_per_insertion: FLOAT
+    dose_rate: VARCHAR(50)
+    treatment_outcome: NVARCHAR(50)
+    end_date: VARCHAR(30)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__breast_markers]'
+  columns:
+    care_id: INTEGER
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    report_number: VARCHAR(50)
+    tumour_marker_date: DATETIME2
+    ps2: VARCHAR(50)
+    ps2_score: FLOAT
+    er: VARCHAR(50)
+    er_score: FLOAT
+    pr: VARCHAR(50)
+    pr_score: FLOAT
+    c_erb_b2: VARCHAR(50)
+    c_erb_b2_score: FLOAT
+    bcl_2: VARCHAR(50)
+    bcl_2_score: FLOAT
+    her2: VARCHAR(50)
+    her2_fish: VARCHAR(50)
+- name: '[dbt_omop].[source].[src_scr__care_plan_mdt]'
+  columns:
+    care_id: INTEGER
+    cancer_site: VARCHAR(50)
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    care_plan_agreed_date: DATETIME2
+    organisation: NVARCHAR(250)
+    cancer_care_plan_intent: VARCHAR(50)
+    first_treatment: VARCHAR(255)
+    second_treatment: VARCHAR(255)
+    third_treatment: VARCHAR(255)
+    fourth_treatment: VARCHAR(255)
+    to_be_actioned_by: VARCHAR(255)
+    performance_status: VARCHAR(183)
+    comorbidity_index: VARCHAR(50)
+    was_patient_discussed_mdt: VARCHAR(3)
+    mdt_meeting_site: VARCHAR(50)
+    sub_site: VARCHAR(50)
+    mdt_meeting_date: DATETIME2
+    location: VARCHAR(50)
+    care_plan_agreed_mdt: VARCHAR(3)
+    mdt_comments: VARCHAR(150)
+    referred_to: VARCHAR(50)
+    who_referred_to: VARCHAR(59)
+    reviewed_pathologist_before_mdt: VARCHAR(5)
+    reviewed_by: VARCHAR(50)
+    no_treatment_reason: VARCHAR(50)
+    discussed_network_mdt: VARCHAR(5)
+    date_network_meeting: DATETIME2
+    network_decision: VARCHAR(150)
+    network_to_be_actioned_by: VARCHAR(255)
+    network_comments: VARCHAR(150)
+    egfr_requested_status: VARCHAR(3)
+    resective_path_discussed: VARCHAR(3)
+    restorative_dentist_asked_assessment_needed: VARCHAR(18)
+    restorative_dentist_assessment_needed: VARCHAR(3)
+    discussion_type: VARCHAR(50)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__cosd]'
+  columns:
+    care_id: INTEGER
+    mrn: VARCHAR(20)
+    nhs_number: VARCHAR(10)
+    cancer_site: VARCHAR(50)
+    icd_code: VARCHAR(5)
+    snomed_diagnosis: BIGINT
+    diagnosis_date: DATETIME2
+    diagnosis_basis: VARCHAR(50)
+    diagnosis_organisation: VARCHAR(5)
+    performance_status: VARCHAR(183)
+    t_stage_pre_treatment: VARCHAR(11)
+    n_stage_pre_treatment: VARCHAR(11)
+    m_stage_pre_treatment: VARCHAR(11)
+    staging_pre_treatment: VARCHAR(8000)
+    tnm_group_pre_treatment: VARCHAR(20)
+    tnm_date_pre_treatment: DATETIME2
+    t_stage_final: VARCHAR(11)
+    n_stage_final: VARCHAR(11)
+    m_stage_final: VARCHAR(11)
+    staging_final: VARCHAR(8000)
+    tnm_group_final: VARCHAR(20)
+    tnm_date_final: DATETIME2
+    figo_stage: VARCHAR(3)
+    figo_letter: VARCHAR(3)
+    figo_number: VARCHAR(3)
+    ann_arbor_stage: VARCHAR(50)
+    ann_arbor_symptoms: VARCHAR(50)
+    ann_arbor_extranodality: VARCHAR(50)
+    ann_arbor_bulk: VARCHAR(30)
+    binet_stage: VARCHAR(50)
+    murphy_st_jude_stage: VARCHAR(50)
+    wilms_tumour_stage: VARCHAR(50)
+    rmh_stage_group: VARCHAR(5)
+    barcelona_clinic_liver_cancer_stage: VARCHAR(20)
+    r_iss_stage: INTEGER
+    comorbidity_evaluation_score: VARCHAR(50)
+    cns_seen_indicator_code: VARCHAR(255)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__diagnosis]'
+  columns:
+    care_id: INTEGER
+    cancer_site: VARCHAR(50)
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    patient_status: VARCHAR(100)
+    assessed_by: VARCHAR(50)
+    tumour_status: VARCHAR(50)
+    date_of_diagnosis: DATETIME2
+    other_reason: VARCHAR(50)
+    date_of_new_referral: DATETIME2
+    new_tumour_site: VARCHAR(50)
+    date_patient_informed: DATETIME2
+    non_cancer_diagnosis_chapter: VARCHAR(213)
+    non_cancer_diagnosis_group: VARCHAR(203)
+    icd_primary_diagnosis: VARCHAR(203)
+    snomed_primary_diagnosis: NVARCHAR(283)
+    secondary_diagnosis: VARCHAR(203)
+    laterality: VARCHAR(50)
+    non_cancer_details: VARCHAR(255)
+    organisation: NVARCHAR(250)
+    basis_of_diagnosis: VARCHAR(50)
+    histology: VARCHAR(133)
+    grade_of_differentiation: VARCHAR(105)
+    date_referred_cns: DATETIME2
+    date_first_seen_cns: DATETIME2
+    other_tumour_site_primary_diagnosis: VARCHAR(203)
+    other_tumour_site_secondary_diagnosis: VARCHAR(203)
+    date_gp_infromed_of_diagnosis: DATETIME2
+    gp_informed_of_diagnosis: VARCHAR(3)
+    spec_nurse_present_when_informed: VARCHAR(3)
+    relative_carer_informed: VARCHAR(3)
+    date_referred_tertiary_centre: DATETIME2
+    organisation_tertiary_centre: NVARCHAR(250)
+    reason_for_ref_tertiary_care: VARCHAR(100)
+    topography_icd03: VARCHAR(7)
+    primary_diag_subsidiary_comment: VARCHAR(50)
+    consultant_diagnosis: VARCHAR(50)
+    consultant_age_specialty_diagnosis: VARCHAR(50)
+    pathway_end_date_faster_diag: DATETIME2
+    pathway_end_reason_faster_diag: NVARCHAR(25)
+    exclusion_reason: NVARCHAR(80)
+    faster_diagnosis_organisation: NVARCHAR(250)
+    care_professional: NVARCHAR(123)
+    method_of_communication: NVARCHAR(83)
+    delay_reason: NVARCHAR(160)
+    primary_cancer_site: NVARCHAR(50)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__initial_assessments]'
+  columns:
+    care_id: INTEGER
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    assessment_date: DATETIME2
+    menstrual_status: VARCHAR(14)
+    age_menopause: INTEGER
+    medical_menopause: VARCHAR(3)
+    smoking_status: VARCHAR(12)
+- name: '[dbt_omop].[source].[src_scr__investigations]'
+  columns:
+    care_id: INTEGER
+    cancer_site: VARCHAR(50)
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    diagnostic_investigation: VARCHAR(50)
+    other_investigation: VARCHAR(50)
+    date_requested: DATE
+    requested_by: VARCHAR(50)
+    organisation: NVARCHAR(250)
+    anaesthesia_required: VARCHAR(3)
+    pre_booked_investigation: VARCHAR(3)
+    date_performed: DATE
+    requested_performed_time_lapse: INTEGER
+    reported_date: DATE
+    performed_reported_time_lapse: INTEGER
+    biopsy_taken: VARCHAR(3)
+    outcome: VARCHAR(30)
+    comments: VARCHAR(200)
+    reason_not_performed: VARCHAR(50)
+    other_reason_not_performed: VARCHAR(200)
+    imagine_code_nicip: VARCHAR(6)
+    imaging_code_snomed_ct: VARCHAR(18)
+    anatomical_site_1: VARCHAR(255)
+    anatomical_site_2: VARCHAR(255)
+    anatomical_site_3: VARCHAR(255)
+    anatomical_side: VARCHAR(40)
+    imagine_report_text: VARCHAR(200)
+    primary_lesion_size: FLOAT
+    radiologist: VARCHAR(50)
+    platelet_count: INTEGER
+    hb_conc: FLOAT
+    bone_marrow_blasts_pct: INTEGER
+    neutrophil_count: FLOAT
+    albumin_level: INTEGER
+    beta_2_microglobulin: FLOAT
+    lymphocyte_count: FLOAT
+    blood_myeloblasts: INTEGER
+    blood_basophils: INTEGER
+    blood_eosinophils: INTEGER
+    pct_predicted_fev1: FLOAT
+    absolute_fig_fev1: FLOAT
+    staging_laparoscopy_performed: VARCHAR(3)
+    fbc: VARCHAR(3)
+    ue: VARCHAR(3)
+    lft: VARCHAR(3)
+    ecg: VARCHAR(3)
+    group_save: VARCHAR(3)
+    x_match: VARCHAR(3)
+    calcium: VARCHAR(3)
+    ca_15_3: VARCHAR(3)
+    other: VARCHAR(3)
+    t_stage_radiological: VARCHAR(6)
+    n_stage_radiological: VARCHAR(6)
+    m_stage_radiological: VARCHAR(6)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__metastases]'
+  columns:
+    care_id: INTEGER
+    cancer_site: VARCHAR(50)
+    location: VARCHAR(50)
+    certainty: VARCHAR(20)
+    type: VARCHAR(50)
+    other_mets_details: VARCHAR(255)
+- name: '[dbt_omop].[source].[src_scr__pathology]'
+  columns:
+    care_id: INTEGER
+    cancer_site: VARCHAR(50)
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    receipt_date: DATETIME2
+    reporting_date: DATETIME2
+    report_number: VARCHAR(50)
+    investigation_type: VARCHAR(50)
+    nature_of_specimen: VARCHAR(50)
+    report_status: VARCHAR(50)
+    surgeon: VARCHAR(59)
+    requesting_organisation: NVARCHAR(250)
+    pathologist: VARCHAR(59)
+    reporting_organisation: NVARCHAR(250)
+    diagnosis_site_icd: VARCHAR(203)
+    diagnosis_site_snomed: NVARCHAR(283)
+    laterality: VARCHAR(50)
+    max_tumour_diameter_mm: FLOAT
+    num_nodes_examined: INTEGER
+    num_pos_nodes: INTEGER
+    type_snomed: VARCHAR(133)
+    grade_differentiation: VARCHAR(105)
+    excision_margins: VARCHAR(100)
+    vascular_lymphatic_invasion: VARCHAR(100)
+    synchronous_tumour: VARCHAR(9)
+    pathological_staging: VARCHAR(41)
+    comments: VARCHAR(200)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__person]'
+  columns:
+    person_source_value: INTEGER
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    postcode: VARCHAR(10)
+    sex: CHAR(1)
+    date_of_birth: DATE
+    gp_code: VARCHAR(8)
+    gp_practice: VARCHAR(15)
+    date_of_death: DATE
+    ethnicity: VARCHAR(50)
+- name: '[dbt_omop].[source].[src_scr__referrals]'
+  columns:
+    care_id: INTEGER
+    patient_id_scr: INTEGER
+    cancer_site: VARCHAR(50)
+    subtype: NVARCHAR(50)
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    source_of_referral: VARCHAR(100)
+    priority_type: VARCHAR(60)
+    referral_route: NVARCHAR(100)
+    other_route: NVARCHAR(50)
+    rapid_diagnostic_cancer_pathway: VARCHAR(3)
+    upgrade_date: DATETIME2
+    referral_type: VARCHAR(100)
+    gp_code: VARCHAR(8)
+    gp_name: VARCHAR(100)
+    practice_code: VARCHAR(20)
+    branch_code: VARCHAR(10)
+    ccg: VARCHAR(100)
+    ccg_code: VARCHAR(5)
+    patient_status: VARCHAR(100)
+    date_decision_to_refer: DATETIME2
+    date_receipt_of_referral: DATETIME2
+    date_first_appointment: DATETIME2
+    first_appt_offered: VARCHAR(3)
+    reason_no_appt: VARCHAR(50)
+    organsiation: NVARCHAR(250)
+    cons_first_appt: VARCHAR(59)
+    initial_ref_appropriate_specialist: VARCHAR(3)
+    first_appt_type: VARCHAR(50)
+    date_referred_to_specialist: DATETIME2
+    org_referred_from: NVARCHAR(250)
+    date_first_appt_specialist: DATETIME2
+    org_first_appt_specialist: NVARCHAR(250)
+    consultant: VARCHAR(59)
+    specialty: VARCHAR(150)
+    nice_referring_symptoms: VARCHAR(200)
+    referring_symptoms: VARCHAR(200)
+    other_symptoms: VARCHAR(200)
+    method_of_referral: VARCHAR(50)
+    appropriateness_of_ref: VARCHAR(50)
+    reason_inappropriate: VARCHAR(200)
+    additional_comments: VARCHAR(200)
+    date_dna_appt_rebooked: DATETIME2
+    adjustment_reason: VARCHAR(200)
+    waiting_time_adjust: INTEGER
+    delay_reason: VARCHAR(200)
+    delay_reason_comments: VARCHAR(200)
+    waiting_time_adj_dtt_days: INTEGER
+    adt_ref_id: VARCHAR(50)
+    ref_org: VARCHAR(200)
+    val_for_upload: VARCHAR(3)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__teletherapy]'
+  columns:
+    care_id: INTEGER
+    cancer_Site: VARCHAR(50)
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    consultant: VARCHAR(59)
+    priority: VARCHAR(50)
+    date_decision_to_treat: DATETIME2
+    organisation_dtt: NVARCHAR(250)
+    date_treatment_start: DATETIME2
+    organisation_site_code: VARCHAR(5)
+    organisation_name: NVARCHAR(250)
+    treatment_event_type: VARCHAR(100)
+    treatment_setting: VARCHAR(50)
+    clinical_trial: VARCHAR(7)
+    treatment_intent: VARCHAR(50)
+    adjunctive_therapy: VARCHAR(50)
+    short_long_course: VARCHAR(5)
+    chemo_radiotherapy: VARCHAR(3)
+    beam_quality: VARCHAR(50)
+    treatment_site: VARCHAR(50)
+    anatomical_site: VARCHAR(255)
+    complexity_group: VARCHAR(50)
+    anaesthetic_required: VARCHAR(5)
+    fields: VARCHAR(50)
+    multipla_planning: VARCHAR(5)
+    prescribed_dose: FLOAT
+    dose_per_fraction: FLOAT
+    prescribed_fractions: FLOAT
+    fraction_per_week: INTEGER
+    prescribed_duration: INTEGER
+    actual_dose: FLOAT
+    actual_duration: INTEGER
+    actual_fractions: FLOAT
+    treatment_outcome: NVARCHAR(50)
+    radio_surgery_performed_indicator: VARCHAR(9)
+    end_date: DATETIME2
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__treatments]'
+  columns:
+    care_id: INTEGER
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    treatment_type: VARCHAR(22)
+    treatment_event_type: VARCHAR(100)
+    treatment_intent: VARCHAR(60)
+    adjunctive_therapy: VARCHAR(50)
+    treatment_setting: VARCHAR(50)
+    consultant: VARCHAR(8)
+    decision_to_treat_date: DATETIME2
+    treatment_start_date: DATETIME2
+    org_site_code_treatment: VARCHAR(5)
+    org_treatment: NVARCHAR(250)
+    discharge_date: DATETIME2
+    waiting_time_adj_dtt: INTEGER
+    validated_upload: VARCHAR(3)
+    last_edit_time: DATETIME2
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_scr__trials]'
+  columns:
+    care_id: INTEGER
+    cancer_site: VARCHAR(50)
+    nhs_number: VARCHAR(10)
+    mrn: VARCHAR(20)
+    clinical_trial_status: VARCHAR(75)
+    consent_date: DATE
+    reason_not_offered: VARCHAR(255)
+    reason_declined: VARCHAR(255)
+    reason_failed: VARCHAR(255)
+    trial_name: VARCHAR(255)
+    trial_type: VARCHAR(50)
+    local_national_trial: VARCHAR(50)
+    trial_number: VARCHAR(50)
+    regimen: VARCHAR(255)
+    randomised_date: DATETIME2
+    start_date: DATETIME2
+    consultant: VARCHAR(59)
+    investigator: VARCHAR(255)
+- name: '[dbt_omop].[source].[src_sl__bacteriology_archive]'
+  columns:
+    order_number: CHAR(16)
+    nhs_number: CHAR(32)
+    mrn: CHAR(32)
+    date_of_birth: DATETIME2
+    postcode: VARCHAR(16)
+    sex: VARCHAR(4)
+    isolate_number: INTEGER
+    visit_number: CHAR(32)
+    location_code: CHAR(32)
+    clinician: CHAR(16)
+    clinician_code: CHAR(32)
+    order_date: DATETIME2
+    result_date: DATETIME2
+    site: VARCHAR(255)
+    qualifier: VARCHAR(255)
+    test: VARCHAR(32)
+    result_value: VARCHAR(255)
+    updated_at: DATETIME2
+- name: '[dbt_omop].[source].[src_sl__bacteriology_live]'
+  columns:
+    order_number: CHAR(16)
+    nhs_number: CHAR(32)
+    mrn: CHAR(32)
+    date_of_birth: DATETIME2
+    postcode: VARCHAR(16)
+    sex: VARCHAR(4)
+    isolate_number: INTEGER
+    visit_number: CHAR(32)
+    location_code: CHAR(32)
+    clinician: CHAR(16)
+    clinician_code: CHAR(32)
+    order_date: DATETIME2
+    result_date: DATETIME2
+    site: VARCHAR(255)
+    qualifier: VARCHAR(255)
+    test: VARCHAR(32)
+    result_value: VARCHAR(255)
+    updated_at: DATETIME2
