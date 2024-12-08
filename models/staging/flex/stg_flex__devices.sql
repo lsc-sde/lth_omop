@@ -27,9 +27,9 @@ select
   date_time,
   manufacturer,
   theatre_implants as device_type_group,
-  theatre_implants,
-  batch_lot_number,
-  ammendments,
+  theatre_implants as device_type,
+  batch_lot_number as device_lot_number,
+  ammendments as device_details,
   expiry_date
 from lth_bronze.src_flex__implant_devices 
 ),
@@ -44,15 +44,15 @@ visits as (
 )
 
 select
-  isnull(v.first_visit_id, d.visit_id) as visit_id,
-  patient_id,
-  date_time,
-  manufacturer,
-  device_type_group,
-  device_type,
-  device_lot_number,
-  device_details,
-  expiry_date
+  isnull(v.first_visit_id, d.visit_id) as visit_id::BIGINT,
+  patient_id::BIGINT,
+  date_time::DATETIME,
+  manufacturer::VARCHAR,
+  device_type_group::VARCHAR,
+  device_type::VARCHAR,
+  device_lot_number::TEXT,
+  device_details::TEXT,
+  expiry_date::DATETIME
 from devices d
 left join visits as v
   on d.visit_id = v.visit_id

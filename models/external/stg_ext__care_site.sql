@@ -6,8 +6,12 @@ MODEL (
 );
 
 select
-  e.*,
-  p.location_source_value
+  e.care_site_id,
+  e.care_site_name::VARCHAR(255),
+  e.care_site_source_value::VARCHAR(255),
+  e.postcode::VARCHAR(10),
+  e.place_of_service_source_value::VARCHAR(50),
+  p.location_source_value::VARCHAR(15)
 from (
   select distinct
     cast(cast(care_site_id as numeric) as bigint) as care_site_id,
