@@ -77,7 +77,7 @@ class SQLMeshSettings(BaseModel):
         max_text_width=80,
         no_rewrite_casts=False,
     )
-    ui: UIConfig = UIConfig(format_on_save=True)
+    ui: UIConfig = UIConfig(format_on_save=False)
 
 variables = {
         "global_start_date": "2005-01-01",
