@@ -1,9 +1,11 @@
 
 MODEL (
   name lth_bronze.stg_flex__devices,
-  kind FULL,
+  kind INCREMENTAL_BY_TIME_RANGE (
+    time_column (device_datetime, '%Y-%m-%d %H:%M:%S.%f'), -- Time column `model_time_column` with format '%Y-%m-%d'
+  ),
   cron '@daily',
-);
+  );
 
 with devices as
 (
@@ -46,8 +48,8 @@ visits as (
 select
   isnull(v.first_visit_id, d.visit_id)::BIGINT as visit_id,
   patient_id::BIGINT,
-  date_time::DATETIME,
-  manufacturer::VARCHAR(MAX),
+  date_time::DATETIME as device_datetime,
+  manufacturer::VARCHAR(MAX) as device_manufacturer,
   device_type_group::VARCHAR(MAX),
   device_type::VARCHAR(MAX),
   device_lot_number::VARCHAR(MAX),
@@ -56,4 +58,5 @@ select
 from devices d
 left join visits as v
   on d.visit_id = v.visit_id
-
+WHERE
+  device_datetime BETWEEN @start_ds and @end_ds
