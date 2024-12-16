@@ -7,7 +7,8 @@
             "label": "SQLMesh UI Plan",
             "type": "shell",
             "command": "sqlmesh ui --mode plan",
-            "promptOnClose": true
-        },
+            "promptOnClose": true,
+            "problemMatcher": []
+        }
     ],
 }
