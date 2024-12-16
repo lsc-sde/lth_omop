@@ -8,6 +8,8 @@ dependencies = ["python-dotenv>=1.0.1", "sqlmesh[mssql,web]>=0.139.0"]
 
 [dependency-groups]
 dev = [
+    "bokeh>=3.6.2",
+    "holoviews>=1.20.0",
     "jupyterlab>=4.3.2",
     "mkdocs>=1.6.1",
     "mkdocs-material>=9.5.47",

@@ -21,7 +21,7 @@ load_dotenv(find_dotenv(), override=True)
 ###############################################################################
 
 state_schema: str = os.getenv("STATE_SCHEMA", "lth_omop_bronze")
-default_gateway: str = 'mssql'
+default_gateway: str = "mssql"
 
 gateways = {}
 
@@ -62,8 +62,11 @@ class SQLMeshSettings(BaseModel):
 
     project: str
     model_defaults: ModelDefaultsConfig = ModelDefaultsConfig(
-        kind=ModelKindName.VIEW, dialect="tsql", cron="@daily", owner="LTH DST",
-        start='2024-01-01'
+        kind=ModelKindName.VIEW,
+        dialect="tsql",
+        cron="@daily",
+        owner="LTH DST",
+        start="2023-07-01 00:00:00.000",
     )
     gateways: Dict[str, GatewayConfig] = gateways
     default_gateway: str = default_gateway
@@ -79,12 +82,13 @@ class SQLMeshSettings(BaseModel):
     )
     ui: UIConfig = UIConfig(format_on_save=False)
 
+
 variables = {
-        "global_start_date": "2005-01-01",
-        "minimum_observation_period_start_date": "2005-01-01",
-        "catalog_src": os.environ['MSSQL_DATABASE_SOURCE'],
-        "schema_src": os.environ['MSSQL_SCHEMA_SOURCE'],
-        "schema_vocab": os.environ['MSSQL_SCHEMA_VOCAB']
-    }
+    "global_start_date": "2005-01-01",
+    "minimum_observation_period_start_date": "2005-01-01",
+    "catalog_src": os.environ["MSSQL_DATABASE_SOURCE"],
+    "schema_src": os.environ["MSSQL_SCHEMA_SOURCE"],
+    "schema_vocab": os.environ["MSSQL_SCHEMA_VOCAB"],
+}
 
 config = Config(**dict(SQLMeshSettings(project="lth_omop_bronze", variables=variables)))
