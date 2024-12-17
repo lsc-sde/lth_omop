@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "LTH OMOP Source to Bronze ETL"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["python-dotenv>=1.0.1", "sqlmesh[mssql,web]>=0.139.0"]
+dependencies = ["python-dotenv>=1.0.1", "sqlmesh[mssql,web]>=0.140.0"]
 
 [dependency-groups]
 dev = [
