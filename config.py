@@ -66,7 +66,7 @@ class SQLMeshSettings(BaseModel):
         dialect="tsql",
         cron="@daily",
         owner="LTH DST",
-        start="2023-07-01 00:00:00.000",
+        start="2024-01-01 00:00:00.000",
     )
     gateways: Dict[str, GatewayConfig] = gateways
     default_gateway: str = default_gateway
