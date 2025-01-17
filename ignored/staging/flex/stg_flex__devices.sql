@@ -19,7 +19,7 @@ select
   lot_number as device_lot_number,
   cath_details as device_details,
   null as expiry_date
-from lth_bronze.src_flex__cathether_devices 
+from lth_bronze.src_flex__cathether_devices
 
 union all
 
@@ -33,7 +33,7 @@ select
   batch_lot_number as device_lot_number,
   ammendments as device_details,
   expiry_date
-from lth_bronze.src_flex__implant_devices 
+from lth_bronze.src_flex__implant_devices
 ),
 
 visits as (
@@ -42,7 +42,7 @@ visits as (
     visit_id,
     first_visit_id,
     person_source_value
-  from lth_bronze.stg_flex__facility_transfer 
+  from lth_bronze.stg_flex__facility_transfer
 )
 
 select
@@ -59,4 +59,4 @@ from devices d
 left join visits as v
   on d.visit_id = v.visit_id
 WHERE
-  device_datetime BETWEEN @start_ds and @end_ds
+  device_datetime::DATETIME BETWEEN @start_dt and @end_dt

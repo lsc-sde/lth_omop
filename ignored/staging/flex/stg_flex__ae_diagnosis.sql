@@ -33,11 +33,11 @@ from (
     updated_at,
     s1.value as diag_list
   from lth_bronze.src_flex__ae_diagnosis
-  where last_edit_time between @start_ds and @end_ds
+  where last_edit_time::DATETIME between @start_dt and @end_dt
   cross apply string_split(diag_list, '~') as s1
 ) as t
 cross apply string_split(diag_list, '|') as s2
 where
   len(value) > 1
   and value not in ('410605003')
-  and last_edit_time between @start_ds and @end_ds
+  and last_edit_time::DATETIME between @start_dt and @end_dt

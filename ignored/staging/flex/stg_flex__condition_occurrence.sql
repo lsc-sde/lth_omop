@@ -55,7 +55,7 @@ left join
   on
     sfvd.visit_number = vs.visit_number
     and v.first_visit_id is null
-    and sfvd.last_edit_time between @start_ds and @end_ds
+    and sfvd.last_edit_time::DATETIME between @start_dt and @end_dt
 
 union
 
@@ -85,4 +85,4 @@ left join
       visit_detail
   ) as v
   on ae.visit_id = v.visit_id
-where ae.last_edit_time between @start_ds and @end_ds
+where ae.last_edit_time::DATETIME between @start_dt and @end_dt
