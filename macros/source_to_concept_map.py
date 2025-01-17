@@ -25,7 +25,7 @@ from {schema}.{model}
         ("flex__job_role", "job_role", "flex"),
         ("flex__medical_specialty", "specialty", "flex"),
         ("flex__radiology_mappings", "radiology", "flex"),
-        ("flex__vital_signs_mappings", "result", "flex"),
+        ("flex__observations_mappings", "result", "flex"),
         ("flex__patient_demographics", "demographics", "flex"),
         ("flex__drug_routes", "drug_routes", "flex"),
         ("flex__blood_mappings", "result", "flex"),
@@ -46,7 +46,7 @@ from {schema}.{model}
         ("flex__devices", "devices", "flex"),
         ("scr__results", "scr_results", "scr"),
         ("scr__field_mappings", "scr_fields", "scr"),
-        ("scr__conditions_other", "scr_conditions", "scr"),
+        ("scr__grade_of_differentiation", "scr_conditions", "scr"),
     ]
 
     out = []
