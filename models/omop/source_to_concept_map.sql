@@ -1,6 +1,6 @@
 
 MODEL (
-  name lth_bronze.SOURCE_TO_CONCEPT_MAP,
+  name lth_bronze.source_to_concept_map,
   kind FULL,
   cron '@daily',
 );
@@ -17,7 +17,7 @@ select
   c.invalid_reason,
   frequency
 from lth_bronze.vocab__source_to_concept_map_raw as r
-left join vocab.CONCEPT as c
+left join @catalog_src.@schema_vocab.CONCEPT as c
   on r.target_concept_id = c.concept_id
 where
   mapping_status = 'approved'
