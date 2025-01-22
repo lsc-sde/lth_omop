@@ -12,5 +12,5 @@ select distinct
   42035286 as country_concept_id,
   postcode::VARCHAR(10),
   'United Kingdom of Great Britain and Northern Ireland'::VARCHAR(255) as country_source_value
-from lth_bronze.ext__postcodes 
+from lth_bronze.ext__postcodes
 where location_id is not null
