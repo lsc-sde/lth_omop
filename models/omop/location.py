@@ -75,7 +75,7 @@ columns = {
     depends_on=["lth_bronze.ext__postcodes"],
     kind=ModelKindName.FULL,
     columns=columns,
-    cron="@hourly",
+    cron="@yearly",
     audits=[
         ("not_null", {"columns": [to_column("location_id"), to_column("zip")]}),
         ("unique_values", {"columns": [to_column("location_id"), to_column("zip")]}),
