@@ -42,7 +42,9 @@ select
   barcelona_clinic_liver_cancer_stage,
   r_iss_stage,
   comorbidity_evaluation_score,
-  cns_seen_indicator_code,
+  cns_seen_indicator_code,  
+  'rxn' as org_code,
+  'scr' as source_system,
   last_edit_time,
   updated_at
 from @catalog_src.@schema_src.src_scr__cosd

@@ -22,6 +22,8 @@ select
   discharge_date,
   waiting_time_adj_dtt,
   validated_upload,
+  'rxn' as org_code,
+  'scr' as source_system,
   last_edit_time,
   updated_at
 from @catalog_src.@schema_src.src_scr__treatments

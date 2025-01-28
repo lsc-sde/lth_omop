@@ -13,5 +13,7 @@ procedure_date,
 procedure_datetime,
 procedure_concept_id,
 procedure_source_value,
-provider_id
+provider_id,
+'rxn' as org_code,
+'endoscopy' as source_system
 from @catalog_src.@schema_src.src_gireport__uppergi_procedure

@@ -60,6 +60,8 @@ select
   t_stage_radiological,
   n_stage_radiological,
   m_stage_radiological,
+  'rxn' as org_code,
+  'scr' as source_system,
   last_edit_time,
   updated_at
 from @catalog_src.@schema_src.src_scr__investigations

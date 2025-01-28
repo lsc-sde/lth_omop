@@ -51,7 +51,9 @@ select
   care_professional,
   method_of_communication,
   delay_reason,
-  primary_cancer_site,
+  primary_cancer_site,  
+  'rxn' as org_code,
+  'scr' as source_system,
   last_edit_time,
   updated_at
 from @catalog_src.@schema_src.src_scr__diagnosis

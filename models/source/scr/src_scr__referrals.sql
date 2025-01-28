@@ -57,6 +57,8 @@ select
   adt_ref_id,
   ref_org,
   val_for_upload,
+  'rxn' as org_code,
+  'scr' as source_system,
   last_edit_time,
   updated_at
 from @catalog_src.@schema_src.src_scr__referrals
