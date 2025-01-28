@@ -5,5 +5,8 @@ MODEL (
   cron '@daily',
 );
 
-select *
+select 
+  *,
+  'rxn' as org_code,
+  'scr' as source_system
 from @catalog_src.@schema_src.src_scr__anti_cancer_drugs

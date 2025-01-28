@@ -15,5 +15,7 @@ select
   gp_code,
   gp_practice,
   date_of_death,
-  ethnicity
+  ethnicity,
+  'rxn' as org_code,
+  'scr' as source_system
 from @catalog_src.@schema_src.src_scr__person

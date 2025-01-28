@@ -27,6 +27,8 @@ select
   display_unit,
   event_status_id,
   emp_provider_id,
+  'rxn' as org_code,
+  'flex' as source_system,
   last_edit_time,
   updated_at
 from @catalog_src.@schema_src.src_flex__result sfr

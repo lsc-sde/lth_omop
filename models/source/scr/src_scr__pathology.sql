@@ -33,6 +33,8 @@ select
   synchronous_tumour,
   pathological_staging,
   comments,
+  'rxn' as org_code,
+  'scr' as source_system,
   last_edit_time,
   updated_at
 from @catalog_src.@schema_src.src_scr__pathology

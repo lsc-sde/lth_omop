@@ -20,5 +20,7 @@ select
   care_site_id,
   care_site_name,
   care_site_source_value,
-  care_site_location
+  care_site_location,
+  'rxn' as org_code,
+  'flex' as source_system
 from @catalog_src.@schema_src.src_flex__care_site_gp
