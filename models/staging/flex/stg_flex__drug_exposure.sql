@@ -14,6 +14,8 @@ with drug_exp as (
     flex_procedure_id,
     flex_procedure_name as procedure_source_value,
     adm_route,
+    source_system,
+    org_code,
     last_edit_time,
     updated_at,
     replace(dosage, ' ' + adm_route, '') as dosage
@@ -40,6 +42,8 @@ select
   flex_procedure_id,
   dosage,
   adm_route,
+  source_system::varchar(20),
+  org_code::varchar(5),
   last_edit_time,
   updated_at,
   replace(procedure_source_value, ' (CRITICAL MED)', '') as drug_source_value,

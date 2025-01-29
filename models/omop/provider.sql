@@ -18,7 +18,9 @@ select distinct
   specialty_source_value::varchar(50) as specialty_source_value,
   null::bigint as specialty_source_concept_id,
   null::varchar(50) as gender_source_value,
-  null::bigint as gender_source_concept_id
+  null::bigint as gender_source_concept_id,
+  p.source_system::varchar(20),
+  p.org_code::varchar(5)
 from lth_bronze.vocab__provider as p
 left join
   (

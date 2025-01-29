@@ -83,7 +83,9 @@ merged_visits as (
       discharge_date_time
     ) over (
       partition by vs.visit_number order by activation_time desc
-    ) as latest_discharge_time,
+    ) as latest_discharge_time,    
+    source_system::varchar(20),
+    org_code::varchar(5),
     FIRST_VALUE(
       last_edit_time
     ) over (

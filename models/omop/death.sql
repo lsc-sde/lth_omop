@@ -12,5 +12,7 @@ select
   death_type_concept_id::bigint as death_type_concept_id,
   null::bigint as cause_concept_id,
   null::varchar(50) as cause_source_value,
-  null::bigint as cause_source_concept_id
+  null::bigint as cause_source_concept_id,
+  source_system::varchar(20),
+  org_code::varchar(5)
 from lth_bronze.vocab__death

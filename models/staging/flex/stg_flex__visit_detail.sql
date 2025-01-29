@@ -17,7 +17,9 @@ with ip_detail as (
         partition by visit_id order by location_hx_time
       ),
       discharge_date_time
-    ) as checkout_datetime,
+    ) as checkout_datetime,    
+    source_system,
+    org_code,
     last_edit_time,
     updated_at
   from lth_bronze.src_flex__visit_detail_ip 
@@ -31,6 +33,8 @@ ae_detail as (
     location_id,
     date_time_in as checkin_datetime,
     date_time_out as checkout_datetime,
+    source_system,
+    org_code,
     last_edit_time,
     updated_at
   from lth_bronze.src_flex__visit_detail_ae 
@@ -42,7 +46,9 @@ select
   visit_type::VARCHAR(10),
   location_id::VARCHAR(50),
   checkin_datetime::DATETIME,
-  checkout_datetime::DATETIME,
+  checkout_datetime::DATETIME,  
+  a.source_system::varchar(20),
+  a.org_code::varchar(5),
   a.last_edit_time::DATETIME,
   a.updated_at::DATETIME,
   concat(

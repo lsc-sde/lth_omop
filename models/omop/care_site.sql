@@ -12,7 +12,9 @@ select distinct
   location_id::bigint as location_id,
   care_site_source_value::varchar(50) as care_site_source_value,
   place_of_service_source_value::varchar(50)
-    as place_of_service_source_value
+    as place_of_service_source_value,
+  cs.source_system::varchar(20),
+  cs.org_code::varchar(5)
 from lth_bronze.vocab__care_site as cs
 left join lth_bronze.location as l
   on cs.location_source_value = l.location_source_value

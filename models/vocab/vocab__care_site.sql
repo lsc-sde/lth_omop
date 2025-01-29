@@ -31,5 +31,7 @@ select
     when place_of_service_source_value = 'Outpatient Clinic' then '8756'
     when place_of_service_source_value = 'GP Practice' then null
     when place_of_service_source_value = 'NHS Trust' then '8717'
-  end::bigint as place_of_service_concept_id
+  end::bigint as place_of_service_concept_id,
+  source_system,
+  org_code
 from lth_bronze.stg__care_site

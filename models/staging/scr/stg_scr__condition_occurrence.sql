@@ -19,6 +19,8 @@ select
   ) as icd_code,
   laterality,
   basis_of_diagnosis,
+  source_system::varchar(20),
+  org_code::varchar(5),
   last_edit_time,
   updated_at
 from lth_bronze.src_scr__diagnosis 

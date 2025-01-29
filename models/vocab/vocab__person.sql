@@ -25,7 +25,9 @@ select
       else v2.target_concept_id
     end,
     0
-  ) as race_concept_id
+  ) as race_concept_id,
+  source_system,
+  org_code
 from lth_bronze.stg__person as p
 left join
   (

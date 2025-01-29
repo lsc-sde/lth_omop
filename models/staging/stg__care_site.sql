@@ -12,7 +12,9 @@ with all_care_sites as (
     care_site_source_value,
     postcode,
     place_of_service_source_value,
-    location_source_value
+    location_source_value,
+    'external' as source_system,
+    'ods' as org_code
   from lth_bronze.stg_ext__care_site
 
   union all
@@ -23,7 +25,9 @@ with all_care_sites as (
     care_site_source_value,
     postcode::varchar,
     place_of_service_source_value,
-    location_source_value
+    location_source_value,
+    source_system,
+    org_code
   from lth_bronze.stg_flex__care_site
 
 --  union all
@@ -44,5 +48,7 @@ select
   care_site_source_value::varchar(450),
   postcode::varchar(15),
   place_of_service_source_value::varchar(450),
-  location_source_value::varchar(450)
+  location_source_value::varchar(450),
+  source_system::varchar(20),
+  org_code::varchar(5)
 from all_care_sites

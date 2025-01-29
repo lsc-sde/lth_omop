@@ -29,7 +29,9 @@ with provider_base as (
             then 1
           else 0
         end desc
-    ) as identifier
+    ) as identifier,
+    ep.source_system,
+    ep.org_code
   from lth_bronze.src_flex__emp_provider as ep
   left join lth_bronze.stg_flex__provider_specialty as emp_med_spec
     on ep.emp_provider_id = emp_med_spec.emp_provider_id
@@ -45,7 +47,9 @@ select
   cast(provider_source_value as varchar) as provider_source_value,
   specialty_source_value,
   c.cons_org_code,
-  row_number() over (order by newid()) as provider_id
+  row_number() over (order by newid()) as provider_id,  
+  p.source_system::varchar(20),
+  p.org_code::varchar(5)
 from provider_base as p
 left join lth_bronze.src_flex__emp_consultant as c
   on p.provider_source_value = c.cons_emp_provider_id

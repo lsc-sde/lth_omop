@@ -11,5 +11,7 @@ select
   provider_name,
   provider_source_value,
   specialty_source_value,
-  cons_org_code
+  cons_org_code,
+  source_system,
+  org_code
 from lth_bronze.stg_flex__provider 
