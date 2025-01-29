@@ -12,5 +12,5 @@ select
   death_datetime::date as death_date,
   source_system,
   org_code
-from lth_bronze.stg__death
+from lth_bronze.stg__person
 where death_datetime is not null
