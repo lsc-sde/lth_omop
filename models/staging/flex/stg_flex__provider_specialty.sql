@@ -7,7 +7,9 @@ MODEL (
 
 select distinct
   efms.emp_provider_id,
-  ms.name
+  ms.name,
+  efms.source_system::varchar(20),
+  efms.org_code::varchar(5)
 from lth_bronze.src_flex__emp_facility_med_spec as efms
 left join lth_bronze.src_flex__medical_specialty as ms
   on efms.physician_service_id = ms.physician_service_id

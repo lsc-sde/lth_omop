@@ -10,13 +10,17 @@ select
   e.care_site_source_value,
   e.postcode,
   e.place_of_service_source_value,
-  p.location_source_value
+  p.location_source_value,
+  source_system,
+  org_code
 from (
   select distinct
     Description as care_site_name,
     Location_Code as care_site_source_value,
     null as postcode,
-    'Swisslab' as place_of_service_source_value
+    'Swisslab' as place_of_service_source_value,    
+    'swisslab' as source_system,
+    'rxn' as org_code
   from lth_bronze.swisslab__locations 
   where Quadramed_Code is null
 ) as e

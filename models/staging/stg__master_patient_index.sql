@@ -13,7 +13,8 @@ with flex_person as (
     birth_datetime,
     death_datetime,
     last_edit_time,
-    'flex' as data_source
+    source_system,
+	org_code
   from lth_bronze.src_flex__person
   group by
     person_source_value,
@@ -21,7 +22,9 @@ with flex_person as (
     birth_datetime,
     death_datetime,
     nhs_number,
-    last_edit_time
+    last_edit_time,
+    source_system,
+	org_code
 ),
 
 scr_person as (
@@ -32,14 +35,18 @@ scr_person as (
     'scr' as data_source,
     cast(date_of_birth as datetime) as birth_datetime,
     cast(date_of_death as datetime) as death_datetime,
-    null as last_edit_time
+    null as last_edit_time,
+    source_system,
+	org_code
   from lth_bronze.src_scr__person
   group by
     person_source_value,
     mrn,
     date_of_birth,
     date_of_death,
-    nhs_number
+    nhs_number,
+    source_system,
+	org_code
 ),
 
 sl_person as (
@@ -64,7 +71,9 @@ select top(1)
     null as data_source,
     null as birth_datetime,
     null as death_datetime,
-    null as last_edit_time
+    null as last_edit_time,
+	null as source_system,
+	null as org_code
 ),
 
 nhs_numbers as (
@@ -89,7 +98,9 @@ mpi_base as (
     sp.scr_patient_id,
     coalesce(fp.birth_datetime, sp.birth_datetime) as birth_datetime,
     coalesce(fp.death_datetime, sp.death_datetime) as death_datetime,
-    fp.last_edit_time
+    fp.last_edit_time,
+    coalesce(fp.source_system, sp.source_system) as source_system,
+	coalesce(fp.org_code, sp.org_code) as org_code
   from nhs_numbers as nn
   left join flex_person as fp
     on nn.nhs_number = fp.nhs_number
@@ -108,7 +119,9 @@ mpi_base_flex as (
     null as scr_patient_id,
     fp.birth_datetime,
     death_datetime,
-    last_edit_time
+    last_edit_time,
+	source_system,
+	org_code
   from flex_person as fp
   where
     flex_patient_id not in (
@@ -129,7 +142,9 @@ mpi_base_scr as (
     scr_patient_id,
     birth_datetime,
     death_datetime,
-    last_edit_time
+    last_edit_time,
+	source_system,
+	org_code
   from scr_person
   where
     scr_patient_id not in (
@@ -150,7 +165,9 @@ mpi_base_sl as (
     null as scr_patient_id,
     birth_datetime,
     death_datetime,
-    last_edit_time
+    last_edit_time,
+	source_system,
+	org_code
   from sl_person
   where
     nhs_number not in (
@@ -232,10 +249,11 @@ select
   flex_patient_id_count,
   flex_mrn_count,
   scr_patient_id_count,
-  row_number() over (partition by coalesce(cn.person_id, mpi.person_id) order by last_edit_time desc) as current_record
+  row_number() over (partition by coalesce(cn.person_id, mpi.person_id) order by last_edit_time desc) as current_record,
+  source_system,
+  org_code
 from mpi_final_all as mpi
 left join collapsed_nhs as cn
   on
     mpi.nhs_number = cn.nhs_number
     and id = 1
-

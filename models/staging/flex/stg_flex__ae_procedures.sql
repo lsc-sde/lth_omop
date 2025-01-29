@@ -12,6 +12,8 @@ select
   activation_time,
   admission_date_time,
   discharge_date_time,
+  source_system::varchar(20),
+  org_code::varchar(5),
   last_edit_time,
   updated_at,
   isnull(

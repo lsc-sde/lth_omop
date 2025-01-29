@@ -13,7 +13,9 @@ select
   specialty_source_value,
   vm.source_code_description,
   vm.target_concept_id,
-  cons_org_code
+  cons_org_code,
+  source_system,
+  org_code
 from lth_bronze.stg__provider as p
 left join
   (

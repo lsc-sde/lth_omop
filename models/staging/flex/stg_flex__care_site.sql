@@ -11,7 +11,9 @@ select
   e.care_site_source_value::VARCHAR(255),
   e.postcode::VARCHAR(10),
   e.place_of_service_source_value::VARCHAR(50),
-  p.location_source_value::VARCHAR(255)
+  p.location_source_value::VARCHAR(255),  
+  source_system::varchar(20),
+  org_code::varchar(5),
 from (
   select
     cast(cast(care_site_id as numeric) as bigint) as care_site_id,
@@ -26,7 +28,9 @@ from (
         facility = 'Chorley and South Ribble District Hospital'
         then '3'
     end as postcode,
-    'Quadramed Location' as place_of_service_source_value
+    'Quadramed Location' as place_of_service_source_value,    
+    source_system,
+    org_code,
   from lth_bronze.src_flex__care_site_ip 
 
   union
@@ -36,7 +40,9 @@ from (
     care_site_name,
     care_site_source_value,
     location_id as postcode,
-    'Outpatient Clinic' as place_of_service_source_value
+    'Outpatient Clinic' as place_of_service_source_value,
+    source_system,
+    org_code
   from lth_bronze.src_flex__care_site_op 
 ) as e
 

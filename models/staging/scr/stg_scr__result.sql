@@ -17,6 +17,8 @@ select
   diagnosis_basis,
   stage_type as field,
   SUBSTRING(stage_value, 2, LEN(stage_value)) as value,
+  source_system,
+  org_code,
   last_edit_time,
   updated_at
 from
@@ -36,6 +38,8 @@ from
       t_stage_final as pT,
       n_stage_final as pN,
       m_stage_final as pM,
+      source_system,
+      org_code,
       last_edit_time,
       updated_at
     from
@@ -66,6 +70,8 @@ select
   null as basis,
   'Max Tumour Diameter' as field,
   cast(max_tumour_diameter_mm as VARCHAR(50)) as value,
+  source_system,
+  org_code,
   last_edit_time,
   updated_at
 from
@@ -85,6 +91,8 @@ select
   basis,
   marker_type as field,   -- The name of the original column
   marker_value as value,      -- The value from the original columns
+  source_system,
+  org_code,
   GETDATE() as last_edit_time,
   GETDATE() as updated_at
 from
@@ -104,7 +112,9 @@ from
       c_erb_b2 as [c-erbB-2],
       bcl_2 as BCL2,
       her2 as HER2,
-      her2_fish as [HER2 FISH]
+      her2_fish as [HER2 FISH],
+      source_system,
+      org_code
     from
       lth_bronze.src_scr__breast_markers 
     where
@@ -138,6 +148,8 @@ select
   null as basis,
   a_type,
   a_value,
+  source_system,
+  org_code,
   GETDATE() as last_edit_time,
   GETDATE() as updated_at
 from
@@ -148,7 +160,9 @@ from
       mrn,
       assessment_date,
       cast(menstrual_status as VARCHAR) as [Menstrual Status],
-      cast(smoking_status as VARCHAR) as [Smoking Status]
+      cast(smoking_status as VARCHAR) as [Smoking Status],
+      source_system,
+      org_code
     from lth_bronze.src_scr__initial_assessment 
   ) as assessment_source
 unpivot
@@ -172,6 +186,8 @@ select
   basis_of_diagnosis,
   'Grade of Differentiation' as field,
   grade_of_differentiation as value,
+  source_system,
+  org_code,
   last_edit_time,
   updated_at
 from lth_bronze.src_scr__diagnosis 
@@ -190,6 +206,8 @@ select
   null as basis,
   'Trial Status' as field,
   clinical_trial_status as value,
+  source_system,
+  org_code,
   GETDATE() as last_edit_time,
   GETDATE() as updated_at
 from lth_bronze.src_scr__trials 
