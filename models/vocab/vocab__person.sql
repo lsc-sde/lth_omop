@@ -35,7 +35,7 @@ left join
       target_concept_id,
       source_code
     from lth_bronze.vocab__source_to_concept_map
-    where [group] = 'demographics'
+    where concept_group = 'demographics'
   ) as v
   on p.gender_source_value = v.source_code
 left join
@@ -45,6 +45,6 @@ left join
       source_code,
       source_code_description
     from lth_bronze.vocab__source_to_concept_map
-    where [group] = 'demographics'
+    where concept_group = 'demographics'
   ) as v2
   on cast(p.race_source_value as varchar) = v2.source_code_description

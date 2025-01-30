@@ -12,8 +12,8 @@ select distinct
   target_concept_name,
   target_domain_id,
   --frequency,
-  "group",
-  source,
+  concept_group,
+  source_system,
   mapping_status
 from
   lth_bronze.vocab__source_to_concept_map_raw
