@@ -23,7 +23,7 @@ left join
       source_code_description,
       target_concept_id
     from lth_bronze.vocab__source_to_concept_map
-    where [group] = 'specialty'
+    where concept_group = 'specialty'
   ) as vm
   on p.specialty_source_value = vm.source_code_description
   

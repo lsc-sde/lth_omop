@@ -11,8 +11,8 @@ select
   conceptId::INT as target_concept_id,
   conceptName::VARCHAR(MAX) as target_concept_name,
   domainId::VARCHAR(50) as target_domain_id,
-  "group"::VARCHAR(50),
-  source::VARCHAR(50),
+  concept_group::VARCHAR(50) as concept_group,
+  source_system::VARCHAR(50) as source_system,
   sourceFrequency::INT as frequency,
   mappingStatus::VARCHAR(50) as mapping_status
 from (

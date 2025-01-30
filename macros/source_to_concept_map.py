@@ -12,8 +12,8 @@ select
     domainId::VARCHAR(50),
     sourceFrequency::INT,
     mappingStatus::VARCHAR(50),
-    '{group}' as "group",
-    '{source}' as source,
+    '{group}' as "concept_group",
+    '{source}' as source_system,
 from {schema}.{model}
 """
     schema = "lth_bronze"
