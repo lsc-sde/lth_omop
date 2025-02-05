@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.cdc__updated_at,
-  kind FULL,
+  kind view,
   cron '@daily',
 );
 
@@ -16,7 +16,7 @@ MODEL (
 */
 
 select
- model,
- datasource,
- cast('2024-12-01 00:00:00' as datetime2) as updated_at
- from lth_bronze.cdc__updated_at_default
+ model::varchar(50),
+ datasource::varchar(20),
+ updated_at::datetime
+from lth_bronze.cdc__updated_at_clone
