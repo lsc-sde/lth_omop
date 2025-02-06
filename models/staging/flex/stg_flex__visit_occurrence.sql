@@ -39,6 +39,8 @@ select distinct
     when ft.visit_id is not null then last_discharge_dest
     else discharge_dest_code
   end::int as discharged_to_source_value,
+  vs.source_system::varchar(20),
+  vs.org_code::varchar(5),
   coalesce(ft.last_edit_time, vs.last_edit_time) as last_edit_time,
   coalesce(ft.updated_at, vs.updated_at) as updated_at
 from lth_bronze.cdc_flex__visit_occurrence as vs

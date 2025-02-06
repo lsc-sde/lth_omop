@@ -25,7 +25,9 @@ select
   lag(visit_occurrence_id)
       over (partition by person_id order by visit_start_datetime) as preceding_visit_occurrence_id,
   vo.visit_type_id,
-  vo.visit_status_id,
+  vo.visit_status_id,  
+  vo.source_system::varchar(20),
+  vo.org_code::varchar(5),
   vo.last_edit_time,
   vo.updated_at
 from lth_bronze.vocab__visit_occurrence as vo
