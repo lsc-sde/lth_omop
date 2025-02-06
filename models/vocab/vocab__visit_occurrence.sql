@@ -19,6 +19,8 @@ with visits as (
         fvo.facility_id,
         fvo.admitted_from_source_value,
         fvo.discharged_to_source_value,
+        fvo.source_system,
+        fvo.org_code,
         fvo.last_edit_time,
         fvo.updated_at
     from lth_bronze.stg_flex__visit_occurrence as fvo
@@ -74,6 +76,8 @@ select
   end as discharged_to_concept_id,
   vo.visit_status_id,
   vo.visit_type_id,
+  vo.source_system::varchar(20),
+  vo.org_code::varchar(5),
   vo.last_edit_time,
   vo.updated_at
 from visits as vo
