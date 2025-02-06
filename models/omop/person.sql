@@ -23,7 +23,9 @@ select
   p.race_source_value::varchar(50) as race_source_value,
   null::bigint as race_source_concept_id,
   null::varchar(50) as ethnicity_source_value,
-  null::bigint as ethnicity_source_concept_id
+  null::bigint as ethnicity_source_concept_id,
+  p.source_system::varchar(20),
+  p.org_code::varchar(5)
 from lth_bronze.vocab__person as p
 left join
   (select distinct
