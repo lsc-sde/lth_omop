@@ -16,5 +16,11 @@ select distinct
   cs.source_system::varchar(20),
   cs.org_code::varchar(5)
 from lth_bronze.vocab__care_site as cs
-left join lth_bronze.location as l
+left join (
+    select  
+            min(location_id) as location_id,
+            location_source_value
+    from lth_bronze.location 
+    group by location_source_value
+    ) as l
   on cs.location_source_value = l.location_source_value
