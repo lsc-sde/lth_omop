@@ -1,8 +1,10 @@
 
 MODEL (
   name lth_bronze.visit_occurrence,
-  kind FULL,
   cron '@daily',
+  kind INCREMENTAL_BY_UNIQUE_KEY (
+    unique_key visit_occurrence_id
+  )
 );
 
 select
