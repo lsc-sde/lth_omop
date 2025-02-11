@@ -10,7 +10,7 @@ load_dotenv()
 @model(
     name="lth_bronze.cdc_updated_at",
     kind=ModelKindName.FULL,
-    depends_on=["cdc__updated_at_final"],
+    depends_on=["lth_bronze.cdc__updated_at_final"],
     columns={
         "id": "int",
         "name": "string",
@@ -39,7 +39,21 @@ def cdc_updated_at(context, snapshot, runtime_stage, start, end, latest, executi
             ELSE
             BEGIN
                 DROP TABLE IF EXISTS lth_bronze.cdc__updated_at_clone;
-                SELECT * INTO lth_bronze.cdc__updated_at_clone FROM lth_bronze.cdc__updated_at_final;
+                SELECT * INTO lth_bronze.cdc__updated_at_clone FROM (
+                SELECT * 
+                FROM lth_bronze.cdc__updated_at_final
+
+                UNION ALL
+
+                SELECT * 
+                FROM lth_bronze.cdc__updated_at_default
+                WHERE NOT EXISTS (
+                    SELECT 1 
+                    FROM lth_bronze.cdc__updated_at_final t
+                    WHERE t.model = cdc__updated_at_default.model
+                    AND t.datasource = cdc__updated_at_default.datasource
+                )
+                ) a
             END
     """)
 
