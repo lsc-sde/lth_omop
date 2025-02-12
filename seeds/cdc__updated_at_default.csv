@@ -10,5 +10,5 @@ OBSERVATION,ukcoder,2024-12-01 00:00:00
 fr__mother_to_child,flex,2024-12-01 00:00:00
 fr__specimen_to_measurement,flex,2024-12-01 00:00:00
 VISIT_OCCURRENCE,flex,2024-12-01 00:00:00
-stg_flex__condition_occurrence,ukcoder,2024-12-01 00:00:00
-stg_flex__condition_occurrence,flex_ae,2024-12-01 00:00:00
+CONDITION_OCCURRENCE,ukcoder,2024-12-01 00:00:00
+CONDITION_OCCURRENCE,flex_ae,2024-12-01 00:00:00
