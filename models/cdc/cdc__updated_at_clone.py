@@ -11,6 +11,7 @@ load_dotenv()
     name="lth_bronze.cdc_updated_at",
     kind=ModelKindName.FULL,
     depends_on=["lth_bronze.cdc__updated_at_final"],
+    cron="@hourly",
     columns={
         "id": "int",
         "name": "string",
@@ -34,7 +35,7 @@ def cdc_updated_at(context, snapshot, runtime_stage, start, end, latest, executi
             IF NOT EXISTS (SELECT 1 FROM lth_bronze.cdc__updated_at_final)
             BEGIN
                 DROP TABLE IF EXISTS lth_bronze.cdc__updated_at_clone;
-                SELECT * INTO lth_bronze.cdc__updated_at_clone FROM lth_bronze.cdc__updated_at_default;
+                SELECT * INTO lth_bronze.cdc__updated_at_clone FROM lth_bronze.cdc__updated_at_default
             END
             ELSE
             BEGIN
