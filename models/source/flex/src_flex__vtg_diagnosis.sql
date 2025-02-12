@@ -14,7 +14,7 @@ select
   episode_start_dt,
   episode_end_dt,
   'rxn' as org_code,
-  'flex' as source_system,
+  'ukcoder' as source_system,
   last_edit_time,
   updated_at
 from @catalog_src.@schema_src.src_flex__vtg_diagnosis
