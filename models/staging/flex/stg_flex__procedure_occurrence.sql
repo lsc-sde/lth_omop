@@ -1,7 +1,7 @@
 
 MODEL (
   name lth_bronze.stg_flex__procedure_occurrence,
-  kind VIEW,
+  kind full,
   cron '@daily',
 );
 
