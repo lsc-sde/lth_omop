@@ -33,5 +33,5 @@ select
     admission_date_time
   ) as procedure_datetime,
   left(value, charindex('|', value) - 1) as list
-from lth_bronze.src_flex__ae_procedures 
+from lth_bronze.cdc_flex__ae_procedures 
 cross apply string_split(list, '~')

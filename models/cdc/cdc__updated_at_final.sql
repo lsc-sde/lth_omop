@@ -37,3 +37,12 @@ select
   max(last_edit_time) as updated_at
 from lth_bronze.condition_occurrence
 group by source_system
+
+union all
+
+select
+  'PROCEDURE_OCCURRENCE'::varchar(25) as model,
+  source_system::varchar(20) as datasource,
+  max(last_edit_time) as updated_at
+from lth_bronze.procedure_occurrence
+group by source_system
