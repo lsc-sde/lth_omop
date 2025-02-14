@@ -13,9 +13,7 @@ with cdc as (
 )
 
 select 
-  *, 
-  'rxn'::varchar(5) as org_code,
-  'swl'::varchar(20) as source_system
+  *
 from
   lth_bronze.stg_sl__bacteriology as ssb
 where

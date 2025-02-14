@@ -79,8 +79,8 @@ select
   mrn,
   date_of_birth,
   vo.visit_id as visit_occurrence_id,
-  @GENERATE_SURROGATE_KEY(nhs_number,order_number,isolate_number)::varchar(80) as isolate_event_id,
-  @GENERATE_SURROGATE_KEY(nhs_number,order_number,isolate_number,test)::varchar(80) as measurement_event_id,
+  @GENERATE_SURROGATE_KEY(nhs_number,order_number,isolate_number)::varbinary(8000) as isolate_event_id,
+  @GENERATE_SURROGATE_KEY(nhs_number,order_number,isolate_number,test)::varbinary(8000) as measurement_event_id,
   order_date,
   pr.provider_id,
   site,
@@ -108,6 +108,8 @@ select
   null as value_as_number,
   null as unit_source_value,
   null as priority,
+  'rxn' as org_code,
+  'swl' as source_system,
   dd.updated_at
 from de_duped as dd
 left join lth_bronze.stg__provider as pr

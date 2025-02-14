@@ -4,7 +4,7 @@ MODEL (
   kind FULL,
   cron '@daily',
   kind INCREMENTAL_BY_UNIQUE_KEY (
-    unique_key visit_occurrence_id
+    unique_key unique_key
   )
 );
 
@@ -12,9 +12,7 @@ with cons_provider as (
 select * from lth_bronze.vocab__provider where cons_org_code is not null
 )
 
-select
-  row_number() over (order by NewID())::bigint
-    as condition_occurrence_id,
+select distinct
   person_id::bigint as person_id,
   condition_concept_id::bigint as condition_concept_id,
   condition_start_date::date as condition_start_date,
@@ -30,6 +28,7 @@ select
   condition_source_value::varchar(50) as condition_source_value,
   condition_source_concept_id::bigint as condition_source_concept_id,
   null::varchar(50) as condition_status_source_value,
+  @generate_surrogate_key(person_id,visit_occurrence_id,condition_concept_id,condition_status_concept_id,condition_start_date,condition_end_date,condition_source_value,c.last_edit_time) as unique_key,
   c.org_code,
   c.source_system,
   c.last_edit_time,
