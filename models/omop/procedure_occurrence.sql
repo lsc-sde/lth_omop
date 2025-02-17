@@ -24,7 +24,7 @@ select
   procedure_source_value::varchar(50) as procedure_source_value,
   null::bigint as procedure_source_concept_id,
   null::varchar(50) as modifier_source_value, 
-  @generate_surrogate_key(person_id, visit_occurrence_id, concept_id, procedure_datetime) as unique_key,
+  @generate_surrogate_key(person_id, visit_occurrence_id, concept_id, procedure_datetime, last_edit_time) as unique_key,
   org_code::varchar(5),
   source_system::varchar(20),
   last_edit_time::datetime,

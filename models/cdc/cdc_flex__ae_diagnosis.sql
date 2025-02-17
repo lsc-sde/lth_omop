@@ -20,7 +20,7 @@ select
   admission_date_time,
   discharge_date_time,
   org_code::varchar(5),
-  source_system::varchar(20),
+  'flex_ae'::varchar(20) as source_system,
   last_edit_time,
   updated_at
 from
