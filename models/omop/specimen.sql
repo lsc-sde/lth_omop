@@ -2,10 +2,7 @@
 MODEL (
   name lth_bronze.specimen,
   kind FULL,
-  cron '@daily',
-  kind INCREMENTAL_BY_UNIQUE_KEY (
-    unique_key unique_key
-  )
+  cron '@daily'
 );
 
 select
