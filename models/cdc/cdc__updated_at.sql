@@ -18,5 +18,6 @@ MODEL (
 select
  model::varchar(50),
  datasource::varchar(20),
- updated_at::datetime
+ updated_at::datetime,
+ id_start_value::int
 from lth_bronze.cdc__updated_at_clone

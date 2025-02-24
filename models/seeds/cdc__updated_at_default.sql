@@ -8,6 +8,7 @@ MODEL (
    columns (
     model VARCHAR(50),
     datasource VARCHAR(50),
-    updated_at DATETIME
+    updated_at DATETIME,
+    id_start_value int
   )
 );
