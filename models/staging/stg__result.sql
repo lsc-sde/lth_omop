@@ -9,7 +9,7 @@ with results_union as (
   select
     flex_patient_id as patient_id,
     visit_occurrence_id,
-    try_cast(measurement_event_id as varchar(80)) as measurement_event_id,
+    measurement_event_id::varchar as measurement_event_id,
     result_datetime,
     provider_id,
     try_cast(source_code as varchar) as source_code,
@@ -29,7 +29,7 @@ with results_union as (
   select
     bi_patient_id as patient_id,
     visit_occurrence_id,
-    try_cast(measurement_event_id as varchar(80)) as measurement_event_id,
+    measurement_event_id::varchar as measurement_event_id,
     bi.referral_received_date as result_datetime,
     provider_id,
     try_cast(source_code as varchar) as source_code,
@@ -49,7 +49,7 @@ with results_union as (
   select
     try_cast(nhs_number as numeric) as patient_id,
     visit_occurrence_id,
-    try_cast(measurement_event_id as varchar(80)) as measurement_event_id,
+    measurement_event_id as measurement_event_id,
     order_date as result_datetime,
     provider_id,
     try_cast(source_code as varchar) as source_code,
@@ -96,7 +96,7 @@ results as (
   select
     coalesce(mpi.person_id, mpi_2.person_id) as person_id,
     visit_occurrence_id,
-    ru.measurement_event_id::varchar(80),
+    ru.measurement_event_id,
     ru.provider_id,
     ru.result_datetime,
     ru.value_as_number,
