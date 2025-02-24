@@ -9,6 +9,11 @@ MODEL (
 );
 
 select
+  abs(cast(cast(
+    @generate_surrogate_key(
+      vm.source_system,vm.person_id,vm.measurement_event_id,vm.target_concept_id,source_value,value_source_value
+      )
+  as varbinary(8)) as bigint)) as measurement_id,
   vm.person_id as person_id,
   vm.target_concept_id::bigint as measurement_concept_id,
   vm.result_datetime as measurement_date,
@@ -30,8 +35,10 @@ select
   vm.unit_source_concept_id::bigint as unit_source_concept_id,
   vm.value_source_value as value_source_value,
   vm.meas_event_field_concept_id::bigint as meas_event_field_concept_id,
-  vm.measurement_event_id::varchar(80),
-  @generate_surrogate_key(vm.source_system,vm.person_id,vm.measurement_event_id,vm.target_concept_id,source_value,value_source_value) as unique_key,
+  vm.measurement_event_id,
+  @generate_surrogate_key(
+    vm.source_system,vm.person_id,vm.measurement_event_id,vm.target_concept_id,source_value,value_source_value
+    ) as unique_key,
   vm.org_code,
   vm.source_system,
   vm.updated_at as last_edit_time,

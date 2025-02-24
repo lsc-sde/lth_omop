@@ -13,6 +13,11 @@ select * from lth_bronze.vocab__provider where cons_org_code is not null
 )
 
 select distinct
+  abs(cast(cast(
+    @generate_surrogate_key(
+      person_id,c.provider_id,visit_occurrence_id,condition_concept_id,condition_status_concept_id,condition_start_date,condition_end_date,condition_source_value,c.last_edit_time
+      )
+   as varbinary(8)) as bigint)) as condition_occurrence_id,
   person_id::bigint as person_id,
   condition_concept_id::bigint as condition_concept_id,
   condition_start_date::date as condition_start_date,
@@ -28,7 +33,9 @@ select distinct
   condition_source_value::varchar(50) as condition_source_value,
   condition_source_concept_id::bigint as condition_source_concept_id,
   null::varchar(50) as condition_status_source_value,
-  @generate_surrogate_key(person_id,visit_occurrence_id,condition_concept_id,condition_status_concept_id,condition_start_date,condition_end_date,condition_source_value,c.last_edit_time) as unique_key,
+  @generate_surrogate_key(
+    person_id,c.provider_id,visit_occurrence_id,condition_concept_id,condition_status_concept_id,condition_start_date,condition_end_date,condition_source_value,c.last_edit_time
+    ) as unique_key,
   c.org_code,
   c.source_system,
   c.last_edit_time,

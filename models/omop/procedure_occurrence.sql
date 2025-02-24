@@ -9,6 +9,11 @@ MODEL (
 );
 
 select
+  abs(cast(cast(
+    @generate_surrogate_key(
+      person_id, visit_occurrence_id, concept_id, procedure_datetime, last_edit_time
+      )
+  as varbinary(8)) as bigint)) as procedure_occurrence_id,
   person_id::bigint as person_id,
   concept_id::bigint as procedure_concept_id,
   procedure_date::date as procedure_date,
@@ -24,7 +29,9 @@ select
   procedure_source_value::varchar(50) as procedure_source_value,
   null::bigint as procedure_source_concept_id,
   null::varchar(50) as modifier_source_value, 
-  @generate_surrogate_key(person_id, visit_occurrence_id, concept_id, procedure_datetime, last_edit_time) as unique_key,
+  @generate_surrogate_key(
+    person_id, visit_occurrence_id, concept_id, procedure_datetime, last_edit_time
+    ) as unique_key,
   org_code::varchar(5),
   source_system::varchar(20),
   last_edit_time::datetime,

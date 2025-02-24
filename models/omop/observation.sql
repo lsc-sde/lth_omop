@@ -9,7 +9,11 @@ MODEL (
 );
 
 select
-  --{{ max_id }} + row_number() over (order by NewID()) as observation_id,
+  abs(cast(cast(
+    @generate_surrogate_key(
+      vo.source_system,person_id,vo.provider_id,observation_event_id,visit_occurrence_id,source_value,value_source_value,result_datetime,target_concept_id,qualifier_concept_id
+      )
+  as varbinary(8)) as bigint)) as observation_id,
   person_id,
   target_concept_id::bigint as observation_concept_id,
   result_datetime::DATE as observation_date,
@@ -28,9 +32,11 @@ select
   unit_source_value::VARCHAR(50) as unit_source_value,
   qualifier_source_value::VARCHAR(50) as qualifier_source_value,
   value_source_value::VARCHAR(50) as value_source_value,
-  observation_event_id::VARCHAR(50) as observation_event_id,
+  observation_event_id as observation_event_id,
   obs_event_field_concept_id::bigint as obs_event_field_concept_id,
-  @generate_surrogate_key(vo.source_system,person_id,observation_event_id,visit_occurrence_id,source_value,value_source_value,result_datetime,target_concept_id,qualifier_concept_id) as unique_key,
+  @generate_surrogate_key(
+    vo.source_system,person_id,vo.provider_id,observation_event_id,visit_occurrence_id,source_value,value_source_value,result_datetime,target_concept_id,qualifier_concept_id
+    ) as unique_key,
   vo.org_code,
   vo.source_system,
   last_edit_time,
