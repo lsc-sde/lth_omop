@@ -16,7 +16,7 @@ with visit_detail as (
 
 select
   c.person_source_value,
-  @convert_event_ts_to_datetime(event_ts) as drug_exposure_start_datetime,
+  event_datetime as drug_exposure_start_datetime,
   cast(drug_exposure_start_datetime as date) as drug_exposure_date,
   cast(provider_id as varchar) as provider_id,
   flex_procedure_id,

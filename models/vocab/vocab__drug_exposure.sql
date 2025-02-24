@@ -24,7 +24,7 @@ inner join lth_bronze.stg__master_patient_index as mpi
   on fdo.person_source_value = mpi.flex_patient_id
 )
 
-select
+select distinct
   visit_occurrence_id,
   person_id,
   c_cm.target_concept_id,
