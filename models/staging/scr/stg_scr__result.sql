@@ -112,7 +112,7 @@ from
       c_erb_b2 as [c-erbB-2],
       bcl_2 as BCL2,
       her2 as HER2,
-      her2_fish as [HER2 FISH],
+      her2_fish as [HER2FISH],
       source_system,
       org_code
     from
@@ -129,7 +129,7 @@ unpivot
     [c-erbB-2],
     BCL2,
     HER2,
-    [HER2 FISH]
+    [HER2FISH]
   )
 ) as unpivoted_markers
 

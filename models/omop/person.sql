@@ -1,8 +1,10 @@
 
 MODEL (
   name lth_bronze.person,
-  kind FULL,
   cron '@daily',
+  kind INCREMENTAL_BY_UNIQUE_KEY (
+    unique_key person_id
+  )
 );
 
 select
@@ -25,7 +27,9 @@ select
   null::varchar(50) as ethnicity_source_value,
   null::bigint as ethnicity_source_concept_id,
   p.source_system::varchar(20),
-  p.org_code::varchar(5)
+  p.org_code::varchar(5),
+  last_edit_time::datetime,
+  getdate()::datetime as insert_date_time
 from lth_bronze.vocab__person as p
 left join
   (select distinct

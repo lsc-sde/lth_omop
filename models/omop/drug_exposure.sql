@@ -37,7 +37,7 @@ select
   adm_route::varchar(50) as route_source_value,
   null::varchar(50) as dose_unit_source_value,
   @generate_surrogate_key(
-    person_id,visit_occurrence_id,drug_concept_id,dosage,drug_exposure_start_datetime,adm_route,last_edit_time
+    person_id,visit_occurrence_id,de.target_concept_id,dosage,drug_exposure_start_datetime,adm_route,last_edit_time
     ) as unique_key,
   de.org_code::varchar(5),
   de.source_system::varchar(20),

@@ -5,7 +5,14 @@ MODEL (
   cron '@daily',
 );
 
-with person as (
+with cdc as (
+  select min(updated_at) as updated_at
+  from lth_bronze.cdc__updated_at
+  where
+    model in ('PERSON') and datasource = 'flex'
+),
+
+person as (
     select distinct
     mpi.person_id,
     mpi.person_source_value,
@@ -29,6 +36,10 @@ with person as (
     on mpi.nhs_number = sp.nhs_number and mpi.source = 'scr'
   where
     collapsed_into_patient_id is null
+  and mpi.last_edit_time >=  (
+      select updated_at from cdc
+    )
+  and mpi.last_edit_time <= getdate()
 )
 
   select

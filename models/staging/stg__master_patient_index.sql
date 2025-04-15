@@ -250,6 +250,7 @@ select
   flex_mrn_count,
   scr_patient_id_count,
   row_number() over (partition by coalesce(cn.person_id, mpi.person_id) order by last_edit_time desc) as current_record,
+  @generate_surrogate_key(flex_patient_id, flex_mrn, coalesce(scr_patient_id, 0), coalesce(cn.nhs_number, mpi.nhs_number)) as unique_key,
   source_system,
   org_code
 from mpi_final_all as mpi

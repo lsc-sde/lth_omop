@@ -27,7 +27,8 @@ select
     0
   ) as race_concept_id,
   source_system,
-  org_code
+  org_code,
+  last_edit_time
 from lth_bronze.stg__person as p
 left join
   (

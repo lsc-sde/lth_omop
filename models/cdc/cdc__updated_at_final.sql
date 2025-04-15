@@ -61,3 +61,13 @@ select
   max(drug_exposure_id) as id_start_value
 from lth_bronze.drug_exposure
 group by source_system
+
+union all
+
+select
+  'PERSON'::varchar(25) as model,
+  source_system::varchar(20) as datasource,
+  max(last_edit_time) as updated_at,
+  max(person_id) as id_start_value
+from lth_bronze.person
+group by source_system
