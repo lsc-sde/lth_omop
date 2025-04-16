@@ -63,7 +63,7 @@ class SQLMeshSettings(BaseModel):
     project: str
     model_defaults: ModelDefaultsConfig = ModelDefaultsConfig(
         kind=ModelKindName.VIEW,
-        dialect="tsql",
+        dialect="tsql,normalization_strategy=case_sensitive",
         cron="@daily",
         owner="LTH DST",
         start="2024-01-01 00:00:00.000",
@@ -89,6 +89,8 @@ variables = {
     "catalog_src": os.environ["MSSQL_DATABASE_SOURCE"],
     "schema_src": os.environ["MSSQL_SCHEMA_SOURCE"],
     "schema_vocab": os.environ["MSSQL_SCHEMA_VOCAB"],
+    "scr_db": os.environ["MSSQL_SCR_DB"],
+    "bi_db": os.environ["MSSQL_BI_DB"],
 }
 
 config = Config(**dict(SQLMeshSettings(project="lth_omop_bronze", variables=variables)))
