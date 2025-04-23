@@ -22,5 +22,7 @@ select
   area,
   subarea,
   sub_subarea,
-  facility
+  facility,
+  'rxn' as org_code,
+  'flex' as source_system
 from @catalog_src.@schema_src.src_flex__care_site_ip

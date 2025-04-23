@@ -23,5 +23,7 @@ select
   qualifier,
   test,
   result_value,
+  'rxn' as org_code,
+  'swisslab' as source_system,
   updated_at
 from @catalog_src.@schema_src.src_sl__bacteriology_archive

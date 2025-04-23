@@ -16,7 +16,9 @@ SELECT
   diagnosis_date,
   diagnosis_basis,
   stage_type AS field,
-  SUBSTRING(stage_value, 2, LEN(stage_value)) AS value,
+  SUBSTRING(stage_value, 2, LEN(stage_value)) AS value,  
+  source_system::varchar(20),
+  org_code::varchar(5),
   last_edit_time,
   updated_at
 FROM
@@ -36,6 +38,8 @@ FROM
       t_stage_final AS pT,
       n_stage_final AS pN,
       m_stage_final AS pM,
+      source_system,
+      org_code,
       last_edit_time,
       updated_at
     FROM
@@ -65,7 +69,9 @@ SELECT
   receipt_date,
   null AS basis,
   'Max Tumour Diameter' AS field,
-  CAST(max_tumour_diameter_mm AS VARCHAR(50)) AS value,
+  max_tumour_diameter_mm::VARCHAR(50) AS value,  
+  source_system::varchar(20),
+  org_code::varchar(5),
   last_edit_time,
   updated_at
 FROM
@@ -84,7 +90,9 @@ SELECT
   date,
   basis,
   marker_type AS field,   -- The name of the original column
-  marker_value AS value,      -- The value from the original columns
+  marker_value AS value,      -- The value from the original columns  
+  source_system::varchar(20),
+  org_code::varchar(5),
   GETDATE() AS last_edit_time,
   GETDATE() AS updated_at
 FROM
@@ -104,7 +112,9 @@ FROM
       c_erb_b2 AS [c-erbB-2],
       bcl_2 AS BCL2,
       her2 AS HER2,
-      her2_fish AS [HER2 FISH]
+      her2_fish AS [HER2 FISH],      
+      source_system,
+      org_code
     FROM
       lth_bronze.src_scr__breast_markers 
     WHERE

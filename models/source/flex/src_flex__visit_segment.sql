@@ -21,6 +21,8 @@ select
   discharge_type_id,
   discharge_dest_code,
   discharge_dest_value,
+  'rxn' as org_code,
+  'flex' as source_system,
   last_edit_time,
   updated_at
 from @catalog_src.@schema_src.src_flex__visit_segment

@@ -1,11 +1,9 @@
 
 MODEL (
   name lth_bronze.stg_flex__devices,
-  kind INCREMENTAL_BY_TIME_RANGE (
-    time_column (device_datetime, '%Y-%m-%d %H:%M:%S.%f'), -- Time column `model_time_column` with format '%Y-%m-%d'
-  ),
+  kind FULL,
   cron '@daily',
-  );
+);
 
 with devices as
 (
@@ -18,8 +16,10 @@ select
   cath_type as device_type,
   lot_number as device_lot_number,
   cath_details as device_details,
-  null as expiry_date
-from lth_bronze.src_flex__cathether_devices 
+  null as expiry_date,
+  source_system::varchar(20),
+  org_code::varchar(5)
+from lth_bronze.src_flex__cathether_devices
 
 union all
 
@@ -29,11 +29,13 @@ select
   date_time,
   manufacturer,
   theatre_implants as device_type_group,
-  theatre_implants as device_type,
-  batch_lot_number as device_lot_number,
-  ammendments as device_details,
-  expiry_date
-from lth_bronze.src_flex__implant_devices 
+  theatre_implants,
+  batch_lot_number,
+  ammendments,
+  expiry_date,
+  source_system::varchar(20),
+  org_code::varchar(5)
+from lth_bronze.src_flex__implant_devices
 ),
 
 visits as (
@@ -42,21 +44,21 @@ visits as (
     visit_id,
     first_visit_id,
     person_source_value
-  from lth_bronze.stg_flex__facility_transfer 
+  from lth_bronze.stg_flex__facility_transfer
 )
 
 select
-  isnull(v.first_visit_id, d.visit_id)::BIGINT as visit_id,
-  patient_id::BIGINT,
-  date_time::DATETIME as device_datetime,
-  manufacturer::VARCHAR(MAX) as device_manufacturer,
-  device_type_group::VARCHAR(MAX),
-  device_type::VARCHAR(MAX),
-  device_lot_number::VARCHAR(MAX),
-  device_details::VARCHAR(MAX),
-  expiry_date::DATETIME
+  isnull(v.first_visit_id, d.visit_id) as visit_id,
+  patient_id,
+  date_time,
+  manufacturer::varchar(150),
+  device_type_group::varchar(100),
+  device_type::varchar(150),
+  device_lot_number::varchar(100),
+  device_details::varchar(450),
+  expiry_date::varchar(20),
+  source_system::varchar(20),
+  org_code::varchar(5)
 from devices d
 left join visits as v
   on d.visit_id = v.visit_id
-WHERE
-  device_datetime BETWEEN @start_ds and @end_ds

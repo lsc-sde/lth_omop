@@ -1,5 +1,0 @@
-version: 2
-models:
-  - name: stg_bi__referrals
-    description: |
-      Based on BI created referral dataset (all datasets are validated by BI)

@@ -1,12 +1,19 @@
-model,datasource,updated_at
-fr__measurement_to_observation_sl,flex,2024-12-01 00:00:00
-fr__observation_to_measurement_sl,flex,2024-12-01 00:00:00
-MEASUREMENT,flex,2024-12-01 00:00:00
-MEASUREMENT,swl,2024-12-01 00:00:00
-OBSERVATION,flex,2024-12-01 00:00:00
-OBSERVATION,swl,2024-12-01 00:00:00
-OBSERVATION,bi,2024-12-01 00:00:00
-OBSERVATION,ukcoder,2024-12-01 00:00:00
-fr__mother_to_child,flex,2024-12-01 00:00:00
-fr__specimen_to_measurement,flex,2024-12-01 00:00:00
-VISIT_OCCURRENCE,flex,2024-12-01 00:00:00
+model,datasource,updated_at,id_start_value
+fr__measurement_to_observation_sl,flex,2024-12-01 00:00:00,0
+fr__observation_to_measurement_sl,flex,2024-12-01 00:00:00,0
+MEASUREMENT,flex,2024-12-01 00:00:00,0
+MEASUREMENT,swl,2024-12-01 00:00:00,0
+OBSERVATION,flex,2024-12-01 00:00:00,0
+OBSERVATION,swl,2024-12-01 00:00:00,0
+OBSERVATION,bi,2024-12-01 00:00:00,0
+OBSERVATION,ukcoder,2024-12-01 00:00:00,0
+fr__mother_to_child,flex,2024-12-01 00:00:00,0
+fr__specimen_to_measurement,flex,2024-12-01 00:00:00,0
+VISIT_OCCURRENCE,flex,2024-12-01 00:00:00,0
+CONDITION_OCCURRENCE,ukcoder,2024-12-01 00:00:00,0
+CONDITION_OCCURRENCE,flex_ae,2024-12-01 00:00:00,0
+PROCEDURE_OCCURRENCE,flex,2024-12-01 00:00:00,0
+PROCEDURE_OCCURRENCE,flex_ae,2024-12-01 00:00:00,0
+PROCEDURE_OCCURRENCE,ukcoder,2024-12-01 00:00:00,0
+DRUG_EXPOSURE,flex,2024-12-01 00:00:00,0
+PERSON,flex,1800-01-01 00:00:00,0

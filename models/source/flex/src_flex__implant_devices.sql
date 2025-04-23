@@ -16,6 +16,8 @@ select
   expiry_date,
   ammendments,
   code_number,
-  batch_lot_number
-from @catalog_src.@schema_src.src_flex__implant_devices
+  batch_lot_number,
+  'rxn' as org_code,
+  'flex' as source_system
+from openquery([UKPROD], @flex_implants())
 
