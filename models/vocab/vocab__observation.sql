@@ -199,63 +199,6 @@ where cn.domain_id = 'Observation'
 union
 
 select distinct
-  r.person_id,
-  r.visit_occurrence_id,
-  null as visit_detail_id,
-  r.measurement_event_id as observation_event_id,
-  cast(r.provider_id as varchar) as provider_id,
-  r.result_datetime,
-  c.target_concept_id,
-  32817 as type_concept_id,
-  r.source_value as value_as_number,
-  r.value_source_value as value_as_string,
-  c2.target_concept_id
-    as value_as_concept_id,
-  null as qualifier_concept_id,
-  null as unit_concept_id,
-  r.source_name as source_value,
-  null as observation_source_concept_id,
-  null as unit_source_value,
-  cast(null as varchar(50)) as qualifier_source_value,
-  r.value_source_value,
-  null as obs_event_field_concept_id,
-  r.org_code,
-  r.source_system,
-  r.updated_at
-from lth_bronze.stg__result as r
-left join
-  (
-    select 
-      source_code,
-      source_code_description,
-      target_concept_id,
-      target_domain_id
-    from lth_bronze.vocab__source_to_concept_map
-    where concept_group = 'scr_fields'
-  ) as c
-  on r.source_code = c.source_code
-left join
-  (
-    select 
-      source_code,
-      source_code_description,
-      target_concept_id,
-      target_domain_id
-    from lth_bronze.vocab__source_to_concept_map
-    where concept_group = 'scr_results'
-  ) as c2
-  on
-    r.value_source_value = c2.source_code_description
-    and r.source_name = c2.source_code
-left join @catalog_src.@schema_vocab.CONCEPT as cn
-  on c.target_concept_id = cn.concept_id
-where
-  source_system = 'scr'
-  and cn.domain_id = 'Observation'
-
-union
-
-select distinct
   person_id,
   null as visit_occurrence_id,
   null as visit_detail_id,

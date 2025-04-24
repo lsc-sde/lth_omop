@@ -63,26 +63,6 @@ with results_union as (
 	  source_system,
     updated_at
   from lth_bronze.cdc_sl__bacteriology
-
-  union all
-
-  select
-    try_cast(nhs_number as numeric) as patient_id,
-    null as visit_occurrence_id,
-    @generate_surrogate_key(nhs_number,care_id,field,value,cancer_site,diagnosis_date) as measurement_event_id,
-    diagnosis_date as result_datetime,
-    null as provider_id,
-    try_cast(field as varchar) as source_code,
-    try_cast(field as varchar) as source_name,
-    try_cast(value as varchar) as value_source_value,
-    try_cast(value as varchar) as source_value,
-    null as value_as_number,
-    case when field = 'Max Tumour Diameter' then 'mm' else null end as unit_source_value,
-    null as priority,
-    org_code,
-	  source_system,
-    updated_at
-  from lth_bronze.stg_scr__result
 ),
 
 person as (
@@ -122,7 +102,7 @@ results as (
     from person) as mpi_2
     on
       ru.patient_id = mpi_2.nhs_number
-      and ru.source_system in ('swl', 'scr')
+      and ru.source_system in ('swl')
 )
 
 select * from results where person_id is not null

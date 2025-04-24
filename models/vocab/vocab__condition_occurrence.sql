@@ -83,7 +83,7 @@ condition as (
   left join mappings as mp
     on
       replace(co.source_code, '.', '') = replace(mp.icd_code, '.', '')
-      and co.source_system in ('ukcoder', 'scr')
+      and co.source_system in ('ukcoder')
   left join snomed_mappings as sp
     on
       co.source_code = sp.concept_snomed
@@ -95,30 +95,3 @@ from condition as c
 inner join @catalog_src.@schema_vocab.CONCEPT as cn
   on c.condition_concept_id = cn.concept_id
 where cn.domain_id = 'Condition'
-
-union
-
-select
-  person_id,
-  sc.target_concept_id as condition_concept_id,
-  r.result_datetime,
-  null as condition_end_date,
-  32879 as condition_type_concept_id,
-  32899 as condition_status_concept_id,
-  null as provider_id,
-  isnumeric(null) as provider_id_type,
-  null as visit_occurrence_id,
-  r.value_source_value as condition_source_value,
-  sc.target_concept_id as condition_source_concept_id,
-  org_code,
-  r.source_system,
-  updated_at as last_edit_time,
-  updated_at
-from lth_bronze.stg__result as r
-inner join lth_bronze.vocab__source_to_concept_map as sc
-  on
-    r.source_name = sc.source_code_description
-    and r.value_source_value = sc.source_code
-where
-  r.source_name = 'Grade of Differentiation'
-  and r.source_system = 'scr'
