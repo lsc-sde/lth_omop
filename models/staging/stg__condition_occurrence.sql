@@ -51,27 +51,3 @@ select
   updated_at
 from cond
 
-union
-
-select
-  coalesce(p1.person_id, p2.person_id) as person_id,
-  null as visit_occurrence_id,
-  date_of_diagnosis,
-  null as end_date,
-  null as provider_id,
-  icd_code as source_code,
-  1 as position,
-  stg_scr.org_code,
-  stg_scr.source_system,
-  stg_scr.last_edit_time,
-  stg_scr.updated_at
-from lth_bronze.stg_scr__condition_occurrence as stg_scr
-left join person as p1
-  on
-    cast(stg_scr.mrn as varchar) = cast(p1.flex_mrn as varchar)
-    and p1.id = 1
-left join person as p2
-  on
-    cast(stg_scr.nhs_number as varchar) = cast(p2.nhs_number as varchar)
-    and p2.id = 1
-where coalesce(p1.person_id, p2.person_id) is not null
