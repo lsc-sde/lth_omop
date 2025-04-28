@@ -20,4 +20,3 @@ select
   'rxn' as org_code,
   'flex' as source_system
 from @catalog_src.@schema_src.src_flex__implant_devices
-
