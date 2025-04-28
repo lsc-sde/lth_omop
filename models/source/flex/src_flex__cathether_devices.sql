@@ -15,4 +15,4 @@ select
   cath_details,
   'rxn' as org_code,
   'flex' as source_system
-from openquery([UKPROD], @flex_cathethers())
+from @catalog_src.@schema_src.flex_cathethers

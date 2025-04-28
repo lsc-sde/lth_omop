@@ -19,5 +19,4 @@ select
   batch_lot_number,
   'rxn' as org_code,
   'flex' as source_system
-from openquery([UKPROD], @flex_implants())
-
+from @catalog_src.@schema_src.flex_implants
