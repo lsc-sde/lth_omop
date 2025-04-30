@@ -4,14 +4,19 @@ version = "0.1.0"
 description = "LTH OMOP Source to Bronze ETL"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["python-dotenv>=1.0.1", "sqlmesh[mssql,web]>=0.147.0", "sqlalchemy", "pyodbc"]
+dependencies = [
+    "python-dotenv>=1.0.1",
+    "sqlmesh[mssql,web]~=0.178",
+    "sqlalchemy",
+    "pyodbc",
+]
 
 [dependency-groups]
 dev = [
     "bokeh>=3.6.2",
     "holoviews>=1.20.0",
     "jupyterlab>=4.3.2",
-    "mkdocs>=1.6.1",
-    "mkdocs-material>=9.5.47",
-    "pre-commit>=4.0.1",
+    "mkdocs~=1.6",
+    "mkdocs-material~=9.6",
+    "pre-commit~=4.2",
 ]
