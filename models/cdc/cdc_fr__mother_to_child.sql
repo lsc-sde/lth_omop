@@ -28,6 +28,6 @@ where
     select dateadd(d, -1, updated_at) from cdc
   )
   and c.last_edit_time < (
-    select dateadd(day, 90, updated_at) from cdc
+    select dateadd(day, 365, updated_at) from cdc
   )
   and c.last_edit_time <= getdate()

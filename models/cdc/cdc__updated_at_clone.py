@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 import pyodbc
 import pandas as pd
 from sqlmesh import ExecutionContext, model
@@ -5,7 +8,7 @@ from sqlmesh.core.model.kind import ModelKindName
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+#load_dotenv()
 
 @model(
     name="lth_bronze.cdc_updated_at",
@@ -21,6 +24,12 @@ load_dotenv()
 
 def cdc_updated_at(context, snapshot, runtime_stage, start, end, latest, execution_time):
 
+    load_dotenv()
+    driver = os.getenv("DB_DRIVER")
+    server = os.getenv("DB_SERVER")
+    db = os.getenv("MSSQL_DATABASE")
+    trusted = os.getenv("DB_TRUSTED_CONNECTION")
+    
     conn_str = (
         f"DRIVER={{{os.getenv('DB_DRIVER')}}};"
         f"SERVER={os.getenv('DB_SERVER')};"

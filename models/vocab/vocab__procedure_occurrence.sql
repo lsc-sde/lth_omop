@@ -57,7 +57,7 @@ prov1 as (
   from lth_bronze.vocab__provider
 )
 
-select
+select distinct
   p.person_id,
   p.visit_occurrence_id,
   p.procedure_date,

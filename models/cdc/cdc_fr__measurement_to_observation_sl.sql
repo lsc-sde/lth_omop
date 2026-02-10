@@ -43,7 +43,7 @@ measures as (
       select dateadd(d, -5, updated_at) from cdc
     )
     and slb.updated_at < (
-      select dateadd(day, 90, updated_at) from cdc
+      select dateadd(day, 365, updated_at) from cdc
     )
     and slb.updated_at <= getdate()
     and slb.source_system = 'swl'

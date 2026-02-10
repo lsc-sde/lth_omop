@@ -90,7 +90,7 @@ condition as (
       and co.source_system = 'flex_ae'
 )
 
-select c.*
+select distinct c.*
 from condition as c
 inner join @catalog_src.@schema_vocab.CONCEPT as cn
   on c.condition_concept_id = cn.concept_id

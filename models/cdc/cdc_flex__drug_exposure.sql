@@ -32,7 +32,7 @@ select
     select updated_at from cdc
   )
   and sfr.last_edit_time < (
-    select dateadd(day, 10, updated_at) from cdc
+    select dateadd(day, 365, updated_at) from cdc
   )
   and sfr.last_edit_time <= getdate()
   and kardex_group_id in (17, 43, 44)

@@ -39,6 +39,6 @@ where
     select updated_at from cdc
   )
   and sfv.last_edit_time < (
-    select dateadd(day, 90, updated_at) from cdc
+    select dateadd(day, 365, updated_at) from cdc
   )
   and sfv.last_edit_time <= getdate()

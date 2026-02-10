@@ -42,6 +42,6 @@ where
     select dateadd(d, -5, updated_at) from cdc
   )
   and s.updated_at < (
-    select dateadd(day, 90, updated_at) from cdc
+    select dateadd(day, 365, updated_at) from cdc
   )
   and s.updated_at <= getdate()

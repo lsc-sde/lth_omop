@@ -2,6 +2,7 @@
 MODEL (
   name lth_bronze.src_flex__result,
   kind VIEW,
+  allow_partials true,
   cron '@daily',
 );
 
@@ -37,6 +38,6 @@ where
     select updated_at from cdc
   )
   and sfr.last_edit_time < (
-    select dateadd(day, 90, updated_at) from cdc
+    select dateadd(day, 365, updated_at) from cdc
   )
   and sfr.last_edit_time <= getdate()
