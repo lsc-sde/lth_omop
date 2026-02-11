@@ -18,7 +18,7 @@ import os
     columns={
         "id": "int",
         "name": "string",
-        "updated_at": "datetime"
+        "updated_at": "datetime" 
     }
 )
 
