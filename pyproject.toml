@@ -6,10 +6,15 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "python-dotenv>=1.2.1",
-    "sqlmesh[mssql,web]~=0.230",
+    "sqlmesh[lsp,mssql,web]~=0.230",
     "sqlalchemy",
     "pyodbc",
 ]
 
 [dependency-groups]
-dev = ["mkdocs~=1.6", "mkdocs-material~=9.7", "pre-commit~=4.5"]
+dev = [
+    "mkdocs~=1.6",
+    "mkdocs-material~=9.7",
+    "pre-commit~=4.5",
+    "ruff>=0.15.0",
+]
