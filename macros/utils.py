@@ -1,8 +1,8 @@
 from sqlmesh import macro
 
+
 @macro()
 def convert_event_ts_to_datetime(evaluator, event_ts):
-
     out = """
     dateadd(
 		SECOND,
@@ -12,4 +12,3 @@ def convert_event_ts_to_datetime(evaluator, event_ts):
     """
 
     return out
-

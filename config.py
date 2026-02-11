@@ -93,4 +93,17 @@ variables = {
     "bi_db": os.environ["MSSQL_BI_DB"],
 }
 
-config = Config(**dict(SQLMeshSettings(project="lth_omop_bronze", variables=variables)))
+# Statements to execute before and after running SQLMesh
+before_all = [
+    "@before_all()",
+]
+
+after_all = [
+    "@after_all()",
+]
+
+config = Config(
+    **dict(SQLMeshSettings(project="lth_omop_bronze", variables=variables)),
+    before_all=before_all,
+    after_all=after_all,
+)
