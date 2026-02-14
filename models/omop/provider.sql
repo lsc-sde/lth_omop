@@ -1,31 +1,31 @@
-
 MODEL (
   name lth_bronze.provider,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-select distinct
-  provider_id::bigint as provider_id,
-  provider_name::varchar(255) as provider_name,
-  null::varchar(20) as npi,
-  null::varchar(20) as dea,
-  target_concept_id::bigint as specialty_concept_id,
-  c.care_site_id::bigint as care_site_id,
-  null::int as year_of_birth,
-  null::bigint as gender_concept_id,
-  provider_source_value::varchar(50) as provider_source_value,
-  specialty_source_value::varchar(50) as specialty_source_value,
-  null::bigint as specialty_source_concept_id,
-  null::varchar(50) as gender_source_value,
-  null::bigint as gender_source_concept_id,
-  p.source_system::varchar(20),
-  p.org_code::varchar(5)
-from lth_bronze.vocab__provider as p
-left join
-  (
-    select *
-    from lth_bronze.CARE_SITE
-    where place_of_service_source_value = 'NHS Trust'
-  ) as c
-  on p.care_site_id::varchar = c.care_site_source_value
+SELECT DISTINCT
+  provider_id::BIGINT AS provider_id,
+  provider_name::VARCHAR(255) AS provider_name,
+  NULL::VARCHAR(20) AS npi,
+  NULL::VARCHAR(20) AS dea,
+  target_concept_id::BIGINT AS specialty_concept_id,
+  c.care_site_id::BIGINT AS care_site_id,
+  NULL::INTEGER AS year_of_birth,
+  NULL::BIGINT AS gender_concept_id,
+  provider_source_value::VARCHAR(50) AS provider_source_value,
+  specialty_source_value::VARCHAR(50) AS specialty_source_value,
+  NULL::BIGINT AS specialty_source_concept_id,
+  NULL::VARCHAR(50) AS gender_source_value,
+  NULL::BIGINT AS gender_source_concept_id,
+  p.source_system::VARCHAR(20),
+  p.org_code::VARCHAR(5)
+FROM lth_bronze.vocab__provider AS p
+LEFT JOIN (
+  SELECT
+    *
+  FROM lth_bronze.care_site
+  WHERE
+    place_of_service_source_value = 'NHS Trust'
+) AS c
+  ON p.care_site_id::VARCHAR = c.care_site_source_value

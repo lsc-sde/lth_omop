@@ -1,56 +1,45 @@
-
 MODEL (
   name lth_bronze.procedure_occurrence,
   cron '@daily',
-  kind INCREMENTAL_BY_UNIQUE_KEY (
-    unique_key unique_key
-  )
+  kind FULL
 );
 
-with src as (
-  select
-    abs(cast(cast(
-      @generate_surrogate_key(
-        person_id, visit_occurrence_id, concept_id, procedure_datetime, last_edit_time
-        )
-    as varbinary(8)) as bigint)) as procedure_occurrence_id,
-    person_id::bigint as person_id,
-    concept_id::bigint as procedure_concept_id,
-    procedure_date::date as procedure_date,
-    procedure_datetime::datetime as procedure_datetime,
-    null::date as procedure_end_date,
-    null::datetime as procedure_end_datetime,
-    procedure_type_concept_id::bigint as procedure_type_concept_id,
-    null::bigint as modifier_concept_id,
-    1::int as quantity,
-    provider_id::bigint as provider_id,
-    visit_occurrence_id::bigint as visit_occurrence_id,
-    null::bigint as visit_detail_id,
-    procedure_source_value::varchar(50) as procedure_source_value,
-    null::bigint as procedure_source_concept_id,
-    null::varchar(50) as modifier_source_value, 
-    @generate_surrogate_key(
-      person_id, visit_occurrence_id, concept_id, procedure_datetime, last_edit_time
-      ) as unique_key,
-    org_code::varchar(5),
-    source_system::varchar(20),
-    last_edit_time::datetime,
-    getdate()::datetime as insert_date_time
-  from lth_bronze.vocab__procedure_occurrence as p
-), dedup as (
-  select *
-  from (
-    select
+WITH src AS (
+  SELECT
+    @generate_surrogate_key(person_id, visit_occurrence_id, concept_id, procedure_datetime, last_edit_time)::VARBINARY(16) AS procedure_occurrence_id,
+    person_id::BIGINT AS person_id,
+    concept_id::BIGINT AS procedure_concept_id,
+    procedure_date::DATE AS procedure_date,
+    procedure_datetime::DATETIME AS procedure_datetime,
+    NULL::DATE AS procedure_end_date,
+    NULL::DATETIME AS procedure_end_datetime,
+    procedure_type_concept_id::BIGINT AS procedure_type_concept_id,
+    NULL::BIGINT AS modifier_concept_id,
+    1::INTEGER AS quantity,
+    provider_id::BIGINT AS provider_id,
+    visit_occurrence_id::BIGINT AS visit_occurrence_id,
+    NULL::BIGINT AS visit_detail_id,
+    procedure_source_value::VARCHAR(50) AS procedure_source_value,
+    NULL::BIGINT AS procedure_source_concept_id,
+    NULL::VARCHAR(50) AS modifier_source_value,
+    org_code::VARCHAR(5) AS org_code,
+    source_system::VARCHAR(20) AS source_system,
+    last_edit_time::DATETIME AS last_edit_time,
+    getdate()::DATETIME AS insert_date_time
+  FROM lth_bronze.vocab__procedure_occurrence AS p
+), dedup AS (
+  SELECT
+    *
+  FROM (
+    SELECT
       src.*,
-      row_number() over (
-        partition by unique_key
-        order by last_edit_time desc
-      ) as rn
-    from src
-  ) t
-  where rn = 1
+      row_number() OVER (PARTITION BY procedure_occurrence_id ORDER BY last_edit_time DESC) AS rn
+    FROM src
+  ) AS t
+  WHERE
+    rn = 1
 )
-select
+SELECT
   procedure_occurrence_id,
   person_id,
   procedure_concept_id,
@@ -67,9 +56,8 @@ select
   procedure_source_value,
   procedure_source_concept_id,
   modifier_source_value,
-  unique_key,
   org_code,
   source_system,
   last_edit_time,
   insert_date_time
-from dedup
+FROM dedup

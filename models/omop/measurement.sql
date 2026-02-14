@@ -9,16 +9,14 @@ MODEL (
 );
 
 SELECT
-  abs(
-    @generate_surrogate_key(
-      vm.source_system,
-      vm.person_id,
-      vm.measurement_event_id,
-      vm.target_concept_id,
-      source_value,
-      value_source_value
-    )::VARBINARY(8)::BIGINT
-  ) AS measurement_id,
+  @generate_surrogate_key(
+    vm.source_system,
+    vm.person_id,
+    vm.measurement_event_id,
+    vm.target_concept_id,
+    source_value,
+    value_source_value
+  )::VARBINARY(16) AS measurement_id,
   vm.person_id AS person_id,
   vm.target_concept_id::BIGINT AS measurement_concept_id,
   vm.result_datetime AS measurement_date,
@@ -41,14 +39,6 @@ SELECT
   vm.value_source_value AS value_source_value,
   vm.meas_event_field_concept_id::BIGINT AS meas_event_field_concept_id,
   vm.measurement_event_id,
-  @generate_surrogate_key(
-    vm.source_system,
-    vm.person_id,
-    vm.measurement_event_id,
-    vm.target_concept_id,
-    source_value,
-    value_source_value
-  ) AS unique_key,
   vm.org_code,
   vm.source_system,
   vm.updated_at AS updated_at,
