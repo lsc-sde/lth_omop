@@ -3,6 +3,7 @@ MODEL (
   name lth_bronze.cdc_bi__referrals,
   kind view,
   cron '@daily',
+  enabled false
 );
 
 with cdc as (

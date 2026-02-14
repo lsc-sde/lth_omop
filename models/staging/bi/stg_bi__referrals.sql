@@ -1,31 +1,32 @@
-
 MODEL (
   name lth_bronze.stg_bi__referrals,
-  kind FULL,
-  cron '@daily',
+  kind INCREMENTAL_BY_TIME_RANGE (
+    time_column updated_at,
+    batch_size 30,
+    batch_concurrency 4
+  ),
+  cron '@daily'
 );
 
-select
-  bi.patient_id as bi_patient_id,
-  bi.visit_id as visit_occurrence_id,
-  null as measurement_event_id,
-  bi.referral_received_date,
+SELECT
+  bi.patient_id AS bi_patient_id,
+  bi.visit_id AS visit_occurrence_id,
+  NULL AS measurement_event_id,
+  bi.referral_received_date::SMALLDATETIME AS referral_received_date,
   pr.provider_id,
-  bi.treatment_function_code as source_code,
-  bi.treatment_function_name as source_name,
-  null as value_source_value,
-  null as source_value,
-  null as value_as_number,
-  null as unit_source_value,
-  coalesce(
-    bi.suspected_cancer_type,
-    bi.consultant_priority,
-    bi.gp_priority)
-    as priority,
-  bi.source_system::varchar(20),
-  bi.org_code::varchar(5),
-  bi.last_edit_time,
-  bi.updated_at
-from lth_bronze.cdc_bi__referrals as bi
-left join lth_bronze.stg__provider as pr
-  on bi.referring_emp_code = pr.provider_source_value
+  bi.treatment_function_code AS source_code,
+  bi.treatment_function_name AS source_name,
+  NULL AS value_source_value,
+  NULL AS source_value,
+  NULL AS value_as_number,
+  NULL AS unit_source_value,
+  coalesce(bi.suspected_cancer_type, bi.consultant_priority, bi.gp_priority) AS priority,
+  bi.source_system::VARCHAR(20),
+  bi.org_code::VARCHAR(5),
+  bi.last_edit_time::DATETIME2 AS last_edit_time,
+  bi.updated_at::DATETIME2 AS updated_at
+FROM lth_bronze.src_bi__referrals AS bi
+LEFT JOIN lth_bronze.stg__provider AS pr
+  ON bi.referring_emp_code = pr.provider_source_value
+WHERE
+  bi.updated_at BETWEEN @start_ds AND @end_ds

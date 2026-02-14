@@ -1,108 +1,106 @@
-
 MODEL (
   name lth_bronze.stg__result,
-  kind FULL,
-  cron '@daily',
+  kind INCREMENTAL_BY_TIME_RANGE (
+    time_column updated_at,
+    batch_size 30,
+    batch_concurrency 4
+  ),
+  cron '@daily'
 );
 
-with results_union as (
-  select
-    flex_patient_id as patient_id,
+WITH results_union AS (
+  SELECT
+    flex_patient_id AS patient_id,
     visit_occurrence_id,
-    cast(measurement_event_id as varchar(50)) as measurement_event_id,
+    measurement_event_id::VARCHAR(50) AS measurement_event_id,
     result_datetime,
     provider_id,
-  try_cast(source_code as varchar(50)) as source_code,
-    try_cast(source_name as varchar) as source_name,
-    try_cast(value_source_value as varchar) as value_source_value,
-    try_cast(source_value as varchar) as source_value,
+    TRY_CAST(source_code AS VARCHAR(50)) AS source_code,
+    TRY_CAST(source_name AS VARCHAR) AS source_name,
+    TRY_CAST(value_source_value AS VARCHAR) AS value_source_value,
+    TRY_CAST(source_value AS VARCHAR) AS source_value,
     value_as_number,
-    try_cast(unit_source_value as varchar) as unit_source_value,
-    try_cast(null as varchar) as priority,
+    TRY_CAST(unit_source_value AS VARCHAR) AS unit_source_value,
+    TRY_CAST(NULL AS VARCHAR) AS priority,
     org_code,
-	  source_system,
-    last_edit_time as updated_at
-  from lth_bronze.stg_flex__result
-
-  union all
-
-  select
-    bi_patient_id as patient_id,
-    visit_occurrence_id,
-    cast(measurement_event_id as varchar(50)) as measurement_event_id,
-    bi.referral_received_date as result_datetime,
-    provider_id,
-  try_cast(source_code as varchar(50)) as source_code,
-    try_cast(source_name as varchar) as source_name,
-    try_cast(value_source_value as varchar) as value_source_value,
-    try_cast(source_value as varchar) as source_value,
-    value_as_number,
-    try_cast(unit_source_value as varchar) as unit_source_value,
-    try_cast(priority as varchar) as priority,    
-    org_code,
-	  source_system,
+    source_system,
     updated_at
-  from lth_bronze.stg_bi__referrals as bi
-
-  union all
-
-  select
-    try_cast(nhs_number as numeric) as patient_id,
+  FROM lth_bronze.stg_flex__result
+  WHERE
+    updated_at BETWEEN @start_ds AND @end_ds
+  UNION ALL
+  SELECT
+    bi_patient_id AS patient_id,
     visit_occurrence_id,
-    cast(measurement_event_id as varchar(50)) as measurement_event_id,
-    order_date as result_datetime,
+    measurement_event_id::VARCHAR(50) AS measurement_event_id,
+    bi.referral_received_date AS result_datetime,
     provider_id,
-    try_cast(source_code as varchar(50)) as source_code,
-    try_cast(source_name as varchar) as source_name,
-    try_cast(value_source_value as varchar) as value_source_value,
-    try_cast(source_value as varchar) as source_value,
+    TRY_CAST(source_code AS VARCHAR(50)) AS source_code,
+    TRY_CAST(source_name AS VARCHAR) AS source_name,
+    TRY_CAST(value_source_value AS VARCHAR) AS value_source_value,
+    TRY_CAST(source_value AS VARCHAR) AS source_value,
     value_as_number,
-    try_cast(unit_source_value as varchar) as unit_source_value,
-    try_cast(priority as varchar) as priority,
+    TRY_CAST(unit_source_value AS VARCHAR) AS unit_source_value,
+    TRY_CAST(priority AS VARCHAR) AS priority,
     org_code,
-	  source_system,
+    source_system,
     updated_at
-  from lth_bronze.cdc_sl__bacteriology
-),
-
-person as (
-select
+  FROM lth_bronze.stg_bi__referrals AS bi
+  WHERE
+    updated_at BETWEEN @start_ds AND @end_ds
+  UNION ALL
+  SELECT
+    TRY_CAST(nhs_number AS NUMERIC) AS patient_id,
+    visit_occurrence_id,
+    measurement_event_id::VARCHAR(50) AS measurement_event_id,
+    order_date AS result_datetime,
+    provider_id,
+    TRY_CAST(source_code AS VARCHAR(50)) AS source_code,
+    TRY_CAST(source_name AS VARCHAR) AS source_name,
+    TRY_CAST(value_source_value AS VARCHAR) AS value_source_value,
+    TRY_CAST(source_value AS VARCHAR) AS source_value,
+    value_as_number,
+    TRY_CAST(unit_source_value AS VARCHAR) AS unit_source_value,
+    TRY_CAST(priority AS VARCHAR) AS priority,
+    org_code,
+    source_system,
+    updated_at
+  FROM lth_bronze.cdc_sl__bacteriology AS ssb
+  WHERE
+    ssb.updated_at BETWEEN @start_ds AND @end_ds AND ssb.valid_to IS NULL
+), person AS (
+  SELECT
     *,
-    row_number() over (partition by person_id order by last_edit_time desc) as id
-from lth_bronze.stg__master_patient_index
-),
-
-results as (
-  select
-    coalesce(mpi.person_id, mpi_2.person_id) as person_id,
-    visit_occurrence_id,
-    cast(ru.measurement_event_id as varchar(50)) as measurement_event_id,
-    ru.provider_id,
-    ru.result_datetime,
-    ru.value_as_number,
-    ru.source_name::varchar(200),
-    ru.source_code,
-    ru.unit_source_value::varchar(200),
-    ru.value_source_value::varchar(200),
-    ru.source_value::varchar(200),
-    ru.priority::varchar(200),
-    ru.org_code::varchar(200),
-    ru.source_system::varchar(200),
-    updated_at
-  from results_union as ru
-  left join person as mpi
-    on
-      ru.patient_id = mpi.flex_patient_id
-      and ru.source_system in ('flex', 'bi')
-      and mpi.id = 1
-  left join
-    (select distinct
-      person_id,
-      nhs_number
-    from person) as mpi_2
-    on
-      ru.patient_id = mpi_2.nhs_number
-      and ru.source_system in ('swl')
+    row_number() OVER (PARTITION BY person_id ORDER BY last_edit_time DESC) AS id
+  FROM lth_bronze.stg__master_patient_index
 )
-
-select * from results where person_id is not null
+SELECT
+  coalesce(mpi.person_id, mpi_2.person_id) AS person_id,
+  visit_occurrence_id AS visit_occurrence_id,
+  ru.measurement_event_id::VARCHAR(50) AS measurement_event_id,
+  ru.provider_id AS provider_id,
+  ru.result_datetime AS result_datetime,
+  ru.value_as_number AS value_as_number,
+  ru.source_name::VARCHAR(200) AS source_name,
+  ru.source_code AS source_code,
+  ru.unit_source_value::VARCHAR(200) AS unit_source_value,
+  ru.value_source_value::VARCHAR(200) AS value_source_value,
+  ru.source_value::VARCHAR(200) AS source_value,
+  ru.priority::VARCHAR(200) AS priority,
+  ru.org_code::VARCHAR(200) AS org_code,
+  ru.source_system::VARCHAR(200) AS source_system,
+  updated_at AS updated_at
+FROM results_union AS ru
+LEFT JOIN person AS mpi
+  ON ru.patient_id = mpi.flex_patient_id
+  AND ru.source_system IN ('flex', 'bi')
+  AND mpi.id = 1
+LEFT JOIN (
+  SELECT DISTINCT
+    person_id AS person_id,
+    nhs_number AS nhs_number
+  FROM person
+) AS mpi_2
+  ON ru.patient_id = mpi_2.nhs_number AND ru.source_system IN ('swl')
+WHERE
+  NOT person_id IS NULL AND updated_at BETWEEN @start_ds AND @end_ds

@@ -5,13 +5,13 @@ from sqlmesh import macro
 def generate_source_to_concept_map(evaluator):
     TEMPLATE = """
 select
-    sourceCode::VARCHAR(MAX),
-    sourceName::VARCHAR(MAX),
-    conceptId::INT,
-    conceptName::VARCHAR(MAX),
-    domainId::VARCHAR(50),
-    sourceFrequency::INT,
-    mappingStatus::VARCHAR(50),
+    sourceCode::VARCHAR(MAX) as source_code,
+    sourceName::VARCHAR(MAX) as source_code_description,
+    conceptId::INT as target_concept_id,
+    conceptName::VARCHAR(MAX) as target_concept_name,
+    domainId::VARCHAR(50) as target_domain_id,
+    sourceFrequency::INT as frequency,
+    mappingStatus::VARCHAR(50) as mapping_status,
     '{group}' as "concept_group",
     '{source}' as source_system,
 from {schema}.{model}
