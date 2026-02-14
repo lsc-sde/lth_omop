@@ -83,10 +83,10 @@ def fetch(di: str):
 )
 def execute(context: ExecutionContext, **kwargs) -> pd.DataFrame:
     # 1) Pull all distinct device_ids from source
-
-    src = context.fetchdf("""
+    src_bi__devices = context.resolve_table("lth_bronze.src_bi__devices")
+    src = context.fetchdf(f"""
         SELECT DISTINCT CAST(device_id AS VARCHAR(64)) AS device_id
-        FROM lth_bronze.src_bi__devices
+        FROM {src_bi__devices}
         WHERE device_id IS NOT NULL
     """)
     if src.empty:
@@ -104,9 +104,10 @@ def execute(context: ExecutionContext, **kwargs) -> pd.DataFrame:
     # 2) Pull already-cached device_ids (table may not exist on first run)
     # This will result in a circular dependency!
     try:
-        cached = context.engine_adapter.fetchdf("""
+        cached_table = context.resolve_table("lth_bronze.stg__device_cache")
+        cached = context.fetchdf(f"""
             SELECT CAST(device_id AS VARCHAR(64)) AS device_id
-            FROM lth_bronze.stg__device_cache
+            FROM {cached_table}
         """)
         cached_ids = set(cached["device_id"].astype(str).str.strip().tolist())
     except Exception:
