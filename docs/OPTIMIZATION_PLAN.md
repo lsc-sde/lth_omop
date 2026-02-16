@@ -1,8 +1,21 @@
 # LTH OMOP ETL - Comprehensive Optimization Plan
 
 **Date:** 2026-02-14  
-**Version:** 1.0  
-**Status:** Ready for Implementation
+**Version:** 1.1  
+**Status:** Updated for Schema Separation (PR #24)  
+**Last Updated:** 2026-02-16
+
+---
+
+> **📝 Note on Schema Separation (PR #24)**  
+> As of PR #24, models have been reorganized into separate schemas for better organization:
+> - **`src.*`** - Source models (e.g., `src.src_flex__person`)
+> - **`stg.*`** - Staging models (e.g., `stg.stg__person`)
+> - **`vcb.*`** - Vocabulary models (e.g., `vcb.vocab__person`)
+> - **`cdm.*`** - OMOP CDM models (e.g., `cdm.person`)
+> - **`ext.*`** - External models (e.g., `ext.ext__postcodes`)
+> 
+> This document has been updated to reflect the new schema structure.
 
 ---
 
@@ -50,9 +63,17 @@ models/
 ### 1.2 Data Flow Pattern
 
 ```
-External Sources → Source Views → Staging Tables → Vocab Views → OMOP Tables
+External Sources → Source Views → Staging Tables → Vocab Views → CDM Tables
      (VIEWs)         (VIEWs)         (FULL)         (VIEWs)      (FULL/INCR)
+       src.*          src.*            stg.*          vcb.*         cdm.*
 ```
+
+**Note:** As of PR #24, models are organized into separate schemas:
+- **src**: Source models (`src.src_flex__*`, `src.src_sl__*`, etc.)
+- **stg**: Staging models (`stg.stg__*`, `stg.stg_flex__*`, etc.)
+- **vcb**: Vocabulary models (`vcb.vocab__*`)
+- **cdm**: OMOP CDM models (`cdm.person`, `cdm.measurement`, etc.)
+- **ext**: External models (`ext.ext__*`)
 
 ### 1.3 Current Model Kinds Distribution
 
@@ -230,7 +251,7 @@ Candidates:
 -- Repeated in every vocab__ model
 LEFT JOIN (
   SELECT source_code, target_concept_id
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE concept_group = 'result'
 ) AS cm ON r.source_code = cm.source_code
 ```
@@ -239,12 +260,12 @@ LEFT JOIN (
 Create materialized concept mapping views by domain:
 
 ```sql
--- New: vocab__concept_map_measurement (FULL)
-SELECT * FROM vocab__source_to_concept_map
+-- New: vcb.vocab__concept_map_measurement (FULL)
+SELECT * FROM vcb.vocab__source_to_concept_map
 WHERE concept_group IN ('result', 'units', 'decoded')
 
--- New: vocab__concept_map_condition (FULL)  
-SELECT * FROM vocab__source_to_concept_map
+-- New: vcb.vocab__concept_map_condition (FULL)  
+SELECT * FROM vcb.vocab__source_to_concept_map
 WHERE concept_group IN ('diagnosis', 'condition')
 ```
 
@@ -727,7 +748,7 @@ Add audit queries to track model performance:
 **Configuration:**
 ```sql
 MODEL (
-  name lth_bronze.observation,
+  name cdm.observation,
   kind INCREMENTAL_BY_TIME_RANGE (
     time_column updated_at,
     batch_size 30,
@@ -1015,7 +1036,7 @@ See detailed model analysis in sections 1-3.
 
 Generate with:
 ```bash
-sqlmesh dag --select-model +lth_bronze.{table_name}+
+sqlmesh dag --select-model +cdm.{table_name}+
 ```
 
 Key tables to visualize:

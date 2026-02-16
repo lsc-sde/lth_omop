@@ -1,8 +1,14 @@
 # LTH OMOP ETL - Optimization Review Summary
 
 **Date:** 2026-02-14  
+**Last Updated:** 2026-02-16 (Schema Separation Alignment)  
 **Review Scope:** Full SQLMesh project analysis and optimization planning  
-**Status:** ✅ Complete
+**Status:** ✅ Complete & Updated for PR #24
+
+---
+
+> **📝 Update (2026-02-16):** Documentation updated to align with PR #24 schema separation.  
+> Models are now organized into separate schemas: `src.*`, `stg.*`, `vcb.*`, `cdm.*`, `ext.*`
 
 ---
 
@@ -273,9 +279,9 @@ joins = content.upper().count(' JOIN ')
 ### Would Have Generated DAGs (if DB available)
 ```bash
 # These commands would generate visual DAGs
-sqlmesh dag person.html --select-model +lth_bronze.person+
-sqlmesh dag measurement.html --select-model +lth_bronze.measurement+
-sqlmesh dag observation.html --select-model +lth_bronze.observation+
+sqlmesh dag person.html --select-model +cdm.person+
+sqlmesh dag measurement.html --select-model +cdm.measurement+
+sqlmesh dag observation.html --select-model +cdm.observation+
 ```
 
 ---

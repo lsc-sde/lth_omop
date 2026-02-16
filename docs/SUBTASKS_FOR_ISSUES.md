@@ -53,7 +53,7 @@ The `vocab__observation` model is the most complex vocab model with 196 lines, 9
 **Performance Baseline:**
 ```bash
 # Run before changes
-sqlmesh evaluate lth_bronze.vocab__observation --timing
+sqlmesh evaluate vcb.vocab__observation --timing
 ```
 
 **Reference:**
@@ -96,7 +96,7 @@ The `vocab__condition_occurrence` model has 97 lines and 8 JOINs, including comp
 ```sql
 -- Validate concept mappings
 SELECT COUNT(*), COUNT(DISTINCT condition_concept_id)
-FROM lth_bronze.vocab__condition_occurrence
+FROM vcb.vocab__condition_occurrence
 ```
 
 **Reference:**
@@ -138,7 +138,7 @@ The `stg_sl__bacteriology` model (118 lines) performs UNION ALL of live and arch
 ```sql
 -- Check for duplicates
 SELECT order_number, isolate_number, COUNT(*)
-FROM lth_bronze.stg_sl__bacteriology
+FROM stg.stg_sl__bacteriology
 GROUP BY order_number, isolate_number
 HAVING COUNT(*) > 1
 ```
@@ -247,7 +247,7 @@ SELECT *, 'OP' AS care_site_type FROM ...op source
 ```sql
 -- Validate row counts
 SELECT care_site_type, COUNT(*) 
-FROM lth_bronze.src_flex__care_site 
+FROM src.src_flex__care_site 
 GROUP BY care_site_type;
 ```
 
@@ -472,7 +472,7 @@ Convert the `observation` OMOP table from FULL refresh to incremental loading us
 **Model Configuration:**
 ```sql
 MODEL (
-  name lth_bronze.observation,
+  name cdm.observation,
   kind INCREMENTAL_BY_TIME_RANGE (
     time_column updated_at,
     batch_size 30,
@@ -506,7 +506,7 @@ sqlmesh plan --start-date 2024-01-08 --end-date 2024-01-14
 sqlmesh plan --start-date 2024-01-08 --end-date 2024-01-14
 
 # 4. Compare row counts
-sqlmesh fetchdf "SELECT COUNT(*) FROM lth_bronze.observation"
+sqlmesh fetchdf "SELECT COUNT(*) FROM cdm.observation"
 ```
 
 **Rollback Plan:**
@@ -679,13 +679,13 @@ Create dedicated views for each domain that pre-filter concept groups.
 **Model Template:**
 ```sql
 MODEL (
-  name lth_bronze.vocab__concept_map_measurement,
+  name vcb.vocab__concept_map_measurement,
   kind FULL,
   cron '@daily'
 );
 
 SELECT *
-FROM lth_bronze.vocab__source_to_concept_map
+FROM vcb.vocab__source_to_concept_map
 WHERE concept_group IN (
   'result',
   'units',
@@ -745,14 +745,14 @@ Refactor all vocab models to use the new pre-filtered concept map views created 
 ```sql
 LEFT JOIN (
   SELECT source_code, target_concept_id
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE concept_group = 'result'
 ) AS cm ON r.source_code = cm.source_code
 ```
 
 **After:**
 ```sql
-LEFT JOIN lth_bronze.vocab__concept_map_measurement AS cm
+LEFT JOIN vcb.vocab__concept_map_measurement AS cm
   ON r.source_code = cm.source_code
 ```
 
@@ -774,7 +774,7 @@ LEFT JOIN lth_bronze.vocab__concept_map_measurement AS cm
 ```sql
 -- Compare concept_id distributions before/after
 SELECT concept_id, COUNT(*)
-FROM lth_bronze.vocab__measurement
+FROM vcb.vocab__measurement
 GROUP BY concept_id
 ORDER BY concept_id;
 ```
@@ -842,7 +842,7 @@ AUDIT (
 );
 
 SELECT COUNT(*) AS row_count
-FROM lth_bronze.person
+FROM cdm.person
 HAVING COUNT(*) < 1000  -- Alert if less than baseline
 ```
 

@@ -2,6 +2,9 @@
 
 This folder contains comprehensive documentation for optimizing the LTH OMOP ETL SQLMesh project.
 
+> **📝 Update (2026-02-16):** All documentation updated to reflect PR #24 schema separation  
+> (`src.*`, `stg.*`, `vcb.*`, `cdm.*`, `ext.*`)
+
 ## 📚 Documentation Files
 
 ### [OPTIMIZATION_PLAN.md](./OPTIMIZATION_PLAN.md)
@@ -140,18 +143,18 @@ models/
 
 ### Generate DAG Visualization
 ```bash
-sqlmesh dag person.html --select-model +lth_bronze.person+
-sqlmesh dag measurement.html --select-model +lth_bronze.measurement+
-sqlmesh dag observation.html --select-model +lth_bronze.observation+
+sqlmesh dag person.html --select-model +cdm.person+
+sqlmesh dag measurement.html --select-model +cdm.measurement+
+sqlmesh dag observation.html --select-model +cdm.observation+
 ```
 
 ### Performance Benchmarking
 ```bash
 # Time model execution
-sqlmesh evaluate lth_bronze.{model_name} --timing
+sqlmesh evaluate cdm.{model_name} --timing
 
 # Validate row counts
-sqlmesh fetchdf "SELECT COUNT(*) FROM lth_bronze.{table_name}"
+sqlmesh fetchdf "SELECT COUNT(*) FROM cdm.{table_name}"
 ```
 
 ### Testing
@@ -163,7 +166,7 @@ sqlmesh test
 sqlmesh test --match "test_person"
 
 # Run audits
-sqlmesh audit --model lth_bronze.person
+sqlmesh audit --model cdm.person
 ```
 
 ## 📞 Support
