@@ -1,18 +1,10 @@
-
 MODEL (
-  name lth_bronze.src_flex__result,
+  name src.src_flex__result,
   kind VIEW,
-  cron '@daily',
+  cron '@daily'
 );
 
-with cdc as (
-  select min(updated_at) as updated_at
-  from lth_bronze.cdc__updated_at 
-  where
-    model in ('MEASUREMENT', 'OBSERVATION') and datasource = 'flex'
-)
-
-select
+SELECT
   result_id,
   visit_id,
   event_id,
@@ -27,16 +19,8 @@ select
   display_unit,
   event_status_id,
   emp_provider_id,
-  'rxn' as org_code,
-  'flex' as source_system,
+  'rxn' AS org_code,
+  'flex' AS source_system,
   last_edit_time,
   updated_at
-from @catalog_src.@schema_src.src_flex__result sfr
-where
-  sfr.last_edit_time > (
-    select updated_at from cdc
-  )
-  and sfr.last_edit_time < (
-    select dateadd(day, 90, updated_at) from cdc
-  )
-  and sfr.last_edit_time <= getdate()
+FROM @catalog_src.@schema_src.src_flex__result AS sfr

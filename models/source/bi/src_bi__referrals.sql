@@ -1,6 +1,6 @@
 
 MODEL (
-  name lth_bronze.src_bi__referrals,
+  name src.src_bi__referrals,
   kind VIEW,
   cron '@daily',
 );

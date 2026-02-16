@@ -1,11 +1,10 @@
-
 MODEL (
-  name lth_bronze.vocab__provider,
+  name vcb.vocab__provider,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-select
+SELECT
   provider_name,
   care_site_id,
   provider_source_value,
@@ -16,14 +15,13 @@ select
   cons_org_code,
   source_system,
   org_code
-from lth_bronze.stg__provider as p
-left join
-  (
-    select distinct
-      source_code_description,
-      target_concept_id
-    from lth_bronze.vocab__source_to_concept_map
-    where concept_group = 'specialty'
-  ) as vm
-  on p.specialty_source_value = vm.source_code_description
-  
+FROM stg.stg__provider AS p
+LEFT JOIN (
+  SELECT DISTINCT
+    source_code_description AS source_code_description,
+    target_concept_id AS target_concept_id
+  FROM vcb.vocab__source_to_concept_map
+  WHERE
+    concept_group = 'specialty'
+) AS vm
+  ON p.specialty_source_value = vm.source_code_description

@@ -1,49 +1,46 @@
-
 MODEL (
-  name lth_bronze.person,
+  name cdm.person,
   cron '@daily',
-  kind INCREMENTAL_BY_UNIQUE_KEY (
-    unique_key person_id
-  )
+  kind FULL
 );
 
-select
-  p.person_id::bigint as person_id,
-  p.gender_concept_id::bigint as gender_concept_id,
-  datepart(year, p.birth_datetime)::int as year_of_birth,
-  datepart(month, p.birth_datetime)::int as month_of_birth,
-  datepart(day, p.birth_datetime)::int as day_of_birth,
-  p.birth_datetime::datetime as birth_datetime,
-  p.race_concept_id::bigint as race_concept_id,
-  p.ethnicity_concept_id::bigint as ethnicity_concept_id,
-  vl.location_id::bigint as location_id,
-  pr.provider_id::bigint as provider_id,
-  cs.care_site_id::bigint as care_site_id,
-  p.person_source_value::varchar(50) as person_source_value,
-  p.gender_source_value::varchar(50) as gender_source_value,
-  null::bigint as gender_source_concept_id,
-  p.race_source_value::varchar(50) as race_source_value,
-  null::bigint as race_source_concept_id,
-  null::varchar(50) as ethnicity_source_value,
-  null::bigint as ethnicity_source_concept_id,
-  p.source_system::varchar(20),
-  p.org_code::varchar(5),
-  last_edit_time::datetime,
-  getdate()::datetime as insert_date_time
-from lth_bronze.vocab__person as p
-left join
-  (select distinct
-    provider_id,
-    provider_source_value
-  from lth_bronze.PROVIDER
-  ) pr
-  on p.provider_id = pr.provider_source_value
-left join
-  (select distinct
-    care_site_id,
-    care_site_source_value
-  from lth_bronze.CARE_SITE
-  ) cs
-  on p.gp_prac_code = cs.care_site_source_value
-left join lth_bronze.location as vl
-  on p.mailing_code = vl.location_source_value
+SELECT
+  p.person_id::BIGINT AS person_id,
+  p.gender_concept_id::BIGINT AS gender_concept_id,
+  datepart(year, p.birth_datetime)::INTEGER AS year_of_birth,
+  datepart(month, p.birth_datetime)::INTEGER AS month_of_birth,
+  datepart(day, p.birth_datetime)::INTEGER AS day_of_birth,
+  p.birth_datetime::DATETIME AS birth_datetime,
+  p.race_concept_id::BIGINT AS race_concept_id,
+  p.ethnicity_concept_id::BIGINT AS ethnicity_concept_id,
+  vl.location_id::BIGINT AS location_id,
+  pr.provider_id::BIGINT AS provider_id,
+  cs.care_site_id::BIGINT AS care_site_id,
+  p.person_source_value::VARCHAR(50) AS person_source_value,
+  p.gender_source_value::VARCHAR(50) AS gender_source_value,
+  NULL::BIGINT AS gender_source_concept_id,
+  p.race_source_value::VARCHAR(50) AS race_source_value,
+  NULL::BIGINT AS race_source_concept_id,
+  NULL::VARCHAR(50) AS ethnicity_source_value,
+  NULL::BIGINT AS ethnicity_source_concept_id,
+  p.source_system::VARCHAR(20),
+  p.org_code::VARCHAR(5),
+  last_edit_time::DATETIME,
+  getdate()::DATETIME AS insert_date_time
+FROM vcb.vocab__person AS p
+LEFT JOIN (
+  SELECT DISTINCT
+    provider_id AS provider_id,
+    provider_source_value AS provider_source_value
+  FROM cdm.provider
+) AS pr
+  ON p.provider_id = pr.provider_source_value
+LEFT JOIN (
+  SELECT DISTINCT
+    care_site_id AS care_site_id,
+    care_site_source_value AS care_site_source_value
+  FROM cdm.care_site
+) AS cs
+  ON p.gp_prac_code = cs.care_site_source_value
+LEFT JOIN cdm.location AS vl
+  ON p.mailing_code = vl.location_source_value

@@ -1,16 +1,16 @@
-
 MODEL (
-  name lth_bronze.vocab__death,
+  name vcb.vocab__death,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-select
+SELECT
   person_id,
   death_datetime,
-  32817 as death_type_concept_id,
-  death_datetime::date as death_date,
+  32817 AS death_type_concept_id,
+  death_datetime::DATE AS death_date,
   source_system,
   org_code
-from lth_bronze.stg__person
-where death_datetime is not null
+FROM stg.stg__person
+WHERE
+  NOT death_datetime IS NULL

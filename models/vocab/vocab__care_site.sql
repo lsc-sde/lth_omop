@@ -1,74 +1,65 @@
-
 MODEL (
-  name lth_bronze.vocab__care_site,
+  name vcb.vocab__care_site,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-with all_care_sites as (
-  select
-    care_site_id::bigint as care_site_id,
+WITH all_care_sites /*  union all */ /*  select */ /*    concat(40, dbo.IDGeneration(care_site_source_value)) as care_site_id, */ /*    care_site_name, */ /*    care_site_source_value, */ /*    postcode::varchar, */ /*    place_of_service_source_value, */ /*    location_source_value */ /*  from stg.stg_sl__care_site */ AS (
+  SELECT
+    care_site_id::BIGINT AS care_site_id,
     care_site_name,
     care_site_source_value,
     postcode,
     place_of_service_source_value,
     location_source_value,
-    'external' as source_system,
-    'ods' as org_code
-  from lth_bronze.stg_ext__care_site
-
-  union all
-
-  select
+    'external' AS source_system,
+    'ods' AS org_code
+  FROM stg.stg_ext__care_site
+  UNION ALL
+  SELECT
     care_site_id,
     care_site_name,
     care_site_source_value,
-    postcode::varchar,
+    postcode::VARCHAR,
     place_of_service_source_value,
     location_source_value,
     source_system,
     org_code
-  from lth_bronze.stg_flex__care_site
-
---  union all
-
---  select
---    concat(40, dbo.IDGeneration(care_site_source_value)) as care_site_id,
---    care_site_name,
---    care_site_source_value,
---    postcode::varchar,
---    place_of_service_source_value,
---    location_source_value
---  from lth_bronze.stg_sl__care_site
+  FROM stg.stg_flex__care_site
 )
-
-select
-  care_site_id::bigint,
-  care_site_name::varchar(450),
-  care_site_source_value::varchar(450),
-  postcode::varchar(15),
-  place_of_service_source_value::varchar(450),
-  location_source_value::varchar(450),
-  case
-    when (
-      care_site_source_value like '232~%'
-      or care_site_source_value like '567~%'
-      or care_site_source_value like '28~%'
-      or care_site_source_value in ('28', '232', '567')
+SELECT
+  care_site_id::BIGINT,
+  care_site_name::VARCHAR(450),
+  care_site_source_value::VARCHAR(450),
+  postcode::VARCHAR(15),
+  place_of_service_source_value::VARCHAR(450),
+  location_source_value::VARCHAR(450),
+  CASE
+    WHEN (
+      care_site_source_value LIKE '232~%'
+      OR care_site_source_value LIKE '567~%'
+      OR care_site_source_value LIKE '28~%'
+      OR care_site_source_value IN ('28', '232', '567')
     )
-    and care_site_name like '%GTD%' then '8782'
-    when (
-      care_site_source_value like '232~%'
-      or care_site_source_value like '567~%'
-      or care_site_source_value like '28~%'
-      or care_site_source_value in ('28', '232', '567')
+    AND care_site_name LIKE '%GTD%'
+    THEN '8782'
+    WHEN (
+      care_site_source_value LIKE '232~%'
+      OR care_site_source_value LIKE '567~%'
+      OR care_site_source_value LIKE '28~%'
+      OR care_site_source_value IN ('28', '232', '567')
     )
-    and care_site_name not like '%GTD%' then '8870'
-    when place_of_service_source_value = 'Quadramed Location' then '8717'
-    when place_of_service_source_value = 'Outpatient Clinic' then '8756'
-    when place_of_service_source_value = 'GP Practice' then null
-    when place_of_service_source_value = 'NHS Trust' then '8717'
-  end::bigint as place_of_service_concept_id,
-  source_system::varchar(20),
-  org_code::varchar(5)
-from all_care_sites
+    AND NOT care_site_name LIKE '%GTD%'
+    THEN '8870'
+    WHEN place_of_service_source_value = 'Quadramed Location'
+    THEN '8717'
+    WHEN place_of_service_source_value = 'Outpatient Clinic'
+    THEN '8756'
+    WHEN place_of_service_source_value = 'GP Practice'
+    THEN NULL
+    WHEN place_of_service_source_value = 'NHS Trust'
+    THEN '8717'
+  END::BIGINT AS place_of_service_concept_id,
+  source_system::VARCHAR(20),
+  org_code::VARCHAR(5)
+FROM all_care_sites

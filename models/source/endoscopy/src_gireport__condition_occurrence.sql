@@ -1,6 +1,6 @@
 
 MODEL (
-  name lth_bronze.src_gireport__condition_occurrence,
+  name src.src_gireport__condition_occurrence,
   kind VIEW,
   cron '@daily',
 );

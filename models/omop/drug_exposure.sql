@@ -1,48 +1,45 @@
-
 MODEL (
-  name lth_bronze.drug_exposure,
+  name cdm.drug_exposure,
   kind FULL,
-  cron '@daily',
-  kind INCREMENTAL_BY_UNIQUE_KEY (
-    unique_key unique_key
-  )
+  cron '@daily'
 );
 
-select
-  abs(cast(cast(
-    @generate_surrogate_key(
-      person_id,visit_occurrence_id,de.target_concept_id,dosage,drug_exposure_start_datetime,adm_route,last_edit_time
-      )
-   as varbinary(8)) as bigint)) as drug_exposure_id,
-  de.person_id::bigint as person_id,
-  de.target_concept_id::bigint as drug_concept_id,
-  drug_exposure_start_datetime::date as drug_exposure_start_date,
-  drug_exposure_start_datetime::datetime as drug_exposure_start_datetime,
-  drug_exposure_start_datetime::date as drug_exposure_end_date,
-  drug_exposure_start_datetime::datetime as drug_exposure_end_datetime,
-  null::date as verbatim_end_date,
-  drug_type_concept_id::bigint as drug_type_concept_id,
-  null::varchar(20) as stop_reason,
-  null::int as refills,
-  null::float as quantity,
-  null::int as days_supply,
-  null::varchar(8000) as sig,
-  route_concept_id::bigint as route_concept_id,
-  null::varchar(50) as lot_number,
-  pr.provider_id::bigint as provider_id,
-  visit_occurrence_id::bigint as visit_occurrence_id,
-  null::bigint as visit_detail_id,
-  drug_source_value::varchar(50) as drug_source_value,
-  null::bigint as drug_source_concept_id,
-  adm_route::varchar(50) as route_source_value,
-  null::varchar(50) as dose_unit_source_value,
+SELECT
   @generate_surrogate_key(
-    person_id,visit_occurrence_id,de.target_concept_id,dosage,drug_exposure_start_datetime,adm_route,last_edit_time
-    ) as unique_key,
-  de.org_code::varchar(5),
-  de.source_system::varchar(20),
-  de.last_edit_time::datetime,
-  getdate()::datetime as insert_date_time
-from lth_bronze.vocab__drug_exposure as de
-left join lth_bronze.PROVIDER as pr
-  on de.provider_id = pr.provider_source_value
+    person_id,
+    visit_occurrence_id,
+    de.target_concept_id,
+    dosage,
+    drug_exposure_start_datetime,
+    adm_route,
+    last_edit_time
+  )::VARBINARY(16) AS drug_exposure_id,
+  de.person_id::BIGINT AS person_id,
+  de.target_concept_id::BIGINT AS drug_concept_id,
+  drug_exposure_start_datetime::DATE AS drug_exposure_start_date,
+  drug_exposure_start_datetime::DATETIME AS drug_exposure_start_datetime,
+  drug_exposure_start_datetime::DATE AS drug_exposure_end_date,
+  drug_exposure_start_datetime::DATETIME AS drug_exposure_end_datetime,
+  NULL::DATE AS verbatim_end_date,
+  drug_type_concept_id::BIGINT AS drug_type_concept_id,
+  NULL::VARCHAR(20) AS stop_reason,
+  NULL::INTEGER AS refills,
+  NULL::FLOAT AS quantity,
+  NULL::INTEGER AS days_supply,
+  NULL::VARCHAR(8000) AS sig,
+  route_concept_id::BIGINT AS route_concept_id,
+  NULL::VARCHAR(50) AS lot_number,
+  pr.provider_id::BIGINT AS provider_id,
+  visit_occurrence_id::BIGINT AS visit_occurrence_id,
+  NULL::BIGINT AS visit_detail_id,
+  drug_source_value::VARCHAR(50) AS drug_source_value,
+  NULL::BIGINT AS drug_source_concept_id,
+  adm_route::VARCHAR(50) AS route_source_value,
+  NULL::VARCHAR(50) AS dose_unit_source_value,
+  de.org_code::VARCHAR(5),
+  de.source_system::VARCHAR(20),
+  de.last_edit_time::DATETIME,
+  getdate()::DATETIME AS insert_date_time
+FROM vcb.vocab__drug_exposure AS de
+LEFT JOIN cdm.provider AS pr
+  ON de.provider_id = pr.provider_source_value

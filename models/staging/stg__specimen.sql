@@ -1,19 +1,19 @@
 
 MODEL (
-  name lth_bronze.stg__specimen,
+  name stg.stg__specimen,
   kind FULL,
   cron '@daily',
 );
 
 with person as (
-	select  
-		mpi.nhs_number,  
-		mpi.person_id,  
-		mpi.person_source_value 
-	from lth_bronze.stg__master_patient_index mpi  
-	where mpi.current_record = 1  
+	select
+		mpi.nhs_number,
+		mpi.person_id,
+		mpi.person_source_value
+	from stg.stg__master_patient_index mpi
+	where mpi.current_record = 1
 	and exists (
-		select 1 from lth_bronze.stg_sl__bacteriology sl where sl.nhs_number = mpi.nhs_number
+		select 1 from stg.stg_sl__bacteriology sl where sl.nhs_number = mpi.nhs_number
   )
 )
 
@@ -29,7 +29,7 @@ select distinct
   org_code::varchar(5),
   source_system::varchar(20),
   updated_at
-from lth_bronze.stg_sl__bacteriology as sl_ba
+from stg.stg_sl__bacteriology as sl_ba
 inner join person as mpi
   on sl_ba.nhs_number = mpi.nhs_number
 where

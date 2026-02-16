@@ -1,6 +1,6 @@
 
 MODEL (
-  name lth_bronze.src_gireport__uppergi_diagnosis,
+  name src.src_gireport__uppergi_diagnosis,
   kind VIEW,
   cron '@daily',
 );

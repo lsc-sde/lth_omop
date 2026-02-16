@@ -1,6 +1,6 @@
 
 MODEL (
-  name lth_bronze.src_flex__emp_provider,
+  name src.src_flex__emp_provider,
   kind VIEW,
   cron '@daily',
 );

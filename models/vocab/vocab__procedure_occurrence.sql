@@ -1,68 +1,62 @@
-
 MODEL (
-  name lth_bronze.vocab__procedure_occurrence,
+  name vcb.vocab__procedure_occurrence,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-with concept as (
-  select
+WITH concept AS (
+  SELECT
     concept_id,
     concept_code,
     concept_name
-  from dbt_omop.vocab.CONCEPT
-  where vocabulary_id in ('OPCS4', 'SNOMED')
-  union
-  select
+  FROM dbt_omop.vocab.concept
+  WHERE
+    vocabulary_id IN ('OPCS4', 'SNOMED')
+  UNION
+  SELECT
     target_concept_id,
     source_code,
     target_concept_name
-  from lth_bronze.vocab__source_to_concept_map
-  where concept_group = 'radiology'
-),
-
-procs as (
-  select
-    po.person_id,
-    po.visit_occurrence_id,
-    po.procedure_date,
-    po.procedure_datetime,
-    po.provider_id,
-	provider_id_type,
-    isnull(po.procedure_source_value, cm.concept_name)
-      as procedure_source_value,
-    32817 as procedure_type_concept_id,
-    po.source_code,
-    cm.concept_id,
-    last_edit_time,
-	org_code,
-    source_system
-  from lth_bronze.stg__procedure_occurrence as po
-  inner join concept as cm
-    on po.source_code = cm.concept_code
-),
-
-prov as (
-  select
-	  cons_org_code,
-	  provider_id
-  from lth_bronze.vocab__provider
-  where cons_org_code is not null
-),
-
-prov1 as (
-  select
-	  provider_id,
-	  provider_source_value
-  from lth_bronze.vocab__provider
+  FROM vcb.vocab__source_to_concept_map
+  WHERE
+    concept_group = 'radiology'
+), procs AS (
+  SELECT
+    po.person_id AS person_id,
+    po.visit_occurrence_id AS visit_occurrence_id,
+    po.procedure_date AS procedure_date,
+    po.procedure_datetime AS procedure_datetime,
+    po.provider_id AS provider_id,
+    provider_id_type AS provider_id_type,
+    isnull(po.procedure_source_value, cm.concept_name) AS procedure_source_value,
+    32817 AS procedure_type_concept_id,
+    po.source_code AS source_code,
+    cm.concept_id AS concept_id,
+    last_edit_time AS last_edit_time,
+    org_code AS org_code,
+    source_system AS source_system
+  FROM stg.stg__procedure_occurrence AS po
+  INNER JOIN concept AS cm
+    ON po.source_code = cm.concept_code
+), prov AS (
+  SELECT
+    cons_org_code AS cons_org_code,
+    provider_id AS provider_id
+  FROM vcb.vocab__provider
+  WHERE
+    NOT cons_org_code IS NULL
+), prov1 AS (
+  SELECT
+    provider_id AS provider_id,
+    provider_source_value AS provider_source_value
+  FROM vcb.vocab__provider
 )
-
-select
+SELECT DISTINCT
   p.person_id,
   p.visit_occurrence_id,
   p.procedure_date,
   p.procedure_datetime,
-  coalesce(pr.provider_id, pr1.provider_id) as provider_id,
+  coalesce(pr.provider_id, pr1.provider_id) AS provider_id,
   p.procedure_source_value,
   p.procedure_type_concept_id,
   p.source_code,
@@ -70,15 +64,12 @@ select
   last_edit_time,
   p.org_code,
   p.source_system
-from procs as p
-inner join dbt_omop.vocab.CONCEPT as cn
-  on p.concept_id = cn.concept_id
-left join prov pr
-  on pr.cons_org_code = p.provider_id
-  and provider_id_type = 0
-left join prov1 pr1
-  on pr1.provider_source_value = p.provider_id
-  and provider_id_type = 1
-where
-  cn.domain_id = 'Procedure'
-  and cn.invalid_reason is null;
+FROM procs AS p
+INNER JOIN dbt_omop.vocab.concept AS cn
+  ON p.concept_id = cn.concept_id
+LEFT JOIN prov AS pr
+  ON pr.cons_org_code = p.provider_id AND provider_id_type = 0
+LEFT JOIN prov1 AS pr1
+  ON pr1.provider_source_value = p.provider_id AND provider_id_type = 1
+WHERE
+  cn.domain_id = 'Procedure' AND cn.invalid_reason IS NULL

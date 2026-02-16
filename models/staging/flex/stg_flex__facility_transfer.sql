@@ -1,104 +1,50 @@
-
 MODEL (
-  name lth_bronze.stg_flex__facility_transfer,
+  name stg.stg_flex__facility_transfer,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-with multiple_visits as (
-  select distinct
-    visit_number,
-    visit_id,
-    COUNT(*) over (partition by visit_number) as total_records
-  from lth_bronze.src_flex__visit_segment 
-  group by
+WITH multiple_visits AS (
+  SELECT DISTINCT
+    visit_number AS visit_number,
+    visit_id AS visit_id,
+    count(*) OVER (PARTITION BY visit_number) AS total_records
+  FROM src.src_flex__visit_segment
+  GROUP BY
     visit_number,
     visit_id
-),
-
-merged_visits as (
-  select
-    vs.visit_id,
-    vs.visit_number,
-    person_source_value,
-    FIRST_VALUE(
-      visit_type_id
-    ) over (
-      partition by vs.visit_number order by activation_time
-    ) as visit_type_id,
-    COUNT(*) over (partition by vs.visit_number) as total_activations,
-    COUNT(*) over (partition by vs.visit_id) as total_entries,
-    row_number() over (
-      partition by vs.visit_number, vs.visit_id order by activation_time
-    ) as visit_activation_sequence_number,
-    row_number() over (
-      partition by vs.visit_number order by activation_time
-    ) as activation_sequence_number,
-    FIRST_VALUE(
-      vs.visit_id
-    ) over (
-      partition by vs.visit_number order by activation_time
-    ) as first_visit_id,
-    FIRST_VALUE(
-      attending_emp_provider_id
-    ) over (
-      partition by vs.visit_number order by activation_time
-    ) as first_attending_emp_provider_id,
-    FIRST_VALUE(
-      facility_id
-    ) over (
-      partition by vs.visit_number order by activation_time
-    ) as first_facility,
-    FIRST_VALUE(
-      visit_status_id
-    ) over (
-      partition by vs.visit_number order by activation_time desc
-    ) as latest_status,
-    FIRST_VALUE(
-      admission_source
-    ) over (
-      partition by vs.visit_number order by activation_time
-    ) as first_admission_source,
-    FIRST_VALUE(
-      discharge_type_id
-    ) over (
-      partition by vs.visit_number order by activation_time desc
-    ) as last_discharge_type,
-    FIRST_VALUE(
-      discharge_dest_code
-    ) over (
-      partition by vs.visit_number order by activation_time desc
-    ) as last_discharge_dest,
-    FIRST_VALUE(
-      activation_time
-    ) over (
-      partition by vs.visit_number order by activation_time
-    ) as earliest_activation_time,
-    FIRST_VALUE(
-      admission_date_time
-    ) over (
-      partition by vs.visit_number order by activation_time
-    ) as earliest_admission_time,
-    FIRST_VALUE(
-      discharge_date_time
-    ) over (
-      partition by vs.visit_number order by activation_time desc
-    ) as latest_discharge_time,    
-    source_system::varchar(20),
-    org_code::varchar(5),
-    FIRST_VALUE(
-      last_edit_time
-    ) over (
-      partition by vs.visit_number order by activation_time desc
-    ) as last_edit_time,
-    convert(smalldatetime, SYSDATETIME()) as updated_at
-  from lth_bronze.src_flex__visit_segment as vs
-  inner join multiple_visits as mv
-    on
-      vs.visit_number = mv.visit_number
-      and vs.visit_id = mv.visit_id
-  where
+), merged_visits AS (
+  SELECT
+    vs.visit_id AS visit_id,
+    vs.visit_number AS visit_number,
+    person_source_value AS person_source_value,
+    first_value(visit_type_id) OVER (PARTITION BY vs.visit_number ORDER BY activation_time) AS visit_type_id,
+    count(*) OVER (PARTITION BY vs.visit_number) AS total_activations,
+    count(*) OVER (PARTITION BY vs.visit_id) AS total_entries,
+    row_number() OVER (PARTITION BY vs.visit_number, vs.visit_id ORDER BY activation_time) AS visit_activation_sequence_number,
+    row_number() OVER (PARTITION BY vs.visit_number ORDER BY activation_time) AS activation_sequence_number,
+    first_value(vs.visit_id) OVER (PARTITION BY vs.visit_number ORDER BY activation_time) AS first_visit_id,
+    first_value(attending_emp_provider_id) OVER (PARTITION BY vs.visit_number ORDER BY activation_time) AS first_attending_emp_provider_id,
+    first_value(facility_id) OVER (PARTITION BY vs.visit_number ORDER BY activation_time) AS first_facility,
+    first_value(visit_status_id) OVER (PARTITION BY vs.visit_number ORDER BY activation_time DESC) AS latest_status,
+    first_value(admission_source) OVER (PARTITION BY vs.visit_number ORDER BY activation_time) AS first_admission_source,
+    first_value(discharge_type_id) OVER (PARTITION BY vs.visit_number ORDER BY activation_time DESC) AS last_discharge_type,
+    first_value(discharge_dest_code) OVER (PARTITION BY vs.visit_number ORDER BY activation_time DESC) AS last_discharge_dest,
+    first_value(activation_time) OVER (PARTITION BY vs.visit_number ORDER BY activation_time) AS earliest_activation_time,
+    first_value(admission_date_time) OVER (PARTITION BY vs.visit_number ORDER BY activation_time) AS earliest_admission_time,
+    first_value(discharge_date_time) OVER (PARTITION BY vs.visit_number ORDER BY activation_time DESC) AS latest_discharge_time,
+    source_system::VARCHAR(20) AS source_system,
+    org_code::VARCHAR(5) AS org_code,
+    first_value(last_edit_time) OVER (PARTITION BY vs.visit_number ORDER BY activation_time DESC) AS last_edit_time,
+    convert(SMALLDATETIME, getdate()) AS updated_at
+  FROM src.src_flex__visit_segment AS vs
+  INNER JOIN multiple_visits AS mv
+    ON vs.visit_number = mv.visit_number AND vs.visit_id = mv.visit_id
+  WHERE
     total_records > 1
 )
-
-select * from merged_visits where visit_activation_sequence_number = 1
+SELECT
+  *
+FROM merged_visits
+WHERE
+  visit_activation_sequence_number = 1

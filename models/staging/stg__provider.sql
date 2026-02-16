@@ -1,6 +1,6 @@
 
 MODEL (
-  name lth_bronze.stg__provider,
+  name stg.stg__provider,
   kind FULL,
   cron '@daily',
 );
@@ -14,4 +14,4 @@ select
   cons_org_code,
   source_system,
   org_code
-from lth_bronze.stg_flex__provider 
+from stg.stg_flex__provider

@@ -1,33 +1,39 @@
-
 MODEL (
-  name lth_bronze.stg_flex__drug_exposure,
+  name stg.stg_flex__drug_exposure,
   kind VIEW,
   cron '@daily'
 );
 
-with visit_detail as (
-  select distinct
-    visit_number,
-    visit_id,
-    first_visit_id,
-    person_source_value
-  from lth_bronze.stg_flex__facility_transfer 
+WITH visit_detail AS (
+  SELECT DISTINCT
+    visit_number AS visit_number,
+    visit_id AS visit_id,
+    first_visit_id AS first_visit_id,
+    person_source_value AS person_source_value
+  FROM stg.stg_flex__facility_transfer
 )
-
-select
-  c.person_source_value,
-  event_datetime as drug_exposure_start_datetime,
-  cast(drug_exposure_start_datetime as date) as drug_exposure_date,
-  cast(provider_id as varchar) as provider_id,
+SELECT
+  sfr.person_source_value,
+  CAST((
+    event_id / 864000
+  ) - 21550 AS DATETIME)::DATETIME2(0) AS drug_exposure_start_datetime,
+  CAST((
+    event_id / 864000
+  ) - 21550 AS DATETIME)::DATETIME2(0)::DATE AS drug_exposure_date,
+  provider_source_value::VARCHAR AS provider_id,
   flex_procedure_id,
-  dosage,
+  replace(dosage, ' ' + adm_route, '') AS dosage,
   adm_route,
-  source_system::varchar(20),
-  org_code::varchar(5),
+  source_system::VARCHAR(20),
+  org_code::VARCHAR(5),
   last_edit_time,
   updated_at,
-  replace(procedure_source_value, ' (CRITICAL MED)', '') as drug_source_value,
-  isnull(v.first_visit_id, c.visit_occurrence_id) as visit_occurrence_id
-from lth_bronze.cdc_flex__drug_exposure as c
-left join visit_detail as v
-  on c.visit_occurrence_id = v.visit_id
+  replace(flex_procedure_name, ' (CRITICAL MED)', '') AS drug_source_value,
+  isnull(v.first_visit_id, sfr.visit_id) AS visit_occurrence_id
+FROM src.src_flex__procedure_event AS sfr
+LEFT JOIN visit_detail AS v
+  ON sfr.visit_id = v.visit_id
+WHERE
+  sfr.last_edit_time <= getdate()
+  AND sfr.kardex_group_id IN (17, 43, 44)
+  AND sfr.event_status_id IN (6, 11)

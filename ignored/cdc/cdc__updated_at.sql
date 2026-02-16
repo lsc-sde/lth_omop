@@ -2,7 +2,7 @@
 MODEL (
   name lth_bronze.cdc__updated_at,
   kind view,
-  cron '@daily',
+  cron '@daily'
 );
 
 /*

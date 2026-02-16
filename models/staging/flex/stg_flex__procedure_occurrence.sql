@@ -1,119 +1,110 @@
-
 MODEL (
-  name lth_bronze.stg_flex__procedure_occurrence,
+  name stg.stg_flex__procedure_occurrence,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-with procedure_occ as (
-  select
-    visit_number,
-    procedure_date,
-    index_nbr,
-    provider_source_value,
-    org_code,
-    source_system,
-    d.last_edit_time,
-    d.updated_at,
-    'ukcoder' as data_source,
-    replace(
-      left(opcs4_code, 3) + '.' + substring(opcs4_code, 4, 10), '.X', ''
-    ) as source_code
-  from lth_bronze.cdc_flex__vtg_procedure as d
-),
-
-rad_proc_occ as (
-  select
-    visit_id as visit_occurrence_id,
-    person_source_value as person_id,
-    cast(
-      cast((event_id / 864000) - 21550 as datetime) as datetime2(0)
-    ) as procedure_datetime,
-    provider_source_value as provider_id,
-    flex_procedure_id,
-    flex_procedure_name as procedure_source_value,
-    org_code,
-    source_system,
-    last_edit_time,
-    updated_at,
-    'flex_radiology' as data_source
-  from lth_bronze.cdc_flex__procedure_event
-  where
-    kardex_group_id = 24
-    and event_status_id in (6, 11)
-),
-
-visit_detail as (
-  select distinct
-    visit_number,
-    visit_id,
-    first_visit_id,
-    person_source_value
-  from lth_bronze.stg_flex__facility_transfer
+WITH procedure_occ AS (
+  SELECT
+    visit_number AS visit_number,
+    procedure_date AS procedure_date,
+    index_nbr AS index_nbr,
+    provider_source_value AS provider_source_value,
+    org_code AS org_code,
+    source_system AS source_system,
+    d.last_edit_time AS last_edit_time,
+    d.updated_at AS updated_at,
+    'ukcoder' AS data_source,
+    replace(left(opcs4_code, 3) + '.' + substring(opcs4_code, 4, 10), '.X', '') AS source_code
+  FROM src.src_flex__vtg_procedure AS d
+), rad_proc_occ AS (
+  SELECT
+    visit_id AS visit_occurrence_id,
+    person_source_value AS person_id,
+    CAST((
+      event_id / 864000
+    ) - 21550 AS DATETIME)::DATETIME2(0) AS procedure_datetime,
+    provider_source_value AS provider_id,
+    flex_procedure_id AS flex_procedure_id,
+    flex_procedure_name AS procedure_source_value,
+    org_code AS org_code,
+    source_system AS source_system,
+    last_edit_time AS last_edit_time,
+    updated_at AS updated_at,
+    'flex_radiology' AS data_source
+  FROM src.src_flex__procedure_event
+  WHERE
+    kardex_group_id = 24 AND event_status_id IN (6, 11)
+), visit_detail AS (
+  SELECT DISTINCT
+    visit_number AS visit_number,
+    visit_id AS visit_id,
+    first_visit_id AS first_visit_id,
+    person_source_value AS person_source_value
+  FROM stg.stg_flex__facility_transfer
 )
-
-select
-  isnull(v.first_visit_id, vs.visit_id) as visit_occurrence_id,
-  isnull(
-    v.person_source_value, vs.person_source_value
-  ) as person_source_value,
-  c.procedure_date as procedure_date,
-  c.procedure_date as procedure_datetime,
-  c.provider_source_value as provider_id,
-  c.source_code as procedure_source_value,
+SELECT
+  isnull(v.first_visit_id, vs.visit_id) AS visit_occurrence_id,
+  isnull(v.person_source_value, vs.person_source_value) AS person_source_value,
+  c.procedure_date AS procedure_date,
+  c.procedure_date AS procedure_datetime,
+  c.provider_source_value AS provider_id,
+  c.source_code AS procedure_source_value,
   c.source_code,
-  org_code::varchar(5),
-  source_system::varchar(20),
+  org_code::VARCHAR(5),
+  source_system::VARCHAR(20),
   c.last_edit_time,
   c.updated_at
-from procedure_occ as c
-left join
-  (select distinct
-    visit_number,
-    first_visit_id,
-    person_source_value
-  from visit_detail) as v
-  on c.visit_number = v.visit_number
-left join
-  (
-    select distinct
-      visit_number,
-      visit_id,
-      person_source_value
-    from lth_bronze.src_flex__visit_segment
-    where
-      visit_number not in (select distinct visit_number from visit_detail)
-  ) as vs
-  on
-    c.visit_number = vs.visit_number
-    and v.first_visit_id is null
-union all
-select
+FROM procedure_occ AS c
+LEFT JOIN (
+  SELECT DISTINCT
+    visit_number AS visit_number,
+    first_visit_id AS first_visit_id,
+    person_source_value AS person_source_value
+  FROM visit_detail
+) AS v
+  ON c.visit_number = v.visit_number
+LEFT JOIN (
+  SELECT DISTINCT
+    visit_number AS visit_number,
+    visit_id AS visit_id,
+    person_source_value AS person_source_value
+  FROM src.src_flex__visit_segment
+  WHERE
+    NOT visit_number IN (
+      SELECT DISTINCT
+        visit_number
+      FROM visit_detail
+    )
+) AS vs
+  ON c.visit_number = vs.visit_number AND v.first_visit_id IS NULL
+UNION ALL
+SELECT
   isnull(v.first_visit_id, c.visit_occurrence_id),
-  c.person_id as person_source_value,
-  cast(procedure_datetime as date),
+  c.person_id AS person_source_value,
+  procedure_datetime::DATE,
   procedure_datetime,
-  cast(provider_id as varchar),
+  provider_id::VARCHAR,
   procedure_source_value,
-  cast(flex_procedure_id as varchar),
-  org_code::varchar(5),
-  source_system::varchar(20),
+  flex_procedure_id::VARCHAR,
+  org_code::VARCHAR(5),
+  source_system::VARCHAR(20),
   last_edit_time,
   updated_at
-from rad_proc_occ as c
-left join visit_detail as v
-  on c.visit_occurrence_id = v.visit_id
-union all
-select
-  visit_id as visit_occurrence_id,
-  ae_po.patient_id as person_source_value,
-  cast(procedure_datetime as date) as procedure_date,
-  procedure_datetime as procedure_datetime,
-  cast(provider_id as varchar),
-  null as procedure_source_value,
-  ae_po.list as source_code,
-  org_code::varchar(5),
-  source_system::varchar(20),
+FROM rad_proc_occ AS c
+LEFT JOIN visit_detail AS v
+  ON c.visit_occurrence_id = v.visit_id
+UNION ALL
+SELECT
+  visit_id AS visit_occurrence_id,
+  ae_po.patient_id AS person_source_value,
+  procedure_datetime::DATE AS procedure_date,
+  procedure_datetime AS procedure_datetime,
+  provider_id::VARCHAR,
+  NULL AS procedure_source_value,
+  ae_po.list AS source_code,
+  org_code::VARCHAR(5),
+  source_system::VARCHAR(20),
   last_edit_time,
   updated_at
-from lth_bronze.stg_flex__ae_procedures as ae_po
+FROM stg.stg_flex__ae_procedures AS ae_po

@@ -66,7 +66,7 @@ class SQLMeshSettings(BaseModel):
         dialect="tsql,normalization_strategy=case_sensitive",
         cron="@daily",
         owner="LTH DST",
-        start="2024-01-01 00:00:00.000",
+        start="2026-01-01 00:00:00.000",
     )
     gateways: Dict[str, GatewayConfig] = gateways
     default_gateway: str = default_gateway
@@ -93,4 +93,17 @@ variables = {
     "bi_db": os.environ["MSSQL_BI_DB"],
 }
 
-config = Config(**dict(SQLMeshSettings(project="lth_omop_bronze", variables=variables)))
+# Statements to execute before and after running SQLMesh
+before_all = [
+    "@before_all()",
+]
+
+after_all = [
+    "@after_all()",
+]
+
+config = Config(
+    **dict(SQLMeshSettings(project="lth_omop_bronze", variables=variables)),
+    # before_all=before_all,
+    # after_all=after_all,
+)
