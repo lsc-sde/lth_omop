@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg_flex__visit_occurrence,
+  name stg.stg_flex__visit_occurrence,
   kind FULL,
   cron '@daily'
 );
@@ -41,6 +41,6 @@ SELECT DISTINCT
   vs.org_code::VARCHAR(5),
   coalesce(ft.last_edit_time, vs.last_edit_time) AS last_edit_time,
   coalesce(ft.updated_at, vs.updated_at) AS updated_at
-FROM lth_bronze.src_flex__visit_segment AS vs
-LEFT JOIN lth_bronze.stg_flex__facility_transfer AS ft
+FROM src.src_flex__visit_segment AS vs
+LEFT JOIN stg.stg_flex__facility_transfer AS ft
   ON vs.visit_number = ft.visit_number

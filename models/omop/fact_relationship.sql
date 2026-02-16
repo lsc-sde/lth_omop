@@ -1,9 +1,7 @@
 MODEL (
   name cdm.fact_relationship,
   cron '@daily',
-  kind INCREMENTAL_BY_UNIQUE_KEY (
-    unique_key unique_key
-  ),
+  kind FULL,
   enabled (0 = 1)
 );
 
@@ -15,7 +13,7 @@ SELECT
   relationship_concept_id::BIGINT,
   unique_key,
   last_edit_time::DATETIME
-FROM cdm.fr__observation_to_measurement_sl
+FROM stg.fr__observation_to_measurement_sl
 UNION ALL
 SELECT
   domain_concept_id_1,
@@ -25,7 +23,7 @@ SELECT
   relationship_concept_id,
   unique_key,
   last_edit_time::DATETIME
-FROM cdm.fr__measurement_to_observation_sl
+FROM stg.fr__measurement_to_observation_sl
 UNION ALL
 SELECT
   domain_concept_id_1,
@@ -35,7 +33,7 @@ SELECT
   relationship_concept_id,
   unique_key,
   last_edit_time::DATETIME
-FROM cdm.fr__specimen_to_measurement
+FROM stg.fr__specimen_to_measurement
 UNION ALL
 SELECT
   domain_concept_id_1,
@@ -45,4 +43,4 @@ SELECT
   relationship_concept_id,
   unique_key,
   last_edit_time::DATETIME
-FROM cdm.fr__mother_to_child
+FROM stg.fr__mother_to_child

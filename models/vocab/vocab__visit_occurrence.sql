@@ -22,15 +22,15 @@ WITH visits AS (
     fvo.org_code AS org_code,
     fvo.last_edit_time AS last_edit_time,
     fvo.updated_at AS updated_at
-  FROM lth_bronze.stg_flex__visit_occurrence AS fvo
-  INNER JOIN lth_bronze.stg__master_patient_index AS mpi
+  FROM stg.stg_flex__visit_occurrence AS fvo
+  INNER JOIN stg.stg__master_patient_index AS mpi
     ON fvo.person_source_value = mpi.flex_patient_id
   WHERE
     NOT fvo.visit_type_id IS NULL
 ), ae_visits AS (
   SELECT DISTINCT
     visit_id AS visit_id
-  FROM lth_bronze.src_flex__visit_detail_ae
+  FROM src.src_flex__visit_detail_ae
 )
 SELECT
   vo.visit_id AS visit_occurrence_id,
