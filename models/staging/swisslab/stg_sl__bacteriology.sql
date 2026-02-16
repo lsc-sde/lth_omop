@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg_sl__bacteriology,
+  name stg.stg_sl__bacteriology,
   kind FULL,
   cron '@daily'
 );
@@ -26,7 +26,7 @@ WITH merged AS (
     'live' AS source,
     updated_at,
     last_edit_time
-  FROM lth_bronze.src_sl__bacteriology_live
+  FROM src.src_sl__bacteriology_live
   WHERE
     NOT result_value IN (
       SELECT
@@ -56,7 +56,7 @@ WITH merged AS (
     'archive' AS source,
     updated_at,
     last_edit_time
-  FROM lth_bronze.src_sl__bacteriology_archive
+  FROM src.src_sl__bacteriology_archive
   WHERE
     NOT result_value IN (
       SELECT
@@ -113,9 +113,9 @@ SELECT
   dd.updated_at,
   dd.last_edit_time
 FROM de_duped AS dd
-LEFT JOIN lth_bronze.stg__provider AS pr
+LEFT JOIN stg.stg__provider AS pr
   ON dd.clinician_code = pr.cons_org_code
-LEFT JOIN lth_bronze.stg_flex__visit_occurrence AS vo
+LEFT JOIN stg.stg_flex__visit_occurrence AS vo
   ON dd.visit_number = vo.visit_number
 WHERE
   NOT test IN ('Quadramed req.') AND sequence_id = 1

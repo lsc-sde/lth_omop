@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.visit_occurrence,
+  name cdm.visit_occurrence,
   cron '@daily',
   kind FULL
 );
@@ -28,13 +28,13 @@ SELECT
   vo.org_code::VARCHAR(5),
   vo.last_edit_time,
   vo.updated_at
-FROM lth_bronze.vocab__visit_occurrence AS vo
-LEFT JOIN lth_bronze.provider AS pr
+FROM vcb.vocab__visit_occurrence AS vo
+LEFT JOIN cdm.provider AS pr
   ON vo.provider_id::VARCHAR = pr.provider_source_value
 LEFT JOIN (
   SELECT
     *
-  FROM lth_bronze.care_site
+  FROM cdm.care_site
   WHERE
     place_of_service_source_value = 'NHS Trust'
 ) AS cs

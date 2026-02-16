@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.src_flex__result,
+  name src.src_flex__result,
   kind VIEW,
   cron '@daily'
 );

@@ -1,104 +1,109 @@
-
 MODEL (
-  name lth_bronze.vocab__visit_occurrence,
+  name vcb.vocab__visit_occurrence,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-with visits as (
-    select
-        mpi.person_id,
-        fvo.visit_number,
-        fvo.activation_time,
-        fvo.visit_type_id,
-        fvo.visit_status_id,
-        fvo.visit_id,
-        fvo.admission_time,
-        fvo.discharge_time,
-        fvo.provider_id,
-        fvo.facility_id,
-        fvo.admitted_from_source_value,
-        fvo.discharged_to_source_value,
-        fvo.source_system,
-        fvo.org_code,
-        fvo.last_edit_time,
-        fvo.updated_at
-    from lth_bronze.stg_flex__visit_occurrence as fvo
-    inner join lth_bronze.stg__master_patient_index as mpi
-    on fvo.person_source_value = mpi.flex_patient_id
-    where fvo.visit_type_id is not null
-),
-
-ae_visits as (
-  select distinct visit_id from lth_bronze.src_flex__visit_detail_ae
+WITH visits AS (
+  SELECT
+    mpi.person_id AS person_id,
+    fvo.visit_number AS visit_number,
+    fvo.activation_time AS activation_time,
+    fvo.visit_type_id AS visit_type_id,
+    fvo.visit_status_id AS visit_status_id,
+    fvo.visit_id AS visit_id,
+    fvo.admission_time AS admission_time,
+    fvo.discharge_time AS discharge_time,
+    fvo.provider_id AS provider_id,
+    fvo.facility_id AS facility_id,
+    fvo.admitted_from_source_value AS admitted_from_source_value,
+    fvo.discharged_to_source_value AS discharged_to_source_value,
+    fvo.source_system AS source_system,
+    fvo.org_code AS org_code,
+    fvo.last_edit_time AS last_edit_time,
+    fvo.updated_at AS updated_at
+  FROM lth_bronze.stg_flex__visit_occurrence AS fvo
+  INNER JOIN lth_bronze.stg__master_patient_index AS mpi
+    ON fvo.person_source_value = mpi.flex_patient_id
+  WHERE
+    NOT fvo.visit_type_id IS NULL
+), ae_visits AS (
+  SELECT DISTINCT
+    visit_id AS visit_id
+  FROM lth_bronze.src_flex__visit_detail_ae
 )
-
-select
-  vo.visit_id as visit_occurrence_id,
+SELECT
+  vo.visit_id AS visit_occurrence_id,
   vo.person_id,
-  case
-    when vo.visit_type_id in (3, 4) then isnull(discharge_time, admission_time)
-    when vo.visit_status_id in (7) then isnull(discharge_time, admission_time)
-    else discharge_time
-  end as visit_end_datetime,
-  32817 as visit_type_concept_id,
+  CASE
+    WHEN vo.visit_type_id IN (3, 4)
+    THEN isnull(discharge_time, admission_time)
+    WHEN vo.visit_status_id IN (7)
+    THEN isnull(discharge_time, admission_time)
+    ELSE discharge_time
+  END AS visit_end_datetime,
+  32817 AS visit_type_concept_id,
   provider_id,
-  facility_id as care_site_id,
-  null as visit_source_concept_id,
+  facility_id AS care_site_id,
+  NULL AS visit_source_concept_id,
   vo.admitted_from_source_value,
   vo.discharged_to_source_value,
-  case
-    when vo.visit_type_id in (1, 6) and a.visit_id is not null then 262
-    when vo.visit_type_id in (1, 6) then 9201
-    when vo.visit_type_id = 2 then 9203
-    when vo.visit_type_id in (3, 4) then 9202
-    when vo.visit_type_id in (5, 8, 7, 9) then 32761
-  end as visit_concept_id,
-  case
-    when
-      vo.visit_type_id in (1, 6) and a.visit_id is not null
-      then activation_time
-    else admission_time
-  end as visit_start_datetime,
-  case
-    when vo.visit_type_id in (1, 6) and a.visit_id is not null then 'ERIP'
-    when vo.visit_type_id in (1, 6) then 'IP'
-    when vo.visit_type_id = 2 then 'ER'
-    when vo.visit_type_id in (3, 4) then 'OP'
-    when vo.visit_type_id in (5, 8, 7, 9) then 'PUI'
-    else 'ER'
-  end as visit_source_value,
-  case
-    when csa.target_concept_id = '4139502' then 0 else csa.target_concept_id
-  end as admitted_from_concept_id,
-  case
-    when csd.target_concept_id = '4139502' then null else csd.target_concept_id
-  end as discharged_to_concept_id,
+  CASE
+    WHEN vo.visit_type_id IN (1, 6) AND NOT a.visit_id IS NULL
+    THEN 262
+    WHEN vo.visit_type_id IN (1, 6)
+    THEN 9201
+    WHEN vo.visit_type_id = 2
+    THEN 9203
+    WHEN vo.visit_type_id IN (3, 4)
+    THEN 9202
+    WHEN vo.visit_type_id IN (5, 8, 7, 9)
+    THEN 32761
+  END AS visit_concept_id,
+  CASE
+    WHEN vo.visit_type_id IN (1, 6) AND NOT a.visit_id IS NULL
+    THEN activation_time
+    ELSE admission_time
+  END AS visit_start_datetime,
+  CASE
+    WHEN vo.visit_type_id IN (1, 6) AND NOT a.visit_id IS NULL
+    THEN 'ERIP'
+    WHEN vo.visit_type_id IN (1, 6)
+    THEN 'IP'
+    WHEN vo.visit_type_id = 2
+    THEN 'ER'
+    WHEN vo.visit_type_id IN (3, 4)
+    THEN 'OP'
+    WHEN vo.visit_type_id IN (5, 8, 7, 9)
+    THEN 'PUI'
+    ELSE 'ER'
+  END AS visit_source_value,
+  CASE WHEN csa.target_concept_id = '4139502' THEN 0 ELSE csa.target_concept_id END AS admitted_from_concept_id,
+  CASE WHEN csd.target_concept_id = '4139502' THEN NULL ELSE csd.target_concept_id END AS discharged_to_concept_id,
   vo.visit_status_id,
   vo.visit_type_id,
-  vo.source_system::varchar(20),
-  vo.org_code::varchar(5),
+  vo.source_system::VARCHAR(20),
+  vo.org_code::VARCHAR(5),
   vo.last_edit_time,
   vo.updated_at
-from visits as vo
-left join
-  (
-    select
-      target_concept_id,
-      source_code
-    from lth_bronze.vocab__source_to_concept_map
-    where concept_group = 'discharge_destination'
-  ) as csd
-  on vo.discharged_to_source_value = csd.source_code
-left join
-  (
-    select
-      target_concept_id,
-      source_code
-    from lth_bronze.vocab__source_to_concept_map
-    where concept_group = 'admission_source'
-  ) as csa
-  on vo.admitted_from_source_value = csa.source_code
-left join ae_visits as a
-  on vo.visit_id = a.visit_id
-
+FROM visits AS vo
+LEFT JOIN (
+  SELECT
+    target_concept_id AS target_concept_id,
+    source_code AS source_code
+  FROM vcb.vocab__source_to_concept_map
+  WHERE
+    concept_group = 'discharge_destination'
+) AS csd
+  ON vo.discharged_to_source_value = csd.source_code
+LEFT JOIN (
+  SELECT
+    target_concept_id AS target_concept_id,
+    source_code AS source_code
+  FROM vcb.vocab__source_to_concept_map
+  WHERE
+    concept_group = 'admission_source'
+) AS csa
+  ON vo.admitted_from_source_value = csa.source_code
+LEFT JOIN ae_visits AS a
+  ON vo.visit_id = a.visit_id

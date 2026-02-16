@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg__result,
+  name stg.stg__result,
   kind INCREMENTAL_BY_TIME_RANGE (
     time_column last_edit_time,
     batch_size 30,
@@ -26,7 +26,7 @@ WITH results_union AS (
     source_system,
     updated_at,
     last_edit_time
-  FROM lth_bronze.stg_flex__result
+  FROM stg.stg_flex__result
   WHERE
     last_edit_time BETWEEN @start_ds AND @end_ds
   UNION ALL
@@ -47,7 +47,7 @@ WITH results_union AS (
     source_system,
     updated_at,
     last_edit_time
-  FROM lth_bronze.stg_bi__referrals AS bi
+  FROM stg.stg_bi__referrals AS bi
   WHERE
     last_edit_time BETWEEN @start_ds AND @end_ds
   UNION ALL
@@ -68,14 +68,14 @@ WITH results_union AS (
     source_system,
     updated_at,
     last_edit_time
-  FROM lth_bronze.cdc_sl__bacteriology AS ssb
+  FROM stg.cdc_sl__bacteriology AS ssb
   WHERE
     ssb.last_edit_time BETWEEN @start_ds AND @end_ds AND ssb.valid_to IS NULL
 ), person AS (
   SELECT
     *,
     row_number() OVER (PARTITION BY person_id ORDER BY last_edit_time DESC) AS id
-  FROM lth_bronze.stg__master_patient_index
+  FROM stg.stg__master_patient_index
 )
 SELECT
   coalesce(mpi.person_id, mpi_2.person_id) AS person_id,

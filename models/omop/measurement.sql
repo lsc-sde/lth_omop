@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.measurement,
+  name cdm.measurement,
   cron '@daily',
   kind INCREMENTAL_BY_TIME_RANGE (
     time_column last_edit_time,
@@ -44,8 +44,8 @@ SELECT
   vm.updated_at,
   vm.last_edit_time,
   getdate() AS insert_date_time
-FROM lth_bronze.vocab__measurement AS vm
-LEFT JOIN lth_bronze.provider AS pr
+FROM vcb.vocab__measurement AS vm
+LEFT JOIN cdm.provider AS pr
   ON vm.provider_id = pr.provider_source_value
 WHERE
   vm.last_edit_time BETWEEN @start_ds AND @end_ds

@@ -86,7 +86,7 @@ Creates a database view. Default for source and vocab layers.
 
 ```sql
 MODEL (
-  name lth_bronze.src_flex__person,
+  name src.src_flex__person,
   kind VIEW,
   cron '@daily'
 );
@@ -114,7 +114,7 @@ Upserts based on unique key. Use for CDC patterns.
 
 ```sql
 MODEL (
-  name lth_bronze.cdc_dimension,
+  name stg.cdc_dimension,
   kind INCREMENTAL_BY_UNIQUE_KEY (
     unique_key [id],
     when_matched WHEN MATCHED THEN UPDATE SET target.col = source.col
@@ -326,7 +326,7 @@ SELECT
   s.source_value,
   COALESCE(v.target_concept_id, 0) AS concept_id
 FROM source AS s
-LEFT JOIN lth_bronze.vocab__source_to_concept_map AS v
+LEFT JOIN vcb.vocab__source_to_concept_map AS v
   ON s.source_code = v.source_code
   AND v.concept_group = 'demographics'
 ```
@@ -338,7 +338,7 @@ LEFT JOIN lth_bronze.vocab__source_to_concept_map AS v
 ### Source Model
 ```sql
 MODEL (
-  name lth_bronze.src_system__entity,
+  name src.src_system__entity,
   kind VIEW,
   cron '@daily'
 );
@@ -356,7 +356,7 @@ FROM @catalog_src.@schema_src.source_table
 ### Staging Model
 ```sql
 MODEL (
-  name lth_bronze.stg__entity,
+  name stg.stg__entity,
   kind FULL,
   cron '@daily'
 );
@@ -368,7 +368,7 @@ WITH deduplicated AS (
       PARTITION BY primary_key
       ORDER BY last_edit_time DESC
     ) AS rn
-  FROM lth_bronze.src_system__entity
+  FROM src.src_system__entity
 )
 SELECT
   column1::BIGINT AS column1,
@@ -396,7 +396,7 @@ SELECT
   source_system,
   last_edit_time,
   getdate()::DATETIME AS insert_date_time
-FROM lth_bronze.vocab__entity
+FROM vcb.vocab__entity
 ```
 
 ---

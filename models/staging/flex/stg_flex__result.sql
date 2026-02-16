@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg_flex__result,
+  name stg.stg_flex__result,
   kind INCREMENTAL_BY_TIME_RANGE (
     time_column last_edit_time,
     batch_size 30,
@@ -14,7 +14,7 @@ WITH visit_detail AS (
     visit_id AS visit_id,
     first_visit_id AS first_visit_id,
     person_source_value AS person_source_value
-  FROM lth_bronze.stg_flex__facility_transfer
+  FROM stg.stg_flex__facility_transfer
 )
 SELECT DISTINCT
   fr.person_source_value AS flex_patient_id,
@@ -37,7 +37,7 @@ SELECT DISTINCT
   fr.updated_at,
   isnull(vd.first_visit_id, fr.visit_id)::NUMERIC(12, 0) AS visit_occurrence_id,
   concat(fr.visit_id, fr.event_id)::VARCHAR(82) AS measurement_event_id
-FROM lth_bronze.src_flex__result AS fr
+FROM src.src_flex__result AS fr
 LEFT JOIN visit_detail AS vd
   ON fr.visit_id = vd.visit_id
 WHERE

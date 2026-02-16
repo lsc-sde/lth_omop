@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.procedure_occurrence,
+  name cdm.procedure_occurrence,
   cron '@daily',
   kind FULL
 );
@@ -26,7 +26,7 @@ WITH src AS (
     source_system::VARCHAR(20) AS source_system,
     last_edit_time::DATETIME AS last_edit_time,
     getdate()::DATETIME AS insert_date_time
-  FROM lth_bronze.vocab__procedure_occurrence AS p
+  FROM vcb.vocab__procedure_occurrence AS p
 ), dedup AS (
   SELECT
     *

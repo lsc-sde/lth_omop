@@ -1,6 +1,6 @@
 
 MODEL (
-  name lth_bronze.src_flex__ae_procedures,
+  name src.src_flex__ae_procedures,
   kind VIEW,
   cron '@daily',
 );

@@ -71,8 +71,8 @@ columns = {
 
 
 @model(
-    "lth_bronze.location",
-    depends_on=["lth_bronze.ext__postcodes"],
+    "cdm.location",
+    depends_on=["cdm.ext__postcodes"],
     kind=ModelKindName.FULL,
     columns=columns,
     cron="@yearly",
@@ -88,7 +88,7 @@ def execute(
     execution_time: datetime,
     **kwargs: t.Any,
 ) -> pd.DataFrame:
-    table = context.resolve_table("lth_bronze.ext__postcodes")
+    table = context.resolve_table("cdm.ext__postcodes")
 
     df = context.fetchdf(query=f"select postcode, location_source_value from {table}")
 

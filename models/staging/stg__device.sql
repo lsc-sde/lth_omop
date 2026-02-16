@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg__device,
+  name stg.stg__device,
   kind VIEW
 );
 
@@ -18,6 +18,6 @@ SELECT
   d.location_code,
   d.device_id,
   c.snomed_identifier
-FROM lth_bronze.src_bi__devices AS d
-JOIN lth_bronze.stg__device_cache AS c
-  ON c.device_id = d.device_id;
+FROM src.src_bi__devices AS d
+JOIN stg.stg__device_cache AS c
+  ON c.device_id = d.device_id

@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg_flex__ae_procedures,
+  name stg.stg_flex__ae_procedures,
   kind FULL,
   cron '@daily'
 );
@@ -30,4 +30,4 @@ SELECT
   ) AS procedure_datetime,
   left(value, charindex('|', value) - 1) AS list,
   'flex_ae' AS source_system
-FROM lth_bronze.src_flex__ae_procedures CROSS APPLY string_split(list, '~')
+FROM src.src_flex__ae_procedures CROSS APPLY string_split(list, '~')

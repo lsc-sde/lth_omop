@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.provider,
+  name cdm.provider,
   kind FULL,
   cron '@daily'
 );
@@ -20,11 +20,11 @@ SELECT DISTINCT
   NULL::BIGINT AS gender_source_concept_id,
   p.source_system::VARCHAR(20),
   p.org_code::VARCHAR(5)
-FROM lth_bronze.vocab__provider AS p
+FROM vcb.vocab__provider AS p
 LEFT JOIN (
   SELECT
     *
-  FROM lth_bronze.care_site
+  FROM cdm.care_site
   WHERE
     place_of_service_source_value = 'NHS Trust'
 ) AS c

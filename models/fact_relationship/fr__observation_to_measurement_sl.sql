@@ -17,4 +17,4 @@ SELECT
   ob.measurement_key,
   ob.unique_key,
   ob.last_edit_time
-FROM lth_bronze.cdc_fr__observation_to_measurement AS ob
+FROM stg.cdc_fr__observation_to_measurement AS ob

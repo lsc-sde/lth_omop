@@ -17,4 +17,4 @@ SELECT
   s.measurement_key,
   s.unique_key,
   s.last_edit_time
-FROM lth_bronze.cdc_fr__specimen_to_measurement AS s
+FROM stg.cdc_fr__specimen_to_measurement AS s

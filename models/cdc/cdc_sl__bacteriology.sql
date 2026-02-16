@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.cdc_sl__bacteriology,
+  name stg.cdc_sl__bacteriology,
   kind SCD_TYPE_2_BY_TIME (
     unique_key measurement_event_id
   ),
@@ -29,6 +29,6 @@ SELECT
   source_system,
   updated_at,
   last_edit_time
-FROM lth_bronze.stg_sl__bacteriology AS ssb
+FROM stg.stg_sl__bacteriology AS ssb
 WHERE
   ssb.last_edit_time BETWEEN @start_ds AND @end_ds

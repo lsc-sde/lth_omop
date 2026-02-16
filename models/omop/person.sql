@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.person,
+  name cdm.person,
   cron '@daily',
   kind FULL
 );
@@ -27,20 +27,20 @@ SELECT
   p.org_code::VARCHAR(5),
   last_edit_time::DATETIME,
   getdate()::DATETIME AS insert_date_time
-FROM lth_bronze.vocab__person AS p
+FROM vcb.vocab__person AS p
 LEFT JOIN (
   SELECT DISTINCT
     provider_id AS provider_id,
     provider_source_value AS provider_source_value
-  FROM lth_bronze.provider
+  FROM cdm.provider
 ) AS pr
   ON p.provider_id = pr.provider_source_value
 LEFT JOIN (
   SELECT DISTINCT
     care_site_id AS care_site_id,
     care_site_source_value AS care_site_source_value
-  FROM lth_bronze.care_site
+  FROM cdm.care_site
 ) AS cs
   ON p.gp_prac_code = cs.care_site_source_value
-LEFT JOIN lth_bronze.location AS vl
+LEFT JOIN cdm.location AS vl
   ON p.mailing_code = vl.location_source_value

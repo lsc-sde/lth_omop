@@ -1,16 +1,16 @@
-
 MODEL (
-  name lth_bronze.stg_flex__provider_specialty,
+  name stg.stg_flex__provider_specialty,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-select distinct
+SELECT DISTINCT
   efms.emp_provider_id,
   ms.name,
-  efms.source_system::varchar(20),
-  efms.org_code::varchar(5)
-from lth_bronze.src_flex__emp_facility_med_spec as efms
-left join lth_bronze.src_flex__medical_specialty as ms
-  on efms.physician_service_id = ms.physician_service_id
-where item_nbr = 1
+  efms.source_system::VARCHAR(20),
+  efms.org_code::VARCHAR(5)
+FROM src.src_flex__emp_facility_med_spec AS efms
+LEFT JOIN src.src_flex__medical_specialty AS ms
+  ON efms.physician_service_id = ms.physician_service_id
+WHERE
+  item_nbr = 1

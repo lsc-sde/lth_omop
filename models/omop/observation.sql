@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.observation,
+  name cdm.observation,
   kind FULL,
   cron '@daily',
   kind FULL
@@ -42,6 +42,6 @@ SELECT
   vo.source_system,
   last_edit_time,
   getdate() AS insert_date_time
-FROM lth_bronze.vocab__observation AS vo
-LEFT JOIN lth_bronze.provider AS pr
+FROM vcb.vocab__observation AS vo
+LEFT JOIN cdm.provider AS pr
   ON vo.provider_id = pr.provider_source_value

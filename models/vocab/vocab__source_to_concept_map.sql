@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.vocab__source_to_concept_map,
+  name vcb.vocab__source_to_concept_map,
   kind FULL,
   cron '@daily'
 );
@@ -13,6 +13,6 @@ SELECT DISTINCT
   concept_group::VARCHAR(50) AS concept_group,
   source_system::VARCHAR(50) AS source_system,
   mapping_status::VARCHAR(50) AS mapping_status
-FROM lth_bronze.vocab__source_to_concept_map_raw
+FROM vcb.vocab__source_to_concept_map_raw
 WHERE
   mapping_status = 'APPROVED'

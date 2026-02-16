@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg_flex__procedure_occurrence,
+  name stg.stg_flex__procedure_occurrence,
   kind FULL,
   cron '@daily'
 );
@@ -16,7 +16,7 @@ WITH procedure_occ AS (
     d.updated_at AS updated_at,
     'ukcoder' AS data_source,
     replace(left(opcs4_code, 3) + '.' + substring(opcs4_code, 4, 10), '.X', '') AS source_code
-  FROM lth_bronze.src_flex__vtg_procedure AS d
+  FROM src.src_flex__vtg_procedure AS d
 ), rad_proc_occ AS (
   SELECT
     visit_id AS visit_occurrence_id,
@@ -32,7 +32,7 @@ WITH procedure_occ AS (
     last_edit_time AS last_edit_time,
     updated_at AS updated_at,
     'flex_radiology' AS data_source
-  FROM lth_bronze.src_flex__procedure_event
+  FROM src.src_flex__procedure_event
   WHERE
     kardex_group_id = 24 AND event_status_id IN (6, 11)
 ), visit_detail AS (
@@ -41,7 +41,7 @@ WITH procedure_occ AS (
     visit_id AS visit_id,
     first_visit_id AS first_visit_id,
     person_source_value AS person_source_value
-  FROM lth_bronze.stg_flex__facility_transfer
+  FROM stg.stg_flex__facility_transfer
 )
 SELECT
   isnull(v.first_visit_id, vs.visit_id) AS visit_occurrence_id,
@@ -69,7 +69,7 @@ LEFT JOIN (
     visit_number AS visit_number,
     visit_id AS visit_id,
     person_source_value AS person_source_value
-  FROM lth_bronze.src_flex__visit_segment
+  FROM src.src_flex__visit_segment
   WHERE
     NOT visit_number IN (
       SELECT DISTINCT
@@ -107,4 +107,4 @@ SELECT
   source_system::VARCHAR(20),
   last_edit_time,
   updated_at
-FROM lth_bronze.stg_flex__ae_procedures AS ae_po
+FROM stg.stg_flex__ae_procedures AS ae_po

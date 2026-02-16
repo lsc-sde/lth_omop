@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.vocab__measurement,
+  name vcb.vocab__measurement,
   kind VIEW,
   cron '@daily'
 );
@@ -34,14 +34,14 @@ SELECT DISTINCT
   r.source_system,
   r.updated_at,
   r.last_edit_time
-FROM lth_bronze.stg__result AS r
+FROM stg.stg__result AS r
 INNER JOIN (
   SELECT DISTINCT
     source_code AS source_code,
     target_concept_id AS target_concept_id,
     target_domain_id AS target_domain_id,
     concept_group AS concept_group
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE
     concept_group = 'result'
     OR (
@@ -60,7 +60,7 @@ LEFT JOIN (
     source_code_description AS source_code_description,
     target_concept_id AS target_concept_id,
     target_domain_id AS target_domain_id
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE
     concept_group = 'units'
 ) AS um
@@ -70,7 +70,7 @@ LEFT JOIN (
     target_concept_id AS target_concept_id,
     source_code AS source_code,
     source_code_description AS source_code_description
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE
     concept_group IN ('decoded', 'bacteriology_other_result')
 ) AS dc

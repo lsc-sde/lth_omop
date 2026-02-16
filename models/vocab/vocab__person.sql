@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.vocab__person,
+  name vcb.vocab__person,
   kind VIEW,
   cron '@daily'
 );
@@ -30,12 +30,12 @@ SELECT
   source_system,
   org_code,
   last_edit_time
-FROM lth_bronze.stg__person AS p
+FROM stg.stg__person AS p
 LEFT JOIN (
   SELECT
     target_concept_id AS target_concept_id,
     source_code AS source_code
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE
     concept_group = 'demographics'
 ) AS v
@@ -45,7 +45,7 @@ LEFT JOIN (
     target_concept_id AS target_concept_id,
     source_code AS source_code,
     source_code_description AS source_code_description
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE
     concept_group = 'demographics'
 ) AS v2

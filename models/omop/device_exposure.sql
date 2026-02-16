@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.device_exposure,
+  name cdm.device_exposure,
   kind FULL,
   cron '@daily'
 );
@@ -23,11 +23,11 @@ WITH ve AS (
     NULL::BIGINT AS unit_source_concept_id,
     source_system::VARCHAR(20) AS source_system,
     org_code::VARCHAR(5) AS org_code
-  FROM lth_bronze.vocab__device_exposure
+  FROM vcb.vocab__device_exposure
   WHERE
     NOT device_concept_id IS NULL
 ), vd AS (
-  /* Additional rows sourced from vocab__device (SNOMED-joined) */ /* Adjust column names here if they differ in lth_bronze.vocab__device */
+  /* Additional rows sourced from vocab__device (SNOMED-joined) */ /* Adjust column names here if they differ in vcb.vocab__device */
   SELECT
     person_id::BIGINT AS person_id,
     device_concept_id::BIGINT AS device_concept_id,
@@ -45,7 +45,7 @@ WITH ve AS (
     NULL::BIGINT AS unit_source_concept_id,
     'Atticus'::VARCHAR(20) AS source_system,
     'RXN'::VARCHAR(5) AS org_code
-  FROM lth_bronze.vocab__device
+  FROM vcb.vocab__device
   WHERE
     NOT device_concept_id IS NULL
 ), unioned AS (

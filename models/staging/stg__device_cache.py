@@ -65,7 +65,7 @@ def fetch(di: str):
 
 
 @model(
-    name="lth_bronze.stg__device_cache",
+    name="stg.stg__device_cache",
     # kind=IncrementalByUniqueKeyKind(unique_key=["device_id"]),
     kind={
         "name": ModelKindName.INCREMENTAL_BY_UNIQUE_KEY,
@@ -79,11 +79,11 @@ def fetch(di: str):
         "error": "VARCHAR(4000)",
     },
     description="Incremental cache of SNOMED CT lookups from AccessGUDID keyed by device_id.",
-    depends_on=["lth_bronze.src_bi__devices"],
+    depends_on=["src.src_bi__devices"],
 )
 def execute(context: ExecutionContext, **kwargs) -> pd.DataFrame:
     # 1) Pull all distinct device_ids from source
-    src_bi__devices = context.resolve_table("lth_bronze.src_bi__devices")
+    src_bi__devices = context.resolve_table("src.src_bi__devices")
     src = context.fetchdf(f"""
         SELECT DISTINCT CAST(device_id AS VARCHAR(64)) AS device_id
         FROM {src_bi__devices}
@@ -104,7 +104,7 @@ def execute(context: ExecutionContext, **kwargs) -> pd.DataFrame:
     # 2) Pull already-cached device_ids (table may not exist on first run)
     # This will result in a circular dependency!
     try:
-        cached_table = context.resolve_table("lth_bronze.stg__device_cache")
+        cached_table = context.resolve_table("stg.stg__device_cache")
         cached = context.fetchdf(f"""
             SELECT CAST(device_id AS VARCHAR(64)) AS device_id
             FROM {cached_table}
@@ -153,7 +153,7 @@ def execute(context: ExecutionContext, **kwargs) -> pd.DataFrame:
 
 
 # @model(
-#     name="lth_bronze.stg__device_cache",
+#     name="stg.stg__device_cache",
 #     kind={
 #         "name": ModelKindName.INCREMENTAL_BY_UNIQUE_KEY,
 #         "unique_key": ["device_id"],
@@ -177,7 +177,7 @@ def execute(context: ExecutionContext, **kwargs) -> pd.DataFrame:
 #     # 1) Pull device ids
 #     src = context.engine_adapter.fetchdf("""
 #         SELECT DISTINCT CAST(device_id AS VARCHAR(64)) AS device_id
-#         FROM lth_bronze.src_bi__devices
+#         FROM src.src_bi__devices
 #         WHERE device_id IS NOT NULL
 #     """)
 
@@ -197,7 +197,7 @@ def execute(context: ExecutionContext, **kwargs) -> pd.DataFrame:
 #     try:
 #         cached = context.engine_adapter.fetchdf("""
 #             SELECT CAST(device_id AS VARCHAR(64)) AS device_id
-#             FROM lth_bronze.stg__device_cache
+#             FROM stg.stg__device_cache
 #         """)
 #         cached_ids = set(cached["device_id"].astype(str).str.strip().tolist())
 #     except Exception:

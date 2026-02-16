@@ -15,4 +15,4 @@ SELECT
   relationship_concept_id,
   unique_key,
   last_edit_time
-FROM lth_bronze.cdc_fr__mother_to_child
+FROM stg.cdc_fr__mother_to_child

@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg__person,
+  name stg.stg__person,
   kind FULL,
   cron '@daily'
 );
@@ -48,8 +48,8 @@ WITH person AS (
     ) AS last_edit_time,
     mpi.source_system AS source_system,
     mpi.org_code AS org_code
-  FROM lth_bronze.stg__master_patient_index AS mpi
-  LEFT JOIN lth_bronze.src_flex__person AS fp
+  FROM stg.stg__master_patient_index AS mpi
+  LEFT JOIN src.src_flex__person AS fp
     ON mpi.flex_patient_id = fp.person_source_value AND mpi.source = 'flex'
   WHERE
     collapsed_into_patient_id IS NULL

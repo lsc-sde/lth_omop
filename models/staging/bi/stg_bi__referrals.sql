@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg_bi__referrals,
+  name stg.stg_bi__referrals,
   kind INCREMENTAL_BY_TIME_RANGE (
     time_column last_edit_time,
     batch_size 30,
@@ -25,8 +25,8 @@ SELECT
   bi.org_code::VARCHAR(5),
   bi.last_edit_time::DATETIME2 AS last_edit_time,
   bi.updated_at::DATETIME2 AS updated_at
-FROM lth_bronze.src_bi__referrals AS bi
-LEFT JOIN lth_bronze.stg__provider AS pr
+FROM src.src_bi__referrals AS bi
+LEFT JOIN stg.stg__provider AS pr
   ON bi.referring_emp_code = pr.provider_source_value
 WHERE
   bi.last_edit_time BETWEEN @start_ds AND @end_ds

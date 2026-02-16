@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg_flex__condition_occurrence,
+  name stg.stg_flex__condition_occurrence,
   kind FULL,
   cron '@daily'
 );
@@ -16,14 +16,14 @@ WITH condition_occ AS (
     replace(left(icd10_code, 3) + '.' + substring(icd10_code, 4, 10), '.X', '') AS source_code,
     org_code::VARCHAR(5) AS org_code,
     source_system::VARCHAR(20) AS source_system
-  FROM lth_bronze.src_flex__vtg_diagnosis
+  FROM src.src_flex__vtg_diagnosis
 ), visit_detail AS (
   SELECT DISTINCT
     visit_number AS visit_number,
     visit_id AS visit_id,
     first_visit_id AS first_visit_id,
     person_source_value AS person_source_value
-  FROM lth_bronze.stg_flex__facility_transfer
+  FROM stg.stg_flex__facility_transfer
 )
 SELECT
   isnull(v.person_source_value, vs.person_source_value) AS patient_id,
@@ -51,7 +51,7 @@ LEFT JOIN (
     vs.visit_number AS visit_number,
     vs.visit_id AS visit_id,
     vs.person_source_value AS person_source_value
-  FROM lth_bronze.src_flex__visit_segment AS vs
+  FROM src.src_flex__visit_segment AS vs
   LEFT JOIN visit_detail AS vd
     ON vs.visit_number = vd.visit_number
   WHERE
@@ -75,7 +75,7 @@ SELECT
   coalesce(v.first_visit_id, ae.visit_id) AS visit_occurrence_id,
   org_code::VARCHAR(5),
   source_system::VARCHAR(20)
-FROM lth_bronze.stg_flex__ae_diagnosis AS ae
+FROM stg.stg_flex__ae_diagnosis AS ae
 LEFT JOIN (
   SELECT DISTINCT
     visit_id AS visit_id,

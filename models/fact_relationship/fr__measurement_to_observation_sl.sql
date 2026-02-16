@@ -19,4 +19,4 @@ SELECT DISTINCT
   slb.measurement_key,
   slb.unique_key,
   slb.last_edit_time
-FROM lth_bronze.cdc_fr__measurement_to_observation_sl AS slb
+FROM stg.cdc_fr__measurement_to_observation_sl AS slb

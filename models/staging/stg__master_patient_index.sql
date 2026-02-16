@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg__master_patient_index,
+  name stg.stg__master_patient_index,
   kind FULL,
   cron '@daily'
 );
@@ -14,7 +14,7 @@ WITH flex_person AS (
     last_edit_time AS last_edit_time,
     source_system AS source_system,
     org_code AS org_code
-  FROM lth_bronze.src_flex__person
+  FROM src.src_flex__person
   GROUP BY
     person_source_value,
     mrn,
@@ -126,7 +126,7 @@ WITH flex_person AS (
     coalesce(p.collapsed_into_patient_id, mpi.flex_patient_id) AS person_source_value,
     mpi.*
   FROM mpi_final_base AS mpi
-  LEFT JOIN lth_bronze.src_flex__person AS p
+  LEFT JOIN src.src_flex__person AS p
     ON mpi.flex_patient_id = p.person_source_value
 ), collapsed_nhs AS (
   SELECT DISTINCT

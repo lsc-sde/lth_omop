@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg_flex__ae_diagnosis,
+  name stg.stg_flex__ae_diagnosis,
   kind FULL,
   cron '@daily'
 );
@@ -28,7 +28,7 @@ FROM (
     updated_at AS updated_at,
     value AS diag_list,
     'flex_ae' AS source_system
-  FROM lth_bronze.src_flex__ae_diagnosis CROSS APPLY string_split(diag_list, '~')
+  FROM src.src_flex__ae_diagnosis CROSS APPLY string_split(diag_list, '~')
 ) AS t CROSS APPLY string_split(diag_list, '|')
 WHERE
   len(value) > 1 AND NOT value IN ('410605003')

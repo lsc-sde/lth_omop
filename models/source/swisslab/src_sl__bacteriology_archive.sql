@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.src_sl__bacteriology_archive,
+  name src.src_sl__bacteriology_archive,
   kind VIEW,
   cron '@daily'
 );

@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.vocab__source_to_concept_map_raw,
+  name vcb.vocab__source_to_concept_map_raw,
   kind VIEW,
   cron '@daily'
 );

@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.fact_relationship,
+  name cdm.fact_relationship,
   cron '@daily',
   kind INCREMENTAL_BY_UNIQUE_KEY (
     unique_key unique_key
@@ -15,7 +15,7 @@ SELECT
   relationship_concept_id::BIGINT,
   unique_key,
   last_edit_time::DATETIME
-FROM lth_bronze.fr__observation_to_measurement_sl
+FROM cdm.fr__observation_to_measurement_sl
 UNION ALL
 SELECT
   domain_concept_id_1,
@@ -25,7 +25,7 @@ SELECT
   relationship_concept_id,
   unique_key,
   last_edit_time::DATETIME
-FROM lth_bronze.fr__measurement_to_observation_sl
+FROM cdm.fr__measurement_to_observation_sl
 UNION ALL
 SELECT
   domain_concept_id_1,
@@ -35,7 +35,7 @@ SELECT
   relationship_concept_id,
   unique_key,
   last_edit_time::DATETIME
-FROM lth_bronze.fr__specimen_to_measurement
+FROM cdm.fr__specimen_to_measurement
 UNION ALL
 SELECT
   domain_concept_id_1,
@@ -45,4 +45,4 @@ SELECT
   relationship_concept_id,
   unique_key,
   last_edit_time::DATETIME
-FROM lth_bronze.fr__mother_to_child
+FROM cdm.fr__mother_to_child

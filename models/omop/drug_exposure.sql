@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.drug_exposure,
+  name cdm.drug_exposure,
   kind FULL,
   cron '@daily'
 );
@@ -40,6 +40,6 @@ SELECT
   de.source_system::VARCHAR(20),
   de.last_edit_time::DATETIME,
   getdate()::DATETIME AS insert_date_time
-FROM lth_bronze.vocab__drug_exposure AS de
-LEFT JOIN lth_bronze.provider AS pr
+FROM vcb.vocab__drug_exposure AS de
+LEFT JOIN cdm.provider AS pr
   ON de.provider_id = pr.provider_source_value

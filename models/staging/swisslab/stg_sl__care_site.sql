@@ -1,11 +1,10 @@
-
 MODEL (
-  name lth_bronze.stg_sl__care_site,
+  name stg.stg_sl__care_site,
   kind FULL,
-  cron '@daily',
+  cron '@daily'
 );
 
-select
+SELECT
   e.care_site_name,
   e.care_site_source_value,
   e.postcode,
@@ -13,23 +12,23 @@ select
   p.location_source_value,
   source_system,
   org_code
-from (
-  select distinct
-    Description as care_site_name,
-    Location_Code as care_site_source_value,
-    null as postcode,
-    'Swisslab' as place_of_service_source_value,    
-    'swisslab' as source_system,
-    'rxn' as org_code
-  from lth_bronze.swisslab__locations 
-  where Quadramed_Code is null
-) as e
-
-left join lth_bronze.ext__postcodes as p
-  on
-    case
-      when e.postcode = '1' then 'PR29HT'
-      when e.postcode = '3' then 'PR71PP'
-      else Replace(e.postcode, ' ', '')
-    end
-    = Replace(p.postcode, ' ', '')
+FROM (
+  SELECT DISTINCT
+    description AS care_site_name,
+    location_code AS care_site_source_value,
+    NULL AS postcode,
+    'Swisslab' AS place_of_service_source_value,
+    'swisslab' AS source_system,
+    'rxn' AS org_code
+  FROM lth_bronze.swisslab__locations
+  WHERE
+    quadramed_code IS NULL
+) AS e
+LEFT JOIN ext.ext__postcodes AS p
+  ON CASE
+    WHEN e.postcode = '1'
+    THEN 'PR29HT'
+    WHEN e.postcode = '3'
+    THEN 'PR71PP'
+    ELSE replace(e.postcode, ' ', '')
+  END = replace(p.postcode, ' ', '')

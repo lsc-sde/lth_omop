@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.vocab__observation,
+  name vcb.vocab__observation,
   kind VIEW,
   cron '@daily'
 );
@@ -42,7 +42,7 @@ WITH concept AS (
     co.source_system AS source_system,
     co.last_edit_time AS last_edit_time,
     co.updated_at AS updated_at
-  FROM lth_bronze.stg__condition_occurrence AS co
+  FROM stg.stg__condition_occurrence AS co
   INNER JOIN concept AS cm
     ON co.source_code = cm.concept_code
   LEFT JOIN mappings AS mp
@@ -71,13 +71,13 @@ SELECT DISTINCT
   r.org_code,
   r.source_system,
   r.updated_at AS last_edit_time
-FROM lth_bronze.stg__result AS r
+FROM stg.stg__result AS r
 INNER JOIN (
   SELECT
     source_code AS source_code,
     target_concept_id AS target_concept_id,
     target_domain_id AS target_domain_id
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE
     concept_group = 'result'
     OR (
@@ -90,7 +90,7 @@ LEFT JOIN (
     source_code AS source_code,
     target_concept_id AS target_concept_id,
     target_domain_id AS target_domain_id
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE
     concept_group IN ('referral_priority')
 ) AS cm_rp
@@ -101,7 +101,7 @@ LEFT JOIN (
     source_code_description AS source_code_description,
     target_concept_id AS target_concept_id,
     target_domain_id AS target_domain_id
-  FROM lth_bronze.vocab__source_to_concept_map
+  FROM vcb.vocab__source_to_concept_map
   WHERE
     concept_group IN ('decoded')
 ) AS cm_dc
@@ -191,6 +191,6 @@ SELECT DISTINCT
   'rxn' AS org_code,
   'mesh' AS source_system,
   insert_datetime AS updated_at
-FROM lth_bronze.ext__data_opt_out
+FROM ext.ext__data_opt_out
 WHERE
   NOT person_id IS NULL

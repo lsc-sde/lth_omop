@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.stg_flex__drug_exposure,
+  name stg.stg_flex__drug_exposure,
   kind VIEW,
   cron '@daily'
 );
@@ -10,7 +10,7 @@ WITH visit_detail AS (
     visit_id AS visit_id,
     first_visit_id AS first_visit_id,
     person_source_value AS person_source_value
-  FROM lth_bronze.stg_flex__facility_transfer
+  FROM stg.stg_flex__facility_transfer
 )
 SELECT
   sfr.person_source_value,
@@ -30,7 +30,7 @@ SELECT
   updated_at,
   replace(flex_procedure_name, ' (CRITICAL MED)', '') AS drug_source_value,
   isnull(v.first_visit_id, sfr.visit_id) AS visit_occurrence_id
-FROM lth_bronze.src_flex__procedure_event AS sfr
+FROM src.src_flex__procedure_event AS sfr
 LEFT JOIN visit_detail AS v
   ON sfr.visit_id = v.visit_id
 WHERE

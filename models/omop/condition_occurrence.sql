@@ -1,5 +1,5 @@
 MODEL (
-  name lth_bronze.condition_occurrence,
+  name cdm.condition_occurrence,
   cron '@daily',
   kind FULL
 );
@@ -7,7 +7,7 @@ MODEL (
 WITH cons_provider AS (
   SELECT
     *
-  FROM lth_bronze.vocab__provider
+  FROM vcb.vocab__provider
   WHERE
     NOT cons_org_code IS NULL
 ), src AS (
@@ -43,10 +43,10 @@ WITH cons_provider AS (
     c.last_edit_time AS last_edit_time,
     c.updated_at AS updated_at,
     getdate() AS insert_date_time
-  FROM lth_bronze.vocab__condition_occurrence AS c
+  FROM vcb.vocab__condition_occurrence AS c
   LEFT JOIN cons_provider AS pr1
     ON c.provider_id = pr1.cons_org_code AND c.provider_id_type = 0
-  LEFT JOIN lth_bronze.vocab__provider AS pr2
+  LEFT JOIN vcb.vocab__provider AS pr2
     ON c.provider_id = pr2.provider_source_value AND c.provider_id_type = 1
 ), dedup AS (
   SELECT
