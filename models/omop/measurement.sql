@@ -2,7 +2,7 @@ MODEL (
   name lth_bronze.measurement,
   cron '@daily',
   kind INCREMENTAL_BY_TIME_RANGE (
-    time_column updated_at,
+    time_column last_edit_time,
     batch_size 30,
     batch_concurrency 4
   )
@@ -41,11 +41,11 @@ SELECT
   vm.measurement_event_id,
   vm.org_code,
   vm.source_system,
-  vm.updated_at AS updated_at,
-  vm.updated_at AS last_edit_time,
+  vm.updated_at,
+  vm.last_edit_time,
   getdate() AS insert_date_time
 FROM lth_bronze.vocab__measurement AS vm
 LEFT JOIN lth_bronze.provider AS pr
   ON vm.provider_id = pr.provider_source_value
 WHERE
-  updated_at BETWEEN @start_ds AND @end_ds
+  vm.last_edit_time BETWEEN @start_ds AND @end_ds

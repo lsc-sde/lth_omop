@@ -1,7 +1,7 @@
 MODEL (
   name lth_bronze.stg_bi__referrals,
   kind INCREMENTAL_BY_TIME_RANGE (
-    time_column updated_at,
+    time_column last_edit_time,
     batch_size 30,
     batch_concurrency 4
   ),
@@ -29,4 +29,4 @@ FROM lth_bronze.src_bi__referrals AS bi
 LEFT JOIN lth_bronze.stg__provider AS pr
   ON bi.referring_emp_code = pr.provider_source_value
 WHERE
-  bi.updated_at BETWEEN @start_ds AND @end_ds
+  bi.last_edit_time BETWEEN @start_ds AND @end_ds

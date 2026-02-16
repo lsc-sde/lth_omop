@@ -1,11 +1,10 @@
-
 MODEL (
   name lth_bronze.src_sl__bacteriology_archive,
   kind VIEW,
-  cron '@daily',
+  cron '@daily'
 );
 
-select
+SELECT
   order_number,
   nhs_number,
   mrn,
@@ -23,7 +22,8 @@ select
   qualifier,
   test,
   result_value,
-  'rxn' as org_code,
-  'swisslab' as source_system,
-  updated_at
-from @catalog_src.@schema_src.src_sl__bacteriology_archive
+  'rxn' AS org_code,
+  'swisslab' AS source_system,
+  updated_at,
+  updated_at AS last_edit_time
+FROM @catalog_src.@schema_src.src_sl__bacteriology_archive

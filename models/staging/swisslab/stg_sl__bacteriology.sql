@@ -24,7 +24,8 @@ WITH merged AS (
     test,
     result_value,
     'live' AS source,
-    updated_at
+    updated_at,
+    last_edit_time
   FROM lth_bronze.src_sl__bacteriology_live
   WHERE
     NOT result_value IN (
@@ -53,7 +54,8 @@ WITH merged AS (
     test,
     result_value,
     'archive' AS source,
-    updated_at
+    updated_at,
+    last_edit_time
   FROM lth_bronze.src_sl__bacteriology_archive
   WHERE
     NOT result_value IN (
@@ -108,7 +110,8 @@ SELECT
   NULL AS priority,
   'rxn' AS org_code,
   'swl' AS source_system,
-  dd.updated_at
+  dd.updated_at,
+  dd.last_edit_time
 FROM de_duped AS dd
 LEFT JOIN lth_bronze.stg__provider AS pr
   ON dd.clinician_code = pr.cons_org_code

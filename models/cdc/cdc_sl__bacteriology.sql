@@ -27,7 +27,8 @@ SELECT
   priority,
   org_code,
   source_system,
-  updated_at
+  updated_at,
+  last_edit_time
 FROM lth_bronze.stg_sl__bacteriology AS ssb
 WHERE
-  ssb.updated_at BETWEEN @start_ds AND @end_ds
+  ssb.last_edit_time BETWEEN @start_ds AND @end_ds

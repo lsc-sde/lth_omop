@@ -1,7 +1,7 @@
 MODEL (
   name lth_bronze.stg__result,
   kind INCREMENTAL_BY_TIME_RANGE (
-    time_column updated_at,
+    time_column last_edit_time,
     batch_size 30,
     batch_concurrency 4
   ),
@@ -24,10 +24,11 @@ WITH results_union AS (
     TRY_CAST(NULL AS VARCHAR) AS priority,
     org_code,
     source_system,
-    updated_at
+    updated_at,
+    last_edit_time
   FROM lth_bronze.stg_flex__result
   WHERE
-    updated_at BETWEEN @start_ds AND @end_ds
+    last_edit_time BETWEEN @start_ds AND @end_ds
   UNION ALL
   SELECT
     bi_patient_id AS patient_id,
@@ -44,10 +45,11 @@ WITH results_union AS (
     TRY_CAST(priority AS VARCHAR) AS priority,
     org_code,
     source_system,
-    updated_at
+    updated_at,
+    last_edit_time
   FROM lth_bronze.stg_bi__referrals AS bi
   WHERE
-    updated_at BETWEEN @start_ds AND @end_ds
+    last_edit_time BETWEEN @start_ds AND @end_ds
   UNION ALL
   SELECT
     TRY_CAST(nhs_number AS NUMERIC) AS patient_id,
@@ -64,10 +66,11 @@ WITH results_union AS (
     TRY_CAST(priority AS VARCHAR) AS priority,
     org_code,
     source_system,
-    updated_at
+    updated_at,
+    last_edit_time
   FROM lth_bronze.cdc_sl__bacteriology AS ssb
   WHERE
-    ssb.updated_at BETWEEN @start_ds AND @end_ds AND ssb.valid_to IS NULL
+    ssb.last_edit_time BETWEEN @start_ds AND @end_ds AND ssb.valid_to IS NULL
 ), person AS (
   SELECT
     *,
@@ -89,7 +92,8 @@ SELECT
   ru.priority::VARCHAR(200) AS priority,
   ru.org_code::VARCHAR(200) AS org_code,
   ru.source_system::VARCHAR(200) AS source_system,
-  updated_at AS updated_at
+  ru.updated_at,
+  ru.last_edit_time
 FROM results_union AS ru
 LEFT JOIN person AS mpi
   ON ru.patient_id = mpi.flex_patient_id
@@ -103,4 +107,4 @@ LEFT JOIN (
 ) AS mpi_2
   ON ru.patient_id = mpi_2.nhs_number AND ru.source_system IN ('swl')
 WHERE
-  NOT person_id IS NULL AND updated_at BETWEEN @start_ds AND @end_ds
+  NOT person_id IS NULL AND ru.last_edit_time BETWEEN @start_ds AND @end_ds

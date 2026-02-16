@@ -1,99 +1,91 @@
-
 MODEL (
   name lth_bronze.vocab__measurement,
-  kind view,
-  cron '@daily',
+  kind VIEW,
+  cron '@daily'
 );
 
-select distinct
+SELECT DISTINCT
   r.person_id,
   r.visit_occurrence_id,
-  null as visit_detail_id,
-  r.measurement_event_id::varchar(80),
+  NULL AS visit_detail_id,
+  r.measurement_event_id::VARCHAR(80),
   r.provider_id,
   r.result_datetime,
   cm.target_concept_id,
-  32817 as type_concept_id,
-  cast(
-    replace(replace(r.source_value, '<', ''), '>', '') as float
-  ) as value_as_number,
-  coalesce(dc.target_concept_id, rs.concept_id) as value_as_concept_id,
-  um.target_concept_id as unit_concept_id,
-  null as range_low,
-  null as range_high,
-  r.source_name as source_value,
-  null as measurement_source_concept_id,
-  isnull(r.unit_source_value, um.source_code_description) as unit_source_value,
-  null as unit_source_concept_id,
-  r.value_source_value as value_source_value,
-  null as meas_event_field_concept_id,
-  case
-    when r.source_value like '%>%' then 4172704
-    when r.source_value like '%<%' then 4171756
-  end as operator_concept_id,
+  32817 AS type_concept_id,
+  replace(replace(r.source_value, '<', ''), '>', '')::FLOAT AS value_as_number,
+  coalesce(dc.target_concept_id, rs.concept_id) AS value_as_concept_id,
+  um.target_concept_id AS unit_concept_id,
+  NULL AS range_low,
+  NULL AS range_high,
+  r.source_name AS source_value,
+  NULL AS measurement_source_concept_id,
+  isnull(r.unit_source_value, um.source_code_description) AS unit_source_value,
+  NULL AS unit_source_concept_id,
+  r.value_source_value AS value_source_value,
+  NULL AS meas_event_field_concept_id,
+  CASE
+    WHEN r.source_value LIKE '%>%'
+    THEN 4172704
+    WHEN r.source_value LIKE '%<%'
+    THEN 4171756
+  END AS operator_concept_id,
   r.org_code,
   r.source_system,
-  r.updated_at
-from lth_bronze.stg__result as r
-inner join
-  (
-    select distinct
-      source_code,
-      target_concept_id,
-      target_domain_id,
-      concept_group
-    from lth_bronze.vocab__source_to_concept_map
-    where
-      concept_group = 'result'
-      or (
-        (
-          concept_group = 'bacteria_presence'
-          or concept_group = 'bacteria_sensitivities'
-          or concept_group = 'bacteriology_other_test'
-
-        )
-        and source_system = 'swisslab'
+  r.updated_at,
+  r.last_edit_time
+FROM lth_bronze.stg__result AS r
+INNER JOIN (
+  SELECT DISTINCT
+    source_code AS source_code,
+    target_concept_id AS target_concept_id,
+    target_domain_id AS target_domain_id,
+    concept_group AS concept_group
+  FROM lth_bronze.vocab__source_to_concept_map
+  WHERE
+    concept_group = 'result'
+    OR (
+      (
+        concept_group = 'bacteria_presence'
+        OR concept_group = 'bacteria_sensitivities'
+        OR concept_group = 'bacteriology_other_test'
       )
-  ) as cm
-  on r.source_code = cm.source_code
-left join
-  (
-    select
-      source_code,
-      source_code_description,
-      target_concept_id,
-      target_domain_id
-    from lth_bronze.vocab__source_to_concept_map
-    where concept_group = 'units'
-  ) as um
-  on r.source_code = um.source_code
-left join
-  (
-    select
-      target_concept_id,
-      source_code,
-      source_code_description
-    from lth_bronze.vocab__source_to_concept_map
-    where concept_group in ('decoded', 'bacteriology_other_result')
-  ) as dc
-  on
-    r.source_code = dc.source_code
-    and r.value_source_value = dc.source_code_description
-left join
-  (
-    select
-      concept_id,
-      concept_name
-    from @catalog_src.@schema_vocab.CONCEPT
-    where
-      concept_name in (
-        'Positive', 'Negative', 'Sensitive', 'Indeterminate', 'Resistant'
-      )
-      and domain_id in ('Meas Value')
-      and vocabulary_id in ('SNOMED')
-  ) as rs
-  on
-    r.value_source_value = rs.concept_name
-where
+      AND source_system = 'swisslab'
+    )
+) AS cm
+  ON r.source_code = cm.source_code
+LEFT JOIN (
+  SELECT
+    source_code AS source_code,
+    source_code_description AS source_code_description,
+    target_concept_id AS target_concept_id,
+    target_domain_id AS target_domain_id
+  FROM lth_bronze.vocab__source_to_concept_map
+  WHERE
+    concept_group = 'units'
+) AS um
+  ON r.source_code = um.source_code
+LEFT JOIN (
+  SELECT
+    target_concept_id AS target_concept_id,
+    source_code AS source_code,
+    source_code_description AS source_code_description
+  FROM lth_bronze.vocab__source_to_concept_map
+  WHERE
+    concept_group IN ('decoded', 'bacteriology_other_result')
+) AS dc
+  ON r.source_code = dc.source_code
+  AND r.value_source_value = dc.source_code_description
+LEFT JOIN (
+  SELECT
+    concept_id AS concept_id,
+    concept_name AS concept_name
+  FROM @catalog_src.@schema_vocab.concept
+  WHERE
+    concept_name IN ('Positive', 'Negative', 'Sensitive', 'Indeterminate', 'Resistant')
+    AND domain_id IN ('Meas Value')
+    AND vocabulary_id IN ('SNOMED')
+) AS rs
+  ON r.value_source_value = rs.concept_name
+WHERE
   cm.target_domain_id = 'Measurement'
-

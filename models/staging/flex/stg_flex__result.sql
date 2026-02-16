@@ -1,7 +1,7 @@
 MODEL (
   name lth_bronze.stg_flex__result,
   kind INCREMENTAL_BY_TIME_RANGE (
-    time_column updated_at,
+    time_column last_edit_time,
     batch_size 30,
     batch_concurrency 4
   ),
@@ -41,4 +41,4 @@ FROM lth_bronze.src_flex__result AS fr
 LEFT JOIN visit_detail AS vd
   ON fr.visit_id = vd.visit_id
 WHERE
-  fr.updated_at BETWEEN @start_ds AND @end_ds
+  fr.last_edit_time BETWEEN @start_ds AND @end_ds
