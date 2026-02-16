@@ -110,6 +110,10 @@ External Sources → Source Views → Staging Tables → Vocab Views → CDM Tab
 | location | Python | - | - | - |
 | source_to_concept_map | FULL | 2 | vocab__source_to_concept_map_raw | - |
 
+_Note:_ Line counts referenced for individual SQL models (for example,
+`vocab__observation.sql` at 196 lines) exclude the `MODEL` block header
+and any trailing newline. A raw filesystem count (e.g., `wc -l`) will
+therefore report 1 additional line (197 lines in this case).
 ### 2.2 Critical Path Analysis
 
 **Dimension Tables (Load First):**
