@@ -35,7 +35,7 @@ def execute(context, **kwargs):
     # ---- source ids
     src = context.engine_adapter.fetchdf("""
         SELECT DISTINCT CAST(device_id AS VARCHAR(64)) AS device_id
-        FROM lth_bronze.src_bi__devices
+        FROM src.src_bi__devices
         WHERE device_id IS NOT NULL
     """)
     if not src.empty:
@@ -51,7 +51,7 @@ def execute(context, **kwargs):
         try:
             cached = context.engine_adapter.fetchdf("""
                 SELECT CAST(device_id AS VARCHAR(64)) AS device_id
-                FROM lth_bronze.stg__device_cache
+                FROM stg.stg__device_cache
             """)
             cached_ids = set(cached["device_id"].astype(str).str.strip().tolist())
         except Exception:
